@@ -107,10 +107,10 @@ public class ChessBoard extends JFrame {
 		boardArray[5][7].addPiece(new ChessPiece(pieceType.BISHOP, "black"));
 		
 		boardArray[3][0].addPiece(new ChessPiece(pieceType.QUEEN, "white"));
-		boardArray[4][7].addPiece(new ChessPiece(pieceType.QUEEN, "black"));
+		boardArray[3][7].addPiece(new ChessPiece(pieceType.QUEEN, "black"));
 		
 		boardArray[4][0].addPiece(new ChessPiece(pieceType.KING, "white"));
-		boardArray[3][7].addPiece(new ChessPiece(pieceType.KING, "black"));
+		boardArray[4][7].addPiece(new ChessPiece(pieceType.KING, "black"));
 	}
 	
 	public void setHighlight(Position pos) {
