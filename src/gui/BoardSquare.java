@@ -19,14 +19,36 @@ public class BoardSquare extends JPanel {
 		this.setBackground(color);
 	}
 	
-	public boolean movePiece(int x, int y) {
-		//prøv å flytt en brikke
+	public boolean movePiece(BoardSquare destination) {
+		
+		if(destination.hasChild()) {
+			
+			if(destination.getChild().getColor() == childPiece.getColor()) {
+				return false;
+			} else {
+				destination.removePiece();
+				destination.addPiece(childPiece);
+				removePiece();
+			}
+			
+		} else {
+			destination.addPiece(childPiece);
+			removePiece();
+		}
+		
 		return true;
 	}
 	
-	public void addPiece(ChessPiece newPiece) {		
-		this.childPiece = newPiece;
-		this.add(newPiece);
+	public void addPiece(ChessPiece newPiece) {	
+		childPiece = newPiece;
+		add(newPiece);
+		validate();
+		repaint();
+	}
+	
+	public void removePiece() {
+		remove(childPiece);
+		childPiece = null;
 	}
 	
 	public Color getOriginalColor() {
@@ -34,11 +56,15 @@ public class BoardSquare extends JPanel {
 	}
 	
 	public Position getPos() {
-		return this.pos;
+		return pos;
 	}
 	
 	public boolean hasChild() {
 		return (childPiece == null) ? false : true;
  	}
+	
+	public ChessPiece getChild() {
+		return childPiece;
+	}
 	
 }

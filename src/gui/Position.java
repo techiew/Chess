@@ -17,8 +17,4 @@ public class Position {
 		return this.y;
 	}
 	
-	public Position getPos() {
-		return new Position(this.x, this.y);
-	}
-	
 }

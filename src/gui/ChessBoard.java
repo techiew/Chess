@@ -19,12 +19,12 @@ public class ChessBoard extends JFrame {
 	private int columns = 8;
 	private int rows = 8;
 	private BoardSquare[][] boardArray = new BoardSquare[rows][columns];
-	private Position currentHighlight = null;
+	private BoardSquare selectedSquare = null;
 	private Color colorHighlight = new Color(209, 206, 111); 
 	
 	public ChessBoard() {
 		this.setVisible(true);
-		this.setSize(500, 500);
+		this.setSize(600, 600);
 		panel.setLayout(new GridLayout(rows, 0));
 		this.add(panel);
 		createChessBoard();
@@ -64,8 +64,8 @@ public class ChessBoard extends JFrame {
 				bSquare.addMouseListener(new MouseAdapter() {
 					
 				    @Override
-				    public void mouseClicked(MouseEvent e) {
-				       setHighlight(((BoardSquare) e.getSource()).getPos());
+				    public void mousePressed(MouseEvent e) {
+				       squareClickedEvent(((BoardSquare) e.getSource()));
 				    }
 				    
 				});
@@ -115,20 +115,74 @@ public class ChessBoard extends JFrame {
 		boardArray[4][7].addPiece(new ChessPiece(pieceType.KING, "black"));
 	}
 	
-	public void setHighlight(Position pos) {
-				
-		if(!boardArray[pos.getX()][pos.getY()].hasChild()) return;
+	//Event handler som kjører når man trykker på en rute
+	public void squareClickedEvent(BoardSquare clickedSquare) {	
 		
-		if(currentHighlight != null) {
+		//Hvis vi trykker på en tom rute
+		if(!clickedSquare.hasChild()) {
 			
-			if(currentHighlight.getPos() == pos.getPos()) return;
+			//Fjern highlight
+			if(selectedSquare != null) {
+				attemptToMovePiece(selectedSquare, clickedSquare);
+				setHighlight(null);
+			}
 			
-			BoardSquare target = boardArray[currentHighlight.getX()][currentHighlight.getY()];
-			target.setBackground(target.getOriginalColor());
+			return;
+		} 
+		
+		//Hvis vi trykker på en rute med brikke
+		if (clickedSquare.hasChild()) {
+		
+			if(selectedSquare != null) {
+				
+				//Fjern highlight hvis du trykker på rute med highlight på
+				if(selectedSquare == clickedSquare) {
+					setHighlight(null);
+					return;
+				}
+				
+				if(selectedSquare.getChild().getColor() != clickedSquare.getChild().getColor()) {
+					setHighlight(null);
+				}
+				
+				attemptToMovePiece(selectedSquare, clickedSquare);
+				return;
+			}
+			
+			//Sett highlight til å være den ruta som er trykket på (bare ruter med brikker)
+			setHighlight(clickedSquare);
+		}
+			
+	}
+		
+	public void setHighlight(BoardSquare clickedSquare) {
+		
+		//Hvis clickedSquare er satt til null, ikke ha noen highlights
+		if(clickedSquare == null) {
+			
+			if(selectedSquare != null) {
+				selectedSquare.setBackground(selectedSquare.getOriginalColor());
+				selectedSquare = null;
+			}
+			
+			return;
 		}
 		
-		boardArray[pos.getX()][pos.getY()].setBackground(colorHighlight);
-		currentHighlight = new Position(pos.getX(), pos.getY());
+		//Hvis en rute alerede er valgt, fjern highlight på den
+		if(selectedSquare != null) {
+			selectedSquare.setBackground(selectedSquare.getOriginalColor());	
+		}
+		
+		selectedSquare = clickedSquare;
+		selectedSquare.setBackground(colorHighlight);	
+	}
+	
+	public void attemptToMovePiece(BoardSquare fromSquare, BoardSquare toSquare) {
+		fromSquare.movePiece(toSquare);
+	}
+	
+	public BoardSquare getSquareAt(Position pos) {
+		return boardArray[pos.getX()][pos.getY()];
 	}
 	
 }

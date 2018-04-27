@@ -33,28 +33,36 @@ public class ChessPiece extends JLabel {
 		
 		switch(type) {
 		case PAWN:
-			imgSrc = (color == "white") ? imgSrc = "whitePawn.png" : "blackPawn.png";
+			imgSrc = (color == "white") ? imgSrc = "white_pawn.png" : "black_pawn.png";
 			break;
 		case ROOK:
-			imgSrc = (color == "white") ? imgSrc = "whiteRook.png" : "blackRook.png";
+			imgSrc = (color == "white") ? imgSrc = "white_rook.png" : "black_rook.png";
 			break;
 		case KNIGHT:
-			imgSrc = (color == "white") ? imgSrc = "whiteKnight.png" : "blackKnight.png";
+			imgSrc = (color == "white") ? imgSrc = "white_knight.png" : "black_knight.png";
 			break;
 		case BISHOP:
-			imgSrc = (color == "white") ? imgSrc = "whiteBishop.png" : "blackBishop.png";
+			imgSrc = (color == "white") ? imgSrc = "white_bishop.png" : "black_bishop.png";
 			break;
 		case QUEEN:
-			imgSrc = (color == "white") ? imgSrc = "whiteQueen.png" : "blackQueen.png";
+			imgSrc = (color == "white") ? imgSrc = "white_queen.png" : "black_queen.png";
 			break;
 		case KING:
-			imgSrc = (color == "white") ? imgSrc = "whiteKing.png" : "blackKing.png";
+			imgSrc = (color == "white") ? imgSrc = "white_king.png" : "black_king.png";
 			break;
 		}
 		
 		image = new ImageIcon(imgSrc);
 		ImageIcon scaledImageIcon = new ImageIcon(image.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH));
 		this.setIcon(scaledImageIcon);
+	}
+	
+	public pieceType getType() {
+		return type;
+	}
+	
+	public String getColor() {
+		return color;
 	}
 	
 }
