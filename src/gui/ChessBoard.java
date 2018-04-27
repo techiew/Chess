@@ -24,7 +24,7 @@ public class ChessBoard extends JFrame {
 	
 	public ChessBoard() {
 		this.setVisible(true);
-		this.setSize(400, 400);
+		this.setSize(500, 500);
 		panel.setLayout(new GridLayout(rows, 0));
 		this.add(panel);
 		createChessBoard();
