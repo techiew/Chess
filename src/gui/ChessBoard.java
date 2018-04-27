@@ -31,11 +31,13 @@ public class ChessBoard extends JFrame {
 		placePieces();
 		this.validate();
 		this.repaint();
+		
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				System.exit(0);
 			}
 		});
+		
 	}
 	
 	private void createChessBoard() {
