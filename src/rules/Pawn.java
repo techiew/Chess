@@ -31,11 +31,20 @@ public class Pawn extends Rules implements RulesInterface {
 		
 		if(piece.getDirection() == "up") {
 			
+			if (from.getY() + 2 == to.getY() && from.getY() == 1) {
+				return true;
+			}
+			
 			if(from.getY() + 1 != to.getY()) {
 				return false;
 			}
 			
+			
 		} else if(piece.getDirection() == "down") {
+			
+			if (from.getY() - 2 == to.getY() && from.getY() == 6) {
+				return true;
+			}
 			
 			if(from.getY() - 1 != to.getY()) {
 				return false;
