@@ -21,8 +21,10 @@ public class ChessBoard extends JFrame {
 	private BoardSquare[][] boardArray = new BoardSquare[rows][columns];
 	private BoardSquare highlightedSquare = null;
 	private Color colorHighlight = new Color(209, 206, 111); 
+	private int turn = 0;
 	
-	public ChessBoard() {
+	public ChessBoard(String title) {
+		this.setTitle(title);
 		this.setVisible(true);
 		this.setSize(600, 600);
 		panel.setLayout(new GridLayout(rows, 0));
@@ -118,7 +120,7 @@ public class ChessBoard extends JFrame {
 	
 	//Event handler som kjører når man trykker på en rute
 	public void squareClickedEvent(BoardSquare clickedSquare) {	
-		
+				
 		//Hvis vi trykker på en tom rute
 		if(!clickedSquare.hasChild()) {
 			
@@ -133,7 +135,7 @@ public class ChessBoard extends JFrame {
 		
 		//Hvis vi trykker på en rute med brikke
 		if (clickedSquare.hasChild()) {
-		
+			
 			if(highlightedSquare != null) {
 				String highlightedColor = highlightedSquare.getChild().getColor();
 				String clickedColor = clickedSquare.getChild().getColor();
@@ -172,6 +174,12 @@ public class ChessBoard extends JFrame {
 			return;
 		}
 		
+		if(turn == 0 && clickedSquare.getChild().getColor() != "white") {
+			return;
+		} else if(turn == 1 && clickedSquare.getChild().getColor() != "black") {
+			return;
+		}
+		
 		//Hvis en rute alerede er i highlightedSquare, fjern highlight på den
 		if(highlightedSquare != null) {
 			highlightedSquare.setBackground(highlightedSquare.getOriginalColor());	
@@ -182,11 +190,26 @@ public class ChessBoard extends JFrame {
 	}
 	
 	public void attemptToMovePiece(BoardSquare fromSquare, BoardSquare toSquare) {
-		fromSquare.movePiece(toSquare);
+		
+		if(turn == 0 && fromSquare.getChild().getColor() != "white") {
+			return;
+		} else if(turn == 1 && fromSquare.getChild().getColor() != "black") {
+			return;
+		}
+		
+		if(fromSquare.movePiece(boardArray, toSquare)) {
+			turn = (turn == 0) ? 1 : 0;
+			setTitle((turn == 0) ? "Hvit sin tur" : "Svart sin tur");
+		}
+		
 	}
 	
 	public BoardSquare getSquareAt(Position pos) {
 		return boardArray[pos.getX()][pos.getY()];
+	}
+	
+	public BoardSquare[][] getBoard() {
+		return boardArray;
 	}
 	
 }

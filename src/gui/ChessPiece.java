@@ -24,35 +24,47 @@ public class ChessPiece extends JLabel {
 		
 	private pieceType type;
 	private String color;
+	private String direction;
 	private ImageIcon image;
-	private Object ruleClass;
+	private Object rulesObject;
 	
 	public ChessPiece(pieceType type, String color) {
 		this.type = type;
 		this.color = color;
 		this.setVisible(true);
 		String imgSrc = "";
-		<T> ruleClass = null;
+		rulesObject = null;
+		
+		if(color == "white") {
+			direction = "up";
+		} else {
+			direction = "down";
+		}
 		
 		switch(type) {
 		case PAWN:
 			imgSrc = (color == "white") ? imgSrc = "white_pawn.png" : "black_pawn.png";
-			ruleClass = new Pawn();
+			rulesObject = new Pawn();
 			break;
 		case ROOK:
 			imgSrc = (color == "white") ? imgSrc = "white_rook.png" : "black_rook.png";
+			rulesObject = new Pawn();
 			break;
 		case KNIGHT:
 			imgSrc = (color == "white") ? imgSrc = "white_knight.png" : "black_knight.png";
+			rulesObject = new Pawn();
 			break;
 		case BISHOP:
 			imgSrc = (color == "white") ? imgSrc = "white_bishop.png" : "black_bishop.png";
+			rulesObject = new Pawn();
 			break;
 		case QUEEN:
 			imgSrc = (color == "white") ? imgSrc = "white_queen.png" : "black_queen.png";
+			rulesObject = new Pawn();
 			break;
 		case KING:
 			imgSrc = (color == "white") ? imgSrc = "white_king.png" : "black_king.png";
+			rulesObject = new Pawn();
 			break;
 		}
 		
@@ -70,7 +82,11 @@ public class ChessPiece extends JLabel {
 	}
 	
 	public Object getRules() {
-		return ruleClass;
+		return rulesObject;
+	}
+	
+	public String getDirection() {
+		return direction;
 	}
 	
 }

@@ -1,13 +1,45 @@
 package rules;
 
 import gui.Position;
+import gui.BoardSquare;
 import gui.ChessPiece;
 
-public class Pawn {
+public class Pawn extends Rules implements RulesInterface {
 	
-	public boolean isLegalMove(ChessPiece piece, Position from, Position to) {
+	public boolean isLegalMove(BoardSquare[][] board, ChessPiece piece, Position from, Position to) {
+		b = board;
 		
-		if(piece.getColor() == "white") {
+		if(from.getX() == to.getX()) {
+			
+			if(getSquareAt(to).hasChild()) {
+				return false;
+			}
+			
+		}
+		
+		if(from.getX() + 1 == to.getX() || from.getX() - 1 == to.getX()) {
+			
+			if(!getSquareAt(to).hasChild()) {
+				return false;
+			}
+			
+		}
+		
+		if(!inRange(from.getX(), to.getX(), 1)) {
+			return false;
+		}
+		
+		if(piece.getDirection() == "up") {
+			
+			if(from.getY() + 1 != to.getY()) {
+				return false;
+			}
+			
+		} else if(piece.getDirection() == "down") {
+			
+			if(from.getY() - 1 != to.getY()) {
+				return false;
+			}
 			
 		}
 		

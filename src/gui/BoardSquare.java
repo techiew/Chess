@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
+import rules.*;
 
 public class BoardSquare extends JPanel {
 
@@ -19,20 +20,20 @@ public class BoardSquare extends JPanel {
 		this.setBackground(color);
 	}
 	
-	public boolean movePiece(BoardSquare destination) {
-		boolean legalMove = (<T> childPiece.getRules()).isLegalMove();
+	public boolean movePiece(BoardSquare[][] board, BoardSquare destination) {
+		boolean legalMove = ((RulesInterface) childPiece.getRules()).isLegalMove(board, childPiece, pos, destination.getPos());
 		
 		if(destination.hasChild()) {
 			
 			if(destination.getChild().getColor() == childPiece.getColor()) {
 				legalMove = false;
-			} else {
+			} else if(legalMove) {
 				destination.removePiece();
 				destination.addPiece(childPiece);
 				removePiece();
 			}
 			
-		} else {
+		} else if(legalMove) {
 			destination.addPiece(childPiece);
 			removePiece();
 		}
