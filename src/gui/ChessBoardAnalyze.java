@@ -54,7 +54,6 @@ public class ChessBoardAnalyze extends JFrame {
 				{
 					placePieces(userInput);
 					textfield.setText("");
-					System.out.println(userInput);
 				}
 			}
 		});
@@ -116,78 +115,84 @@ public class ChessBoardAnalyze extends JFrame {
 	}
 	
 	private void placePieces(String userInput) {
-		clearBoard();
 		FENbombe fenBombe = new FENbombe(userInput);
-		String[] fenArray = fenBombe.getFenArray();
-		for (int i = 0; i < 64; i++)
+		System.out.println(fenBombe.checkFenArray() + "dette er getfenarray");
+		if (fenBombe.checkFenArray())
 		{
-			//System.out.println(fenArray[i]);
+			clearBoard();
+			String[] fenArray = fenBombe.getFenArray();
+			for (int i = 0; i < 64; i++)
+			{
+				//System.out.println(fenArray[i]);
+			}
+			int x = 0;
+			int y = 0;
+			System.out.println(fenArray.length);
+			for (int i = 0; i < fenArray.length; i++)
+			{
+				if (i % 8 == 0 && i != 0)
+				{
+						x = 0;
+						y++;
+				}
+				switch(fenArray[i])
+				{
+					case "r":
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.ROOK, "black"));
+						x++;
+						break;
+					case "n":
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.KNIGHT, "black"));
+						x++;
+						break;
+					case "b":
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.BISHOP, "black"));
+						x++;
+						break;
+					case "q":
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.QUEEN, "black"));
+						x++;
+						break;
+					case "k":
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.KING, "black"));
+						x++;
+						break;
+					case "0":
+						x++;
+						break;
+					case "p":
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.PAWN, "black"));
+						x++;
+						break;
+					case "R":
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.ROOK, "white"));
+						x++;
+						break;
+					 case "N":
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.KNIGHT, "white"));
+						x++;
+						break;
+					case "B": 
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.BISHOP, "white"));
+						x++;
+						break;
+					case "Q":
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.QUEEN, "white"));
+						x++;
+						break;
+					case "K":
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.KING, "white"));
+						x++;
+						break;
+					case "P":
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.PAWN, "white"));
+						x++;
+						break; 
+				}
+			}
 		}
-		int x = 0;
-		int y = 0;
-		System.out.println(fenArray.length);
-		for (int i = 0; i < fenArray.length; i++)
-		{
-			if (i % 8 == 0 && i != 0)
-			{
-					x = 0;
-					y++;
-			}
-			System.out.println(x);
-			switch(fenArray[i])
-			{
-				case "r":
-					boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.ROOK, "black"));
-					x++;
-					break;
-				case "n":
-					boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.KNIGHT, "black"));
-					x++;
-					break;
-				case "b":
-					boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.BISHOP, "black"));
-					x++;
-					break;
-				case "q":
-					boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.QUEEN, "black"));
-					x++;
-					break;
-				case "k":
-					boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.KING, "black"));
-					x++;
-					break;
-				case "0":
-					x++;
-					break;
-				case "p":
-					boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.PAWN, "black"));
-					x++;
-					break;
-				case "R":
-					boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.ROOK, "white"));
-					x++;
-					break;
-				 case "N":
-					boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.KNIGHT, "white"));
-					x++;
-					break;
-				case "B": 
-					boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.BISHOP, "white"));
-					x++;
-					break;
-				case "Q":
-					boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.QUEEN, "white"));
-					x++;
-					break;
-				case "K":
-					boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.KING, "white"));
-					x++;
-					break;
-				case "P":
-					boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.PAWN, "white"));
-					x++;
-					break; 
-			}
+		else {
+			System.out.println("Den scuffed ass shit FEN stringen din er invalid as fuck");
 		}
 	}
 	
@@ -238,9 +243,7 @@ public class ChessBoardAnalyze extends JFrame {
 			} 
 			if (boardArray[x][y].hasChild())
 			{
-				System.out.println(boardArray[x][y].hasChild());
 				boardArray[x][y].removePiece();
-				System.out.println("x" + x + "og y" + y);
 				x++;
 			}
 			else

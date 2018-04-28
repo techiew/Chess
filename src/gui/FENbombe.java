@@ -2,6 +2,7 @@ package gui;
 
 public class FENbombe {
 	private String[] completeSplitFenCode = new String[64];
+	private int arrayCounter = 0;
 	public FENbombe(String fen) {			// skal motta string
 		String trimmedFenCode = "";
 		String[] incompleteSplitFenCode;
@@ -26,11 +27,13 @@ public class FENbombe {
 				{
 					completeSplitFenCode[counter] = "0";
 					counter++;
+					arrayCounter++;
 				}
 			}
 			else {
 				completeSplitFenCode[counter] = incompleteSplitFenCode[i];
 				counter++;
+				arrayCounter++;
 			}
 		
 		}
@@ -39,7 +42,16 @@ public class FENbombe {
 		
 	}
 	
-
+	public boolean checkFenArray()
+	{
+		if (arrayCounter == 64)
+		{
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	public String[] getFenArray()
 	{
 		return completeSplitFenCode;

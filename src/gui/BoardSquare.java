@@ -49,7 +49,6 @@ public class BoardSquare extends JPanel {
 	}
 	
 	public void removePiece() {
-		System.out.println("hei");
 		remove(childPiece);
 		childPiece = null;
 	}
