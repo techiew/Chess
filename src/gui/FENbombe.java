@@ -45,7 +45,9 @@ public class FENbombe {
 		return completeSplitFenCode;
 	}
 	
-	private static boolean isANumber(String incompleteSplitFenCode)
+	
+	
+	private boolean isANumber(String incompleteSplitFenCode)
 	  {
 	    try
 	    {
