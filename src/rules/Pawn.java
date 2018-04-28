@@ -9,6 +9,8 @@ public class Pawn extends Rules implements RulesInterface {
 	public boolean isLegalMove(BoardSquare[][] board, ChessPiece piece, Position from, Position to) {
 		b = board;
 		
+		boolean firstMove = piece.isFirstMove();
+		
 		if(from.getX() == to.getX()) {
 			
 			if(getSquareAt(to).hasChild()) {
@@ -31,22 +33,26 @@ public class Pawn extends Rules implements RulesInterface {
 		
 		if(piece.getDirection() == "up") {
 			
-			if (from.getY() + 2 == to.getY() && from.getY() == 1) {
-				return true;
-			}
-			
-			if(from.getY() + 1 != to.getY()) {
+			if(firstMove) {
+				
+				if(from.getY() + 1 != to.getY() && from.getY() + 2 != to.getY()) {
+					return false;
+				}
+				
+			} else if(from.getY() + 1 != to.getY()) {
 				return false;
 			}
 			
 			
 		} else if(piece.getDirection() == "down") {
 			
-			if (from.getY() - 2 == to.getY() && from.getY() == 6) {
-				return true;
-			}
-			
-			if(from.getY() - 1 != to.getY()) {
+			if(firstMove) {
+				
+				if(from.getY() - 1 != to.getY() && from.getY() - 2 != to.getY()) {
+					return false;
+				}
+				
+			} else if(from.getY() - 1 != to.getY()) {
 				return false;
 			}
 			

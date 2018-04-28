@@ -38,6 +38,8 @@ public class BoardSquare extends JPanel {
 			removePiece();
 		}
 		
+		if(legalMove) destination.getChild().onPieceMoved();
+		
 		return legalMove;
 	}
 	

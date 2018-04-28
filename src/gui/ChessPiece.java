@@ -27,13 +27,15 @@ public class ChessPiece extends JLabel {
 	private String direction;
 	private ImageIcon image;
 	private Object rulesObject;
+	private boolean firstMove;
 	
 	public ChessPiece(pieceType type, String color) {
 		this.type = type;
 		this.color = color;
-		this.setVisible(true);
+		setVisible(true);
 		String imgSrc = "";
 		rulesObject = null;
+		firstMove = true;
 		
 		if(color == "white") {
 			direction = "up";
@@ -87,6 +89,18 @@ public class ChessPiece extends JLabel {
 	
 	public String getDirection() {
 		return direction;
+	}
+	
+	public boolean isFirstMove() {
+		return firstMove;
+	}
+	
+	public void onPieceMoved() {
+		
+		if(firstMove == true) {
+			firstMove = false;
+		}
+		
 	}
 	
 }

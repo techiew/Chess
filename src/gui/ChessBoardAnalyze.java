@@ -32,6 +32,7 @@ public class ChessBoardAnalyze extends JFrame {
 	private Color colorHighlight = new Color(209, 206, 111); 
 	private String userInput;
 	private JTextField textfield;
+	
 	public ChessBoardAnalyze() {
 		this.setVisible(true);
 		this.setSize(windowSizeX, windowSizeY);
