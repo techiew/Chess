@@ -20,11 +20,12 @@ public class BoardSquare extends JPanel {
 	}
 	
 	public boolean movePiece(BoardSquare destination) {
+		boolean legalMove = (<T> childPiece.getRules()).isLegalMove();
 		
 		if(destination.hasChild()) {
 			
 			if(destination.getChild().getColor() == childPiece.getColor()) {
-				return false;
+				legalMove = false;
 			} else {
 				destination.removePiece();
 				destination.addPiece(childPiece);
@@ -36,7 +37,7 @@ public class BoardSquare extends JPanel {
 			removePiece();
 		}
 		
-		return true;
+		return legalMove;
 	}
 	
 	public void addPiece(ChessPiece newPiece) {	

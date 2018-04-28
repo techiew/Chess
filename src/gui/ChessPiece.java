@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import rules.*;
 
 enum pieceType {
 	PAWN,
@@ -24,16 +25,19 @@ public class ChessPiece extends JLabel {
 	private pieceType type;
 	private String color;
 	private ImageIcon image;
+	private Object ruleClass;
 	
 	public ChessPiece(pieceType type, String color) {
 		this.type = type;
 		this.color = color;
 		this.setVisible(true);
 		String imgSrc = "";
+		<T> ruleClass = null;
 		
 		switch(type) {
 		case PAWN:
 			imgSrc = (color == "white") ? imgSrc = "white_pawn.png" : "black_pawn.png";
+			ruleClass = new Pawn();
 			break;
 		case ROOK:
 			imgSrc = (color == "white") ? imgSrc = "white_rook.png" : "black_rook.png";
@@ -63,6 +67,10 @@ public class ChessPiece extends JLabel {
 	
 	public String getColor() {
 		return color;
+	}
+	
+	public Object getRules() {
+		return ruleClass;
 	}
 	
 }

@@ -19,7 +19,7 @@ public class ChessBoard extends JFrame {
 	private int columns = 8;
 	private int rows = 8;
 	private BoardSquare[][] boardArray = new BoardSquare[rows][columns];
-	private BoardSquare selectedSquare = null;
+	private BoardSquare highlightedSquare = null;
 	private Color colorHighlight = new Color(209, 206, 111); 
 	
 	public ChessBoard() {
@@ -75,6 +75,7 @@ public class ChessBoard extends JFrame {
 					colorOne = colorTwo;
 					colorTwo = temp;
 				}
+				
 				row++;
 			}
 			
@@ -122,8 +123,8 @@ public class ChessBoard extends JFrame {
 		if(!clickedSquare.hasChild()) {
 			
 			//Fjern highlight
-			if(selectedSquare != null) {
-				attemptToMovePiece(selectedSquare, clickedSquare);
+			if(highlightedSquare != null) {
+				attemptToMovePiece(highlightedSquare, clickedSquare);
 				setHighlight(null);
 			}
 			
@@ -133,20 +134,23 @@ public class ChessBoard extends JFrame {
 		//Hvis vi trykker på en rute med brikke
 		if (clickedSquare.hasChild()) {
 		
-			if(selectedSquare != null) {
+			if(highlightedSquare != null) {
+				String highlightedColor = highlightedSquare.getChild().getColor();
+				String clickedColor = clickedSquare.getChild().getColor();
 				
 				//Fjern highlight hvis du trykker på rute med highlight på
-				if(selectedSquare == clickedSquare) {
+				if(highlightedSquare == clickedSquare) {
 					setHighlight(null);
 					return;
 				}
+								
+				attemptToMovePiece(highlightedSquare, clickedSquare);
 				
-				if(selectedSquare.getChild().getColor() != clickedSquare.getChild().getColor()) {
+				if(highlightedColor != clickedColor) {
 					setHighlight(null);
-				}
+					return;
+				} 
 				
-				attemptToMovePiece(selectedSquare, clickedSquare);
-				return;
 			}
 			
 			//Sett highlight til å være den ruta som er trykket på (bare ruter med brikker)
@@ -160,21 +164,21 @@ public class ChessBoard extends JFrame {
 		//Hvis clickedSquare er satt til null, ikke ha noen highlights
 		if(clickedSquare == null) {
 			
-			if(selectedSquare != null) {
-				selectedSquare.setBackground(selectedSquare.getOriginalColor());
-				selectedSquare = null;
+			if(highlightedSquare != null) {
+				highlightedSquare.setBackground(highlightedSquare.getOriginalColor());
+				highlightedSquare = null;
 			}
 			
 			return;
 		}
 		
-		//Hvis en rute alerede er valgt, fjern highlight på den
-		if(selectedSquare != null) {
-			selectedSquare.setBackground(selectedSquare.getOriginalColor());	
+		//Hvis en rute alerede er i highlightedSquare, fjern highlight på den
+		if(highlightedSquare != null) {
+			highlightedSquare.setBackground(highlightedSquare.getOriginalColor());	
 		}
 		
-		selectedSquare = clickedSquare;
-		selectedSquare.setBackground(colorHighlight);	
+		highlightedSquare = clickedSquare;
+		highlightedSquare.setBackground(colorHighlight);	
 	}
 	
 	public void attemptToMovePiece(BoardSquare fromSquare, BoardSquare toSquare) {
