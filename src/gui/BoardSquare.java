@@ -14,10 +14,10 @@ public class BoardSquare extends JPanel {
 	private Position pos;
 	
 	public BoardSquare(Position pos, Color color) {
-		this.setVisible(true);
+		setVisible(true);
 		this.pos = pos;
 		this.color = color;
-		this.setBackground(color);
+		setBackground(color);
 	}
 	
 	public boolean movePiece(BoardSquare[][] board, BoardSquare destination) {
@@ -43,6 +43,18 @@ public class BoardSquare extends JPanel {
 		return legalMove;
 	}
 	
+	public boolean movePieceMultiplayer(BoardSquare destination) {
+		if(destination.hasChild()) {
+			destination.removePiece();
+			destination.addPiece(childPiece);
+			removePiece();	
+		} else {
+			destination.addPiece(childPiece);
+			removePiece();
+		}
+		return true;
+	}
+	
 	public void addPiece(ChessPiece newPiece) {	
 		childPiece = newPiece;
 		add(newPiece);
@@ -53,6 +65,8 @@ public class BoardSquare extends JPanel {
 	public void removePiece() {
 		remove(childPiece);
 		childPiece = null;
+		validate();
+		repaint();
 	}
 	
 	public Color getOriginalColor() {
