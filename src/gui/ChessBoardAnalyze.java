@@ -18,6 +18,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import Stockfish.Stockfish;
+
 public class ChessBoardAnalyze extends JFrame {
 
 	private JPanel panel = new JPanel();
@@ -30,9 +32,12 @@ public class ChessBoardAnalyze extends JFrame {
 	private BoardSquare[][] boardArray = new BoardSquare[rows][columns];
 	private Position currentHighlight = null;
 	private Color colorHighlight = new Color(209, 206, 111); 
-	private String userInput;
-	private JTextField textfield;
-	
+	private String userFenInput;
+	private JTextField fenInputTextfield;
+	private JButton bestMoveButton;
+	private Stockfish stockfish = new Stockfish();
+	private String stockfishResponse;
+	AnalyzeInput analyzeWindow;
 	public ChessBoardAnalyze() {
 		this.setVisible(true);
 		this.setSize(windowSizeX, windowSizeY);
@@ -40,13 +45,14 @@ public class ChessBoardAnalyze extends JFrame {
 		this.setLocation(windowPosX, windowPosY);
 		panel.setLayout(new GridLayout(rows, 0));
 		this.add(panel);
-		AnalyzeInput analyzeWindow = new AnalyzeInput(windowSizeX, windowPosY);
-		textfield = analyzeWindow.textfield;
-		textfield.addActionListener(new ActionListener()
+		analyzeWindow = new AnalyzeInput(windowSizeX, windowPosY, windowSizeY);
+		fenInputTextfield = analyzeWindow.fenInputTextfield;
+		bestMoveButton = analyzeWindow.bestMoveButton;
+		fenInputTextfield.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				String userInput = textfield.getText();
+				String userInput = fenInputTextfield.getText();
 				if (userInput.length() < 10)
 				{
 					System.out.println("Invalid FEN code");
@@ -54,11 +60,26 @@ public class ChessBoardAnalyze extends JFrame {
 				else
 				{
 					placePieces(userInput);
-					textfield.setText("");
+					fenInputTextfield.setText("");
+					analyzeWindow.showBestMove("");
 				}
 			}
 		});
-		//userInput = analyzeWindow.getUserInput();
+		
+		bestMoveButton.addActionListener(new ActionListener() {
+			public void actionPerformed (ActionEvent e)
+			{
+				stockfishResponse = "Stockfish anbefaler trekk: " + stockfish.getBestMove(30);
+				analyzeWindow.showBestMove(stockfishResponse);
+			}
+		});
+		
+		if (stockfish.startEngine()) {
+			System.out.println("Engine har started");
+		}
+		else {
+			System.out.println("fuck noe er gærnt");
+		}
 		createChessBoard();
 		initializePieces();
 		this.validate();
@@ -117,9 +138,12 @@ public class ChessBoardAnalyze extends JFrame {
 	
 	private void placePieces(String userInput) {
 		FENbombe fenBombe = new FENbombe(userInput);
-		System.out.println(fenBombe.checkFenArray() + "dette er getfenarray");
+		userFenInput = userInput;
 		if (fenBombe.checkFenArray())
 		{
+			stockfish.sendFen(userInput);
+			analyzeWindow.showCurrentFen(userFenInput);
+		   // stockfishResponse = stockfish.getBestMove(30);
 			clearBoard();
 			String[] fenArray = fenBombe.getFenArray();
 			for (int i = 0; i < 64; i++)
@@ -128,7 +152,6 @@ public class ChessBoardAnalyze extends JFrame {
 			}
 			int x = 0;
 			int y = 0;
-			System.out.println(fenArray.length);
 			for (int i = 0; i < fenArray.length; i++)
 			{
 				if (i % 8 == 0 && i != 0)
@@ -200,6 +223,9 @@ public class ChessBoardAnalyze extends JFrame {
 	
 	private void initializePieces()
 	{
+		userFenInput = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 ";
+		stockfish.sendFen(userFenInput);
+		analyzeWindow.showCurrentFen(userFenInput);
 		for(int i = 0; i < 8; i++) {
 			boardArray[i][1].addPiece(new ChessPiece(pieceType.PAWN, "white"));
 
