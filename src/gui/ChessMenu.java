@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -16,6 +17,7 @@ public class ChessMenu extends JFrame {
 	public JButton chessClientButton = new JButton("ChessBoard Client");
 	public JButton chessAnalyzeButton = new JButton("ChessBoard Analyzer");
 	public JTextField klientIPTextbox = new JTextField(30);
+	private JLabel ipAdresseTekst = new JLabel("Skriv inn IP adresen til hosten: ");
 	private String klientIP = null;
 	public ChessMenu()
 	{
@@ -23,6 +25,7 @@ public class ChessMenu extends JFrame {
 		setVisible(true);
 		setSize(600,600);
 		setLocation(50,50);
+		containerPanel.add(ipAdresseTekst);
 		containerPanel.add(klientIPTextbox);
 		containerPanel.add(chessServerButton);
 		containerPanel.add(chessClientButton);
