@@ -137,8 +137,8 @@ public class ChessMenu extends JFrame {
 					System.out.println("Skriv inn en IP adresse REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
 				}
 				else {
-					new ChessBoard(true, true, klientIP, 21337, "Sjakk"); //Klient
 					setVisible(false);
+					new ChessBoard(true, true, klientIP, 21337, "Sjakk"); //Klient
 				}
 			}
 		});

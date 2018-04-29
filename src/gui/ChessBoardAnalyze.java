@@ -18,7 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
-import Stockfish.Stockfish;
+import stockfish.Stockfish;
 
 public class ChessBoardAnalyze extends JFrame {
 

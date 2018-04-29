@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
-public class Client implements ConnectionInterface {
+import gui.ChessBoard;
+
+public class Client implements ConnectionInterface, Runnable {
 
 	private String ip;
 	private int port;
@@ -15,11 +17,12 @@ public class Client implements ConnectionInterface {
 	private InputStreamReader ir;
 	private BufferedReader input;
 	private PrintStream output;
+	private ChessBoard board;
 	
-	public Client(String ip, int port) {
+	public Client(ChessBoard board, String ip, int port) {
+		this.board = board;
 		this.ip = ip;
 		this.port = port;
-		start();
 	}
 	
 	private void start() {
@@ -50,7 +53,7 @@ public class Client implements ConnectionInterface {
 		output.println(response);
 	}
 	
-	public String waitForResponse() {
+	public void waitForResponse() {
 		
 		try {
 			
@@ -60,14 +63,14 @@ public class Client implements ConnectionInterface {
 			response = input.readLine();
 			
 			System.out.println(response);
-			return response;
+			return;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
 		
+		return;
 	}
 	
 	public boolean isConnected() {

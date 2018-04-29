@@ -16,6 +16,7 @@ import javax.swing.SwingUtilities;
 
 import multiplayer.Client;
 import multiplayer.ConnectionInterface;
+import multiplayer.Message;
 import multiplayer.Server;
 
 public class ChessBoard extends JFrame {
@@ -26,13 +27,13 @@ public class ChessBoard extends JFrame {
 	private BoardSquare[][] boardArray = new BoardSquare[rows][columns];
 	private BoardSquare highlightedSquare = null;
 	private Color colorHighlight = new Color(209, 206, 111); 
-	private int turn;
 	private String myColor;
 	private boolean isClient;
 	private boolean isMultiplayer;
 	private boolean isConnected = false;
 	private Server server = null;
 	private Client client = null;
+	private int turn = 0;
 	
 	public ChessBoard(boolean isMultiplayer, boolean isClient, String ip, int port, String title) {
 		this.isMultiplayer = isMultiplayer;
@@ -58,19 +59,19 @@ public class ChessBoard extends JFrame {
 			if(isClient) {
 				System.out.println("Client");
 				myColor = "black";
-				client = new Client(ip, port);
+				client = new Client(this, ip, port);
+				Thread clientThread = new Thread(client, "Client thread");
+				clientThread.start();
 				isConnected = true;
 			} else {
 				System.out.println("Server");
 				myColor = "white";
-				server = new Server(port);
+				server = new Server(this, port);
+				Thread serverThread = new Thread(server, "Server thread");
+				serverThread.start();
 				isConnected = true;
 			}
 			
-		}
-		
-		if(myColor == "black") {
-			waitForOtherPlayer();
 		}
 		
 	}
@@ -116,7 +117,6 @@ public class ChessBoard extends JFrame {
 			
 		}
 		
-		//boardArray[0][0].setBackground(new Color(255, 0, 0));
 	}
 	
 	private void placePieces() {
@@ -153,8 +153,7 @@ public class ChessBoard extends JFrame {
 	
 	//Event handler som kjører når man trykker på en rute
 	public void squareClickedEvent(BoardSquare clickedSquare) {	
-		boolean pieceMoved = false;
-		
+	
 		if(isMultiplayer && !isConnected) return;
 		if(isMultiplayer && (myColor == "white" && turn == 1 || myColor == "black" && turn == 0)) return;
 		
@@ -163,7 +162,7 @@ public class ChessBoard extends JFrame {
 			
 			//Fjern highlight
 			if(highlightedSquare != null) {
-				pieceMoved = attemptToMovePiece(highlightedSquare, clickedSquare);
+				attemptToMovePiece(highlightedSquare, clickedSquare);
 				setHighlight(null);
 			}
 			
@@ -182,7 +181,7 @@ public class ChessBoard extends JFrame {
 					return;
 				}
 								
-				pieceMoved = attemptToMovePiece(highlightedSquare, clickedSquare);
+				attemptToMovePiece(highlightedSquare, clickedSquare);
 				
 				if(highlightedColor != clickedColor) {
 					setHighlight(null);
@@ -194,19 +193,10 @@ public class ChessBoard extends JFrame {
 			//Sett highlight til å være den ruta som er trykket på (bare ruter med brikker)
 			setHighlight(clickedSquare);	
 		}
-			
-		if(isMultiplayer && pieceMoved) {
-		    //SwingUtilities.invokeLater(new Runnable() 
-		    //{
-		     // public void run()
-		     // {
-		    	// waitForOtherPlayer();
-		      //}
-		   // });
-		}
 		
 	}
 		
+	//Prøv å framhev ruten som vi trykket på
 	public void setHighlight(BoardSquare clickedSquare) {
 		
 		//Hvis clickedSquare er satt til null, ikke ha noen highlights
@@ -229,6 +219,7 @@ public class ChessBoard extends JFrame {
 		highlightedSquare.setBackground(colorHighlight);	
 	}
 	
+	//Prøv å beveg en brikke og sjekk om det er lovlig
 	public boolean attemptToMovePiece(BoardSquare fromSquare, BoardSquare toSquare) {
 		
 		if(turn == 0 && fromSquare.getChild().getColor() != "white") {
@@ -243,15 +234,7 @@ public class ChessBoard extends JFrame {
 			onPieceMoved();
 			
 			if(isMultiplayer) {
-				sendTurnAction(fromSquare, toSquare);
-				Thread thread1 = new Thread(new Runnable() {
-				    @Override
-				    public void run(){
-				    	waitForOtherPlayer();
-				    }
-				});
-				 
-				thread1.start();
+				sendPieceMoveEvent(fromSquare, toSquare);
 			}
 			
 			return true;
@@ -260,29 +243,45 @@ public class ChessBoard extends JFrame {
 		return false;
 	}
 	
-	public void forceMovePiece(BoardSquare fromSquare, BoardSquare toSquare) {
-		
-		if(fromSquare.movePieceMultiplayer(toSquare)) {			
-			onPieceMoved();	
-		}
-		
-	}
-	
+	//Når en brikke ble flyttet på, endre tur
 	private void onPieceMoved() {
 		turn = (turn == 0) ? 1 : 0;
 		setTitle((turn == 0) ? "Hvit sin tur" : "Svart sin tur");
 	}
 	
-	public void sendTurnAction(BoardSquare from, BoardSquare to) {
+	public BoardSquare getSquareAt(Position pos) {
+		return boardArray[pos.getX()][pos.getY()];
+	}
+	
+	public BoardSquare[][] getBoard() {
+		return boardArray;
+	}
+	
+	
+	//Multiplayer kode ------------------------------------------------------
+	
+	//Tving brettet vårt til å bevege en brikke (uten å sjekke regler), brukes for trekk fra andre spilleren
+	public void forceMovePiece(BoardSquare fromSquare, BoardSquare toSquare) {
+		
+		if(fromSquare.movePieceNoRules(toSquare)) {			
+			onPieceMoved();	
+		}
+		
+	}
+	
+	//Send melding til den andre spilleren om hva som ble gjort denne runden
+	public void sendPieceMoveEvent(BoardSquare from, BoardSquare to) {
 		String action = "move " 
 				+ from.getPos().getX() + "" + from.getPos().getY()
 				+ " " + to.getPos().getX() + "" + to.getPos().getY();
-		getConnection().sendResponse(action);
+		Message msg = new Message(action);
+		getConnection().sendResponse(msg);
 	}
 	
-	public void waitForOtherPlayer() {
+	//Ta i mot oppdatering fra socket
+	public void getUpdateFromSocket(Message msg) {
 		setHighlight(null);
-		String response = getConnection().waitForResponse();
+		String response = msg.getMessage();
 		
 		String[] split = response.split(" ");
 		String fromSquarePos = split[1];
@@ -298,18 +297,11 @@ public class ChessBoard extends JFrame {
 		forceMovePiece(from, to);
 	}
 	
+	//Hent instansen av socketen som brukes for tilkobling
 	private ConnectionInterface getConnection() {
 		
 		return (ConnectionInterface)((isClient) ? client : server);
 		
-	}
-	
-	public BoardSquare getSquareAt(Position pos) {
-		return boardArray[pos.getX()][pos.getY()];
-	}
-	
-	public BoardSquare[][] getBoard() {
-		return boardArray;
 	}
 	
 }
