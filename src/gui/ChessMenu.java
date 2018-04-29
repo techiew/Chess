@@ -37,8 +37,11 @@ public class ChessMenu extends JFrame {
 	private JPanel containerPanel = new JPanel();
 	public JButton chessClientButton = new JButton("Enkeltspiller");
 	public JButton chessAnalyzeButton = new JButton("Analysemodus");
+	private JButton btnHost = new JButton("Host");
+	private JButton btnJoin = new JButton("Join");
 	public JTextField klientIPTextbox = new JTextField(30);
 	private JLabel ipAdresseTekst = new JLabel("Skriv inn IP adressen:");
+	private JLabel lblSkrivInnPorten_1 = new JLabel("Skriv inn porten:");
 	private String klientIP = null;
 	private BufferedImage bilde;
 	private JTextField textField;
@@ -88,12 +91,10 @@ public class ChessMenu extends JFrame {
 		textField.setBounds(50, 354, 271, 33);
 		containerPanel.add(textField);
 		
-		JButton btnJoin = new JButton("Join");
 		btnJoin.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		btnJoin.setBounds(331, 258, 165, 33);
 		containerPanel.add(btnJoin);
 		
-		JButton btnHost = new JButton("Host");
 		btnHost.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		btnHost.setBounds(331, 354, 165, 33);
 		containerPanel.add(btnHost);
@@ -108,15 +109,14 @@ public class ChessMenu extends JFrame {
 		textField_1.setBounds(239, 258, 82, 33);
 		containerPanel.add(textField_1);
 		
-		JLabel lblSkrivInnPorten_1 = new JLabel("Skriv inn porten:");
 		lblSkrivInnPorten_1.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblSkrivInnPorten_1.setBounds(226, 214, 136, 33);
 		containerPanel.add(lblSkrivInnPorten_1);
 		
 		JLabel lblNewLabel = new JLabel("");
-		Image img = new ImageIcon(this.getClass().getResource("/menuImage.png")).getImage();
-		lblNewLabel.setIcon(new ImageIcon(img));
-		lblNewLabel.setBounds(33, 52, 463, 159);
+		//Image img = new ImageIcon(this.getClass().getResource("/menuImage.png")).getImage();
+		//lblNewLabel.setIcon(new ImageIcon(img));
+		//lblNewLabel.setBounds(33, 52, 463, 159);
 		containerPanel.add(lblNewLabel);
 		
 		klientIPTextbox.addActionListener(new ActionListener()
@@ -142,6 +142,10 @@ public class ChessMenu extends JFrame {
 				}
 			}
 		});
+		
+		
+		
+		
 		
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){

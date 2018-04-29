@@ -7,14 +7,14 @@ public class Main {
 	public static void main(String[] args) {
 		new ChessMenu();
 		//while(menu.isVisible()) {
-			//en eller annen måte å stoppe resten på midlertidig
+			//en eller annen mï¿½te ï¿½ stoppe resten pï¿½ midlertidig
 		//}
 		
 		//String ip = menu.ip;
 		//int port = menu.port;
 		//boolean isMultiplayer = menu.isMultiplayer; // er det multiplayer eller singleplayer?
 		//boolean isClient = menu.isClient; //hoster vi server eller joiner vi??
-		//Så vil instansieringa se sånn her ut:
+		//Sï¿½ vil instansieringa se sï¿½nn her ut:
 		//new ChessBoard(isMultiplayer, isClient, ip, port, "Sjakk");
 		
 		//new ChessBoardAnalyze();
