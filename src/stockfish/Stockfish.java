@@ -59,7 +59,7 @@ public class Stockfish {
 				
 				if (text.equals("readyok")) {
 					break;
-				}
+				} 
 				else {
 					buffer.append(text + "\n");
 				}	
@@ -75,7 +75,6 @@ public class Stockfish {
 	
 	public void sendFen(String fen) {
 		sendCommand("position fen " + fen);
-		System.out.println(fen + "ble mekka");
 	}
 	
 	public String getBestMove(int waitTime) {
