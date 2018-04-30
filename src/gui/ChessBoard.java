@@ -75,6 +75,8 @@ public class ChessBoard extends JFrame {
 		soundPlayer = new SoundPlayer();
 		Thread soundThread = new Thread(soundPlayer, "Sound thread");
 		soundThread.start();
+		
+		soundPlayer.playSound(SoundPlayer.SoundName.WALMART); //WALMART KID !!!!!!!!!!!!!!!!!!!!!!
 	}
 	
 	private void createChessBoard() {
