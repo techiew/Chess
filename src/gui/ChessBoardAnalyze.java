@@ -162,54 +162,54 @@ public class ChessBoardAnalyze extends JFrame {
 				switch(fenArray[i])
 				{
 					case "r":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.ROOK, "black"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.ROOK, "black"));
 						x++;
 						break;
 					case "n":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.KNIGHT, "black"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.KNIGHT, "black"));
 						x++;
 						break;
 					case "b":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.BISHOP, "black"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.BISHOP, "black"));
 						x++;
 						break;
 					case "q":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.QUEEN, "black"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.QUEEN, "black"));
 						x++;
 						break;
 					case "k":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.KING, "black"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.KING, "black"));
 						x++;
 						break;
 					case "0":
 						x++;
 						break;
 					case "p":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.PAWN, "black"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.PAWN, "black"));
 						x++;
 						break;
 					case "R":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.ROOK, "white"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.ROOK, "white"));
 						x++;
 						break;
 					 case "N":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.KNIGHT, "white"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.KNIGHT, "white"));
 						x++;
 						break;
 					case "B": 
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.BISHOP, "white"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.BISHOP, "white"));
 						x++;
 						break;
 					case "Q":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.QUEEN, "white"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.QUEEN, "white"));
 						x++;
 						break;
 					case "K":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.KING, "white"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.KING, "white"));
 						x++;
 						break;
 					case "P":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(pieceType.PAWN, "white"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.PAWN, "white"));
 						x++;
 						break; 
 				}
@@ -227,34 +227,34 @@ public class ChessBoardAnalyze extends JFrame {
 		stockfish.sendFen(userFenInput);
 		analyzeWindow.showCurrentFen(userFenInput);
 		for(int i = 0; i < 8; i++) {
-			boardArray[i][1].addPiece(new ChessPiece(pieceType.PAWN, "white"));
+			boardArray[i][1].addPiece(new ChessPiece(PieceType.PAWN, "white"));
 
 		}
 		
 		for(int i = 0; i < 8; i++) {
-			boardArray[i][6].addPiece(new ChessPiece(pieceType.PAWN, "black"));
+			boardArray[i][6].addPiece(new ChessPiece(PieceType.PAWN, "black"));
 		}
 
-		boardArray[0][0].addPiece(new ChessPiece(pieceType.ROOK, "white"));
-		boardArray[7][0].addPiece(new ChessPiece(pieceType.ROOK, "white"));
-		boardArray[0][7].addPiece(new ChessPiece(pieceType.ROOK, "black"));
-		boardArray[7][7].addPiece(new ChessPiece(pieceType.ROOK, "black"));
+		boardArray[0][0].addPiece(new ChessPiece(PieceType.ROOK, "white"));
+		boardArray[7][0].addPiece(new ChessPiece(PieceType.ROOK, "white"));
+		boardArray[0][7].addPiece(new ChessPiece(PieceType.ROOK, "black"));
+		boardArray[7][7].addPiece(new ChessPiece(PieceType.ROOK, "black"));
 		
-		boardArray[1][0].addPiece(new ChessPiece(pieceType.KNIGHT, "white"));
-		boardArray[6][0].addPiece(new ChessPiece(pieceType.KNIGHT, "white"));
-		boardArray[1][7].addPiece(new ChessPiece(pieceType.KNIGHT, "black"));
-		boardArray[6][7].addPiece(new ChessPiece(pieceType.KNIGHT, "black"));
+		boardArray[1][0].addPiece(new ChessPiece(PieceType.KNIGHT, "white"));
+		boardArray[6][0].addPiece(new ChessPiece(PieceType.KNIGHT, "white"));
+		boardArray[1][7].addPiece(new ChessPiece(PieceType.KNIGHT, "black"));
+		boardArray[6][7].addPiece(new ChessPiece(PieceType.KNIGHT, "black"));
 	
-		boardArray[2][0].addPiece(new ChessPiece(pieceType.BISHOP, "white"));
-		boardArray[5][0].addPiece(new ChessPiece(pieceType.BISHOP, "white"));
-		boardArray[2][7].addPiece(new ChessPiece(pieceType.BISHOP, "black"));
-		boardArray[5][7].addPiece(new ChessPiece(pieceType.BISHOP, "black"));
+		boardArray[2][0].addPiece(new ChessPiece(PieceType.BISHOP, "white"));
+		boardArray[5][0].addPiece(new ChessPiece(PieceType.BISHOP, "white"));
+		boardArray[2][7].addPiece(new ChessPiece(PieceType.BISHOP, "black"));
+		boardArray[5][7].addPiece(new ChessPiece(PieceType.BISHOP, "black"));
 		
-		boardArray[3][0].addPiece(new ChessPiece(pieceType.QUEEN, "white"));
-		boardArray[3][7].addPiece(new ChessPiece(pieceType.QUEEN, "black"));
+		boardArray[3][0].addPiece(new ChessPiece(PieceType.QUEEN, "white"));
+		boardArray[3][7].addPiece(new ChessPiece(PieceType.QUEEN, "black"));
 		
-		boardArray[4][0].addPiece(new ChessPiece(pieceType.KING, "white"));
-		boardArray[4][7].addPiece(new ChessPiece(pieceType.KING, "black"));
+		boardArray[4][0].addPiece(new ChessPiece(PieceType.KING, "white"));
+		boardArray[4][7].addPiece(new ChessPiece(PieceType.KING, "black"));
 	}
 	
 	private void clearBoard()

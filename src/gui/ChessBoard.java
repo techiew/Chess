@@ -18,6 +18,7 @@ import multiplayer.Client;
 import multiplayer.ConnectionInterface;
 import multiplayer.Message;
 import multiplayer.Server;
+import sound.*;
 
 public class ChessBoard extends JFrame {
 
@@ -34,6 +35,7 @@ public class ChessBoard extends JFrame {
 	private Server server = null;
 	private Client client = null;
 	private int turn = 0;
+	private SoundPlayer soundPlayer = null;
 	
 	public ChessBoard(boolean isMultiplayer, boolean isClient, String ip, int port, String title) {
 		this.isMultiplayer = isMultiplayer;
@@ -61,17 +63,18 @@ public class ChessBoard extends JFrame {
 				client = new Client(this, ip, port);
 				Thread clientThread = new Thread(client, "Client thread");
 				clientThread.start();
-				isConnected = true;
 			} else {
 				myColor = "white";
 				server = new Server(this, port);
 				Thread serverThread = new Thread(server, "Server thread");
 				serverThread.start();
-				isConnected = true;
 			}
 			
 		}
 		
+		soundPlayer = new SoundPlayer();
+		Thread soundThread = new Thread(soundPlayer, "Sound thread");
+		soundThread.start();
 	}
 	
 	private void createChessBoard() {
@@ -120,33 +123,33 @@ public class ChessBoard extends JFrame {
 	private void placePieces() {
 		
 		for(int i = 0; i < 8; i++) {
-			boardArray[i][1].addPiece(new ChessPiece(pieceType.PAWN, "white"));
+			boardArray[i][1].addPiece(new ChessPiece(PieceType.PAWN, "white"));
 		}
 		
 		for(int i = 0; i < 8; i++) {
-			boardArray[i][6].addPiece(new ChessPiece(pieceType.PAWN, "black"));
+			boardArray[i][6].addPiece(new ChessPiece(PieceType.PAWN, "black"));
 		}
 		
-		boardArray[0][0].addPiece(new ChessPiece(pieceType.ROOK, "white"));
-		boardArray[7][0].addPiece(new ChessPiece(pieceType.ROOK, "white"));
-		boardArray[0][7].addPiece(new ChessPiece(pieceType.ROOK, "black"));
-		boardArray[7][7].addPiece(new ChessPiece(pieceType.ROOK, "black"));
+		boardArray[0][0].addPiece(new ChessPiece(PieceType.ROOK, "white"));
+		boardArray[7][0].addPiece(new ChessPiece(PieceType.ROOK, "white"));
+		boardArray[0][7].addPiece(new ChessPiece(PieceType.ROOK, "black"));
+		boardArray[7][7].addPiece(new ChessPiece(PieceType.ROOK, "black"));
 		
-		boardArray[1][0].addPiece(new ChessPiece(pieceType.KNIGHT, "white"));
-		boardArray[6][0].addPiece(new ChessPiece(pieceType.KNIGHT, "white"));
-		boardArray[1][7].addPiece(new ChessPiece(pieceType.KNIGHT, "black"));
-		boardArray[6][7].addPiece(new ChessPiece(pieceType.KNIGHT, "black"));
+		boardArray[1][0].addPiece(new ChessPiece(PieceType.KNIGHT, "white"));
+		boardArray[6][0].addPiece(new ChessPiece(PieceType.KNIGHT, "white"));
+		boardArray[1][7].addPiece(new ChessPiece(PieceType.KNIGHT, "black"));
+		boardArray[6][7].addPiece(new ChessPiece(PieceType.KNIGHT, "black"));
 	
-		boardArray[2][0].addPiece(new ChessPiece(pieceType.BISHOP, "white"));
-		boardArray[5][0].addPiece(new ChessPiece(pieceType.BISHOP, "white"));
-		boardArray[2][7].addPiece(new ChessPiece(pieceType.BISHOP, "black"));
-		boardArray[5][7].addPiece(new ChessPiece(pieceType.BISHOP, "black"));
+		boardArray[2][0].addPiece(new ChessPiece(PieceType.BISHOP, "white"));
+		boardArray[5][0].addPiece(new ChessPiece(PieceType.BISHOP, "white"));
+		boardArray[2][7].addPiece(new ChessPiece(PieceType.BISHOP, "black"));
+		boardArray[5][7].addPiece(new ChessPiece(PieceType.BISHOP, "black"));
 		
-		boardArray[3][0].addPiece(new ChessPiece(pieceType.QUEEN, "white"));
-		boardArray[3][7].addPiece(new ChessPiece(pieceType.QUEEN, "black"));
+		boardArray[3][0].addPiece(new ChessPiece(PieceType.QUEEN, "white"));
+		boardArray[3][7].addPiece(new ChessPiece(PieceType.QUEEN, "black"));
 		
-		boardArray[4][0].addPiece(new ChessPiece(pieceType.KING, "white"));
-		boardArray[4][7].addPiece(new ChessPiece(pieceType.KING, "black"));
+		boardArray[4][0].addPiece(new ChessPiece(PieceType.KING, "white"));
+		boardArray[4][7].addPiece(new ChessPiece(PieceType.KING, "black"));
 	}
 	
 	//Event handler som kjører når man trykker på en rute
@@ -245,6 +248,7 @@ public class ChessBoard extends JFrame {
 	private void onPieceMoved() {
 		turn = (turn == 0) ? 1 : 0;
 		setTitle((turn == 0) ? "Hvit sin tur" : "Svart sin tur");
+		soundPlayer.playSound(SoundPlayer.SoundName.PIECE_MOVED);
 	}
 	
 	public BoardSquare getSquareAt(Position pos) {
@@ -300,6 +304,11 @@ public class ChessBoard extends JFrame {
 		
 		return (ConnectionInterface)((isClient) ? client : server);
 		
+	}
+
+	public void onPlayerConnected() {
+		soundPlayer.playSound(SoundPlayer.SoundName.CONNECTED);
+		isConnected = true;
 	}
 	
 }
