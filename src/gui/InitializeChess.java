@@ -18,8 +18,8 @@ public class InitializeChess {
 	public InitializeChess() {
 		
 		ChessMenu menu = new ChessMenu();
-		clientJoin = menu.btnJoin;
-		hostButton = menu.btnHost;
+		clientJoin = menu.joinButton;
+		hostButton = menu.hostButton;
 		chessAnalyzeButton = menu.chessAnalyzeButton;
 		
 		clientJoin.addActionListener(new ActionListener() {		//JOIN GAME, KLIENT

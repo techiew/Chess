@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,13 +12,19 @@ import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
 
 public class ChessMenu extends JFrame {
 	public String clientIP;
@@ -24,19 +32,20 @@ public class ChessMenu extends JFrame {
 	public int hostPort;
 	
 	private JPanel containerPanel = new JPanel();
-	public JButton chessClientButton = new JButton("Enkeltspiller");
+	public JButton singleplayerButton = new JButton("Enkeltspiller");
 	public JButton chessAnalyzeButton = new JButton("Analysemodus");
-	public JButton btnHost = new JButton("Host");
-	public JButton btnJoin = new JButton("Join");
-	public JTextField klientIPTextbox = new JTextField(30);
-	private JLabel ipAdresseTekst = new JLabel("Skriv inn IP adressen:");
-	private JLabel lblSkrivInnPorten_1 = new JLabel("Skriv inn porten:");
-	private JTextPane txtpnVelkommenTilChessmaster = new JTextPane();
+	public JButton hostButton = new JButton("Host");
+	public JButton joinButton = new JButton("Join");
+	public JTextField clientIPTextfield = new JTextField(30);
+	private JLabel ipAdressText = new JLabel("Skriv inn IP adressen:");
+	private JLabel addPortText1 = new JLabel("Skriv inn porten:");
 	private JLabel lblNewLabel = new JLabel("");
-	private JLabel lblSkrivInnPorten = new JLabel("Skriv inn porten: ");
-	private BufferedImage bilde;
+	private JLabel addPortText2 = new JLabel("Skriv inn porten: ");
+	private BufferedImage img;
 	private JTextField hostPortTextfield;
 	private JTextField clientPortTextfield;
+	private JLabel picLabel;
+	
 	
 	public ChessMenu()
 	{		
@@ -47,12 +56,12 @@ public class ChessMenu extends JFrame {
 		containerPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 		containerPanel.setBorder(null);
 		containerPanel.setLayout(null);
-		ipAdresseTekst.setFont(new Font("Tahoma", Font.BOLD, 12));
-		ipAdresseTekst.setBounds(50, 214, 136, 33);
-		containerPanel.add(ipAdresseTekst);
-		klientIPTextbox.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		klientIPTextbox.setBounds(50, 258, 190, 33);
-		containerPanel.add(klientIPTextbox);
+		ipAdressText.setFont(new Font("Tahoma", Font.BOLD, 12));
+		ipAdressText.setBounds(50, 214, 136, 33);
+		containerPanel.add(ipAdressText);
+		clientIPTextfield.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		clientIPTextfield.setBounds(50, 258, 190, 33);
+		containerPanel.add(clientIPTextfield);
 		chessAnalyzeButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		chessAnalyzeButton.setBounds(50, 484, 446, 48);
 		containerPanel.add(chessAnalyzeButton);
@@ -65,54 +74,72 @@ public class ChessMenu extends JFrame {
 						setVisible(false);
 					}
 				});
-		chessClientButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		chessClientButton.setBounds(50, 412, 446, 48);
-		containerPanel.add(chessClientButton);
+		singleplayerButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		singleplayerButton.setBounds(50, 412, 446, 48);
+		containerPanel.add(singleplayerButton);
 		getContentPane().add(containerPanel);
-		
-		txtpnVelkommenTilChessmaster.setFont(new Font("Tahoma", Font.PLAIN, 29));
-		txtpnVelkommenTilChessmaster.setBackground(SystemColor.menu);
-		txtpnVelkommenTilChessmaster.setText("Velkommen til ChessMaster X-TREME3000!");
-		txtpnVelkommenTilChessmaster.setBounds(10, 11, 564, 48);
-		containerPanel.add(txtpnVelkommenTilChessmaster);
 		
 		hostPortTextfield = new JTextField(30);
 		hostPortTextfield.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		hostPortTextfield.setBounds(50, 354, 271, 33);
 		containerPanel.add(hostPortTextfield);
 		
-		btnJoin.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnJoin.setBounds(331, 258, 165, 33);
-		containerPanel.add(btnJoin);
+		joinButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		joinButton.setBounds(331, 258, 165, 33);
+		containerPanel.add(joinButton);
 		
-		btnHost.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnHost.setBounds(331, 354, 165, 33);
-		containerPanel.add(btnHost);
+		hostButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		hostButton.setBounds(331, 354, 165, 33);
+		containerPanel.add(hostButton);
 		
-		lblSkrivInnPorten.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblSkrivInnPorten.setBounds(50, 316, 114, 14);
-		containerPanel.add(lblSkrivInnPorten);
+		addPortText2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		addPortText2.setBounds(50, 316, 114, 14);
+		containerPanel.add(addPortText2);
 		
 		clientPortTextfield = new JTextField(30);
 		clientPortTextfield.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		clientPortTextfield.setBounds(239, 258, 82, 33);
 		containerPanel.add(clientPortTextfield);
 		
-		lblSkrivInnPorten_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblSkrivInnPorten_1.setBounds(226, 214, 136, 33);
-		containerPanel.add(lblSkrivInnPorten_1);
+		addPortText1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		addPortText1.setBounds(226, 214, 136, 33);
+		containerPanel.add(addPortText1);		
 		
+		//JPanel imagePanel = new JPanel();
+		//imagePanel.setBounds(10, 49, 552, 154);
+		//containerPanel.add(imagePanel);
+		
+		JLabel welcomeText = new JLabel("Velkommen til ChessMaster X-TREME3000!");
+		welcomeText.setFont(new Font("Tahoma", Font.BOLD, 25));
+		welcomeText.setBounds(10, 11, 564, 33);
+		containerPanel.add(welcomeText);
+		
+		
+		BufferedImage myPicture;
+		
+		try {
+			myPicture = ImageIO.read(new File("menuImage.png"));
+			JLabel label = new JLabel(new ImageIcon(myPicture));
+			label.setSize(new Dimension(463, 159));
+			//picLabel.setSize(200,200);
+			label.setBounds(33, 52, 463, 159);
+			containerPanel.add(label);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+				
 		//Image img = new ImageIcon(this.getClass().getResource("/menuImage.png")).getImage();
 		//lblNewLabel.setIcon(new ImageIcon(img));
 		//lblNewLabel.setBounds(33, 52, 463, 159);
-		containerPanel.add(lblNewLabel);
+		//containerPanel.add(img);
 		
-		klientIPTextbox.addFocusListener(new FocusListener() {
+		clientIPTextfield.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				
 			}
 			public void focusLost(FocusEvent e) {
-				clientIP = klientIPTextbox.getText();
+				clientIP = clientIPTextfield.getText();
 				System.out.println(clientIP);
 			}
 		});
