@@ -35,6 +35,7 @@ public class Client implements ConnectionInterface, Runnable {
 				output = new ObjectOutputStream(socket.getOutputStream());
 				input = new ObjectInputStream(socket.getInputStream());
 				handshake();
+				notifyConnection();
 			}
 			
 			while(socket.isConnected()) {
@@ -110,6 +111,10 @@ public class Client implements ConnectionInterface, Runnable {
 	
 	private void updateChessBoard(Message msg) {
 		board.getUpdateFromSocket(msg);
+	}
+	
+	private void notifyConnection() {
+		board.onPlayerConnected();
 	}
 	
 }

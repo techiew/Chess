@@ -33,6 +33,7 @@ public class Server implements ConnectionInterface, Runnable {
 				input = new ObjectInputStream(socket.getInputStream());
 				output = new ObjectOutputStream(socket.getOutputStream());
 				handshake();
+				notifyConnection();
 			}
 			
 			while(socket.isConnected()) {
@@ -112,6 +113,10 @@ public class Server implements ConnectionInterface, Runnable {
 
 	private void updateChessBoard(Message msg) {
 		board.getUpdateFromSocket(msg);
+	}
+	
+	private void notifyConnection() {
+		board.onPlayerConnected();
 	}
 
 }

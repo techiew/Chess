@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import rules.*;
 
-enum pieceType {
+enum PieceType {
 	PAWN,
 	ROOK,
 	KNIGHT,
@@ -22,14 +22,14 @@ enum pieceType {
 
 public class ChessPiece extends JLabel {
 		
-	private pieceType type;
+	private PieceType type;
 	private String color;
 	private String direction;
 	private ImageIcon image;
 	private Object rulesObject;
 	private boolean firstMove;
 	
-	public ChessPiece(pieceType type, String color) {
+	public ChessPiece(PieceType type, String color) {
 		this.type = type;
 		this.color = color;
 		setVisible(true);
@@ -54,7 +54,7 @@ public class ChessPiece extends JLabel {
 			break;
 		case KNIGHT:
 			imgSrc = (color == "white") ? imgSrc = "white_knight.png" : "black_knight.png";
-			rulesObject = new Pawn();
+			rulesObject = new Knight();
 			break;
 		case BISHOP:
 			imgSrc = (color == "white") ? imgSrc = "white_bishop.png" : "black_bishop.png";
@@ -75,7 +75,7 @@ public class ChessPiece extends JLabel {
 		this.setIcon(scaledImageIcon);
 	}
 	
-	public pieceType getType() {
+	public PieceType getType() {
 		return type;
 	}
 	
