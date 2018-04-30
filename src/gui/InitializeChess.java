@@ -18,9 +18,6 @@ public class InitializeChess {
 	public InitializeChess() {
 		
 		ChessMenu menu = new ChessMenu();
-		clientIP = menu.clientIP;
-		clientPort = menu.clientPort;
-		hostPort = menu.hostPort;
 		clientJoin = menu.btnJoin;
 		hostButton = menu.btnHost;
 		chessAnalyzeButton = menu.chessAnalyzeButton;
@@ -28,10 +25,13 @@ public class InitializeChess {
 		clientJoin.addActionListener(new ActionListener() {		//JOIN GAME, KLIENT
 			public void actionPerformed (ActionEvent e)
 			{
+				clientIP = menu.clientIP;
+				clientPort = menu.clientPort;
 				if (clientIP == null && clientPort == 0) {
 					System.out.println("Vennligst sett inn en IP adresse og Port :)))))))");
 				}
 				else {
+					System.out.println(clientPort + clientIP);
 					new ChessBoard(multiplayer, client, clientIP, clientPort, "Sjakk");
 				}
 			}
@@ -40,7 +40,8 @@ public class InitializeChess {
 		hostButton.addActionListener(new ActionListener() {		//HOST GAME, SERVER
 			public void actionPerformed (ActionEvent e)
 			{
-				if (clientPort == 0) {
+				hostPort = menu.hostPort;
+				if (hostPort == 0) {
 					System.out.println("Vennligst sett inn en Port Xd");
 				}
 				else {

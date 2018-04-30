@@ -19,9 +19,9 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
 public class ChessMenu extends JFrame {
-	public String clientIP = null;
-	public int clientPort = 0;
-	public int hostPort = 0;
+	public String clientIP;
+	public int clientPort;
+	public int hostPort;
 	
 	private JPanel containerPanel = new JPanel();
 	public JButton chessClientButton = new JButton("Enkeltspiller");
@@ -113,6 +113,7 @@ public class ChessMenu extends JFrame {
 			}
 			public void focusLost(FocusEvent e) {
 				clientIP = klientIPTextbox.getText();
+				System.out.println(clientIP);
 			}
 		});
 		
@@ -122,7 +123,10 @@ public class ChessMenu extends JFrame {
 			}
 			public void focusLost(FocusEvent e) {
 				String clientPortString = clientPortTextfield.getText();
-				clientPort = Integer.parseInt(clientPortString);
+				if (isANumber(clientPortString)) {
+					clientPort = Integer.parseInt(clientPortString);
+					System.out.println(clientPort);
+				}
 			}
 		});
 		
@@ -132,14 +136,32 @@ public class ChessMenu extends JFrame {
 			}
 			public void focusLost(FocusEvent e) {
 				String hostPortString = hostPortTextfield.getText();
-				hostPort = Integer.parseInt(hostPortString);
+				if (isANumber(hostPortString)) {
+					System.out.println(hostPortString);
+					hostPort = Integer.parseInt(hostPortString);
+					System.out.println(hostPort);
+				}
 			}
 		});
 	
+		
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				System.exit(0);
 			}
 		});
 	}
+	
+	private boolean isANumber(String incompleteSplitFenCode)
+	  {
+	    try
+	    {
+	      double check = Double.parseDouble(incompleteSplitFenCode);
+	    }
+	    catch(NumberFormatException nfe)
+	    {
+	      return false;
+	    }
+	    return true;
+	  }
 }
