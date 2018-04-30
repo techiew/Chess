@@ -43,7 +43,7 @@ public class BoardSquare extends JPanel {
 		return legalMove;
 	}
 	
-	public boolean movePieceMultiplayer(BoardSquare destination) {
+	public boolean movePieceNoRules(BoardSquare destination) {
 		if(destination.hasChild()) {
 			destination.removePiece();
 			destination.addPiece(childPiece);
