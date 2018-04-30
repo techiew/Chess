@@ -26,11 +26,12 @@ public class Server implements ConnectionInterface, Runnable {
 	public void run() {
 		
 		try {
-			
 			serverSocket = new ServerSocket(port);
 			socket = serverSocket.accept();
 			
 			if(socket.isConnected()) {
+				input = new ObjectInputStream(socket.getInputStream());
+				output = new ObjectOutputStream(socket.getOutputStream());
 				handshake();
 			}
 			
@@ -44,8 +45,8 @@ public class Server implements ConnectionInterface, Runnable {
 			
 			try {
 				socket.close();
-			} catch (IOException i) {
-				i.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			
 		}
@@ -55,12 +56,8 @@ public class Server implements ConnectionInterface, Runnable {
 	//Si hei til hverandre og bestem ting som f.eks. hvilken spiller som er hvilken farge
 	private void handshake() {
 		
-		try {
-			
-			connected = true;
-			input = new ObjectInputStream(socket.getInputStream());
-			output = new ObjectOutputStream(socket.getOutputStream());
-			
+		try {			
+			System.out.println("SERVER: handshake");
 			Message sendTestMsg = new Message("Hei fra serveren");
 			Message getTestMsg = (Message)input.readObject();
 			
@@ -82,17 +79,13 @@ public class Server implements ConnectionInterface, Runnable {
 	private void waitForResponse() {
 		
 		try {
-			
 			Message response = null;	
-			
 			System.out.println("Server venter på respons");
+			
 			response = (Message)input.readObject();
 			
-			System.out.println(response.getMessage());
+			System.out.println("SERVER: " + response.getMessage());
 			updateChessBoard(response);
-			
-			return;
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,6 +98,7 @@ public class Server implements ConnectionInterface, Runnable {
 	}
 	
 	//Send en melding til den andre spilleren, sendes når en brikke blir flyttet
+	@Override
 	public void sendResponse(Message response) {
 		
 		try {

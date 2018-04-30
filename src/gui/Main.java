@@ -5,7 +5,7 @@ import multiplayer.*;
 public class Main {
 
 	public static void main(String[] args) {
-		new ChessMenu();
+		//new ChessMenu();
 		//while(menu.isVisible()) {
 			//en eller annen m�te � stoppe resten p� midlertidig
 		//}

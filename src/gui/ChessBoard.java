@@ -57,14 +57,12 @@ public class ChessBoard extends JFrame {
 		if(isMultiplayer) {
 			
 			if(isClient) {
-				System.out.println("Client");
 				myColor = "black";
 				client = new Client(this, ip, port);
 				Thread clientThread = new Thread(client, "Client thread");
 				clientThread.start();
 				isConnected = true;
 			} else {
-				System.out.println("Server");
 				myColor = "white";
 				server = new Server(this, port);
 				Thread serverThread = new Thread(server, "Server thread");
