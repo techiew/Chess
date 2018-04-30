@@ -13,13 +13,11 @@ public class SoundPlayer implements Runnable {
 	
 	public enum SoundName {
 		PIECE_MOVED,
-		CONNECTED,
-		WALMART
+		CONNECTED
 	};
 	
 	private final File pieceMoved = new File("sound/piece_moved.wav");
 	private final File connected = new File("sound/connected.wav");
-	private final File walmart = new File("sound/walmart.wav");
 	private volatile File currentSound = null;
 	
 	@Override
@@ -67,9 +65,6 @@ public class SoundPlayer implements Runnable {
 			break;
 		case CONNECTED:
 			soundFile = connected;
-			break;
-		case WALMART:
-			soundFile = walmart;
 			break;
 		}
 
