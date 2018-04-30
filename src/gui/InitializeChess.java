@@ -12,9 +12,9 @@ public class InitializeChess {
 	JButton clientJoin = new JButton();
 	JButton hostButton = new JButton();
 	JButton chessAnalyzeButton = new JButton();
-	boolean Client = true;
-	boolean Server = false;
-	boolean Multiplayer = true;
+	boolean client = true;
+	boolean server = false;
+	boolean multiplayer = true;
 	public InitializeChess() {
 		
 		ChessMenu menu = new ChessMenu();
@@ -32,7 +32,7 @@ public class InitializeChess {
 					System.out.println("Vennligst sett inn en IP adresse og Port :)))))))");
 				}
 				else {
-					new ChessBoard(Multiplayer, Client, clientIP, clientPort, "Sjakk");
+					new ChessBoard(multiplayer, client, clientIP, clientPort, "Sjakk");
 				}
 			}
 		});
@@ -44,7 +44,7 @@ public class InitializeChess {
 					System.out.println("Vennligst sett inn en Port Xd");
 				}
 				else {
-					new ChessBoard(Multiplayer, Server, "localhost", hostPort, "Sjakk"); 
+					new ChessBoard(multiplayer, server, "localhost", hostPort, "Sjakk"); 
 				}
 			}
 		});
