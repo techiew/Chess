@@ -5,7 +5,8 @@ import multiplayer.*;
 public class Main {
 
 	public static void main(String[] args) {
-		new InitializeChess();
+
+new ChessBoard(false, false, "localhost", 21337, "Sjakk");
 		//new ChessMenu();
 		//while(menu.isVisible()) {
 			//en eller annen m�te � stoppe resten p� midlertidig
