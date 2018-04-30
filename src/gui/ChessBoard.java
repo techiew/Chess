@@ -18,6 +18,7 @@ import multiplayer.Client;
 import multiplayer.ConnectionInterface;
 import multiplayer.Message;
 import multiplayer.Server;
+import rules.RulesInterface;
 import sound.*;
 
 public class ChessBoard extends JFrame {

@@ -66,7 +66,7 @@ public class ChessPiece extends JLabel {
 			break;
 		case KING:
 			imgSrc = (color == "white") ? imgSrc = "white_king.png" : "black_king.png";
-			rulesObject = new Pawn();
+			rulesObject = new King();
 			break;
 		}
 		
@@ -99,6 +99,14 @@ public class ChessPiece extends JLabel {
 		
 		if(firstMove == true) {
 			firstMove = false;
+		}
+		
+	}
+	
+	public void onPieceRemoved() {
+		
+		if(type == PieceType.KING) {
+			//Tap spillet
 		}
 		
 	}

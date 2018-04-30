@@ -36,12 +36,21 @@ public class Pawn extends Rules implements RulesInterface {
 		
 		//Beveger den seg opp/ned? hvis det er første trekket for denne brikka,
 		//la den gå 2 ruter oppover, hvis ikke, bare 1
+		//Sjekker også om det er en brikke i mellom hvis bonden beveger seg 2 skritt
 		if(piece.getDirection() == "up") {
 			
 			if(firstMove) {
 				
 				if(from.getY() + 1 != to.getY() && from.getY() + 2 != to.getY()) {
 					return false;
+				}
+				
+				if(to.getY() - 2 == from.getY()) {
+					
+					if(getSquareAt(new Position(to.getX(), to.getY() - 1)).hasChild()) {
+						return false;
+					}
+					
 				}
 				
 			} else if(from.getY() + 1 != to.getY()) {
@@ -55,6 +64,14 @@ public class Pawn extends Rules implements RulesInterface {
 				
 				if(from.getY() - 1 != to.getY() && from.getY() - 2 != to.getY()) {
 					return false;
+				}
+				
+				if(to.getY() + 2 == from.getY()) {
+					
+					if(getSquareAt(new Position(to.getX(), to.getY() + 1)).hasChild()) {
+						return false;
+					}
+					
 				}
 				
 			} else if(from.getY() - 1 != to.getY()) {
