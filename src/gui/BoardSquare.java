@@ -20,6 +20,13 @@ public class BoardSquare extends JPanel {
 		setBackground(color);
 	}
 	
+	//En copy constructor
+	public BoardSquare(BoardSquare square) {
+		this.childPiece = square.childPiece;
+		this.color = square.color;
+		this.pos = square.pos;
+	}
+	
 	public boolean movePiece(BoardSquare[][] board, BoardSquare destination) {
 		boolean legalMove = ((RulesInterface) childPiece.getRules()).isLegalMove(board, childPiece, pos, destination.getPos());
 		
@@ -44,6 +51,7 @@ public class BoardSquare extends JPanel {
 	}
 	
 	public boolean movePieceNoRules(BoardSquare destination) {
+		
 		if(destination.hasChild()) {
 			destination.removePiece();
 			destination.addPiece(childPiece);
@@ -52,6 +60,7 @@ public class BoardSquare extends JPanel {
 			destination.addPiece(childPiece);
 			removePiece();
 		}
+		
 		return true;
 	}
 	

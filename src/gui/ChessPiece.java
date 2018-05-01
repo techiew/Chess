@@ -11,15 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import rules.*;
 
-enum PieceType {
-	PAWN,
-	ROOK,
-	KNIGHT,
-	BISHOP,
-	QUEEN,
-	KING
-};
-
 public class ChessPiece extends JLabel {
 		
 	private PieceType type;
@@ -58,7 +49,7 @@ public class ChessPiece extends JLabel {
 			break;
 		case BISHOP:
 			imgSrc = (color == "white") ? imgSrc = "white_bishop.png" : "black_bishop.png";
-			rulesObject = new Bishop();
+			rulesObject = new Pawn();
 			break;
 		case QUEEN:
 			imgSrc = (color == "white") ? imgSrc = "white_queen.png" : "black_queen.png";

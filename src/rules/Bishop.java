@@ -88,10 +88,10 @@ public class Bishop extends Rules implements RulesInterface {
 			}
 			
 			if (previousBoxX[i] != fromX && previousBoxY[i] != fromY) { 
-				square = getSquareAt(new Position(previousBoxX[i],previousBoxY[i])); 
+				square = getSquareAt(new Position(previousBoxX[i], previousBoxY[i])); 
 				
 				if (square.hasChild()) {	
-					System.out.println("Du prøvde å gå " + i + "trekk over en brikke"); 
+					System.out.println("Du prøvde å gå " + i + " trekk over en brikke"); 
 					return false; 
 				}
 				

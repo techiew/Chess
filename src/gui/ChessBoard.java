@@ -18,6 +18,7 @@ import multiplayer.Client;
 import multiplayer.ConnectionInterface;
 import multiplayer.Message;
 import multiplayer.Server;
+import rules.PieceType;
 import rules.RulesInterface;
 import sound.*;
 
@@ -97,6 +98,7 @@ public class ChessBoard extends JFrame {
 				}
 				
 				panel.add(bSquare);
+				
 				boardArray[x][(columns - 1) - y] = bSquare;
 				
 				bSquare.addMouseListener(new MouseAdapter() {
