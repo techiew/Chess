@@ -103,7 +103,7 @@ public class ChessMenu extends JFrame {
 		//imagePanel.setBounds(10, 49, 552, 154);
 		//containerPanel.add(imagePanel);
 		
-		JLabel welcomeText = new JLabel("Velkommen til ChessMaster X-TREME3000!");
+		JLabel welcomeText = new JLabel("OBJ2000V EKSAMEN 2018 SJAKK");
 		welcomeText.setFont(new Font("Tahoma", Font.BOLD, 25));
 		welcomeText.setBounds(10, 11, 564, 33);
 		containerPanel.add(welcomeText);
