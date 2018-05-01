@@ -12,6 +12,7 @@ public class InitializeChess {
 	JButton clientJoin = new JButton();
 	JButton hostButton = new JButton();
 	JButton chessAnalyzeButton = new JButton();
+	JButton localPlay = new JButton();
 	boolean client = true;
 	boolean server = false;
 	boolean multiplayer = true;
@@ -21,6 +22,7 @@ public class InitializeChess {
 		clientJoin = menu.joinButton;
 		hostButton = menu.hostButton;
 		chessAnalyzeButton = menu.chessAnalyzeButton;
+		localPlay = menu.singleplayerButton;
 		
 		clientJoin.addActionListener(new ActionListener() {	//JOIN GAME, KLIENT
 			
@@ -61,6 +63,13 @@ public class InitializeChess {
 				new ChessBoardAnalyze();
 			}
 			
+		});
+		
+		localPlay.addActionListener(new ActionListener() {
+			
+			public void actionPerformed (ActionEvent e) {
+				new ChessBoard(false, false, "localhost", 21337, "Sjakk");
+			}
 		});
 		
 	}

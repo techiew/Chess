@@ -76,10 +76,10 @@ public class ChessBoardAnalyze extends JFrame {
 		});
 		
 		if (stockfish.startEngine()) {
-			System.out.println("Engine har started");
+			System.out.println("Sjakkmotoren har startet");
 		}
 		else {
-			System.out.println("fuck noe er gærnt");
+			System.out.println("Feil med starting av sjakkmotor");
 		}
 		createChessBoard();
 		initializePieces();
@@ -87,6 +87,7 @@ public class ChessBoardAnalyze extends JFrame {
 		this.repaint();
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
+				stockfish.stopEngine();
 				System.exit(0);
 			}
 		});

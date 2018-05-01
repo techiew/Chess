@@ -6,12 +6,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter; 
 
 public class Stockfish {
+	//En veldig stor del av klassen er lånt av Rahul og du finner hans kildekode her:
+	//https://www.programcreek.com/java-api-examples/index.php?source_dir=chess-misc-master/JavaStockfish/src/com/rahul/stockfish/Stockfish.java#
+	//mere detaljer står i den tekniske manualen. 
 	private Process engineProcess;
 	private BufferedReader processReader;
 	private OutputStreamWriter processWriter;
 	private static final String PATH = "stockfish_9_x32.exe";
 	
-	public boolean startEngine() {
+	public boolean startEngine() { //Metoden er skrevet og lånt fra Rahul.
 		
 		try {
 			engineProcess = Runtime.getRuntime().exec(PATH);
@@ -24,7 +27,7 @@ public class Stockfish {
 		return true;
 	}
 	
-	public void stopEngine() {
+	public void stopEngine() { //Metoden er skrevet og lånt fra Rahul.
 		
 		try {
 			sendCommand("quit");
@@ -36,7 +39,7 @@ public class Stockfish {
 		
 	}
 	
-	public void sendCommand(String command) {
+	public void sendCommand(String command) { //Metoden er skrevet og lånt fra Rahul.
 		
 		try {
 			processWriter.write(command + "\n");
@@ -47,9 +50,9 @@ public class Stockfish {
 		
 	}
 	
-	public String getOutput(int waitTime) {
-		StringBuffer buffer = new StringBuffer();
+	public String getOutput(int waitTime) { //Metoden er skrevet og lånt fra Rahul.
 		
+		StringBuffer buffer = new StringBuffer();
 		try {
 			Thread.sleep(waitTime);
 			sendCommand("isready");
@@ -73,11 +76,11 @@ public class Stockfish {
 		return buffer.toString();
 	}
 	
-	public void sendFen(String fen) {
+	public void sendFen(String fen) { //Kode skrevet av oss, men benytter oss av Rahul's sendCommand metode. 
 		sendCommand("position fen " + fen);
 	}
 	
-	public String getBestMove(int waitTime) {
+	public String getBestMove(int waitTime) { //Metoden er skrevet og lånt fra Rahul.
 		sendCommand("go movetime " + waitTime);
 		return getOutput(waitTime + 20).split("bestmove ")[1].split(" ")[0];
 	}
