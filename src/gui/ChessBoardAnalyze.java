@@ -36,8 +36,10 @@ public class ChessBoardAnalyze extends JFrame {
 	private String userFenInput;
 	private JTextField fenInputTextfield;
 	private JButton bestMoveButton;
+	private JButton getEvalScore;
 	private Stockfish stockfish = new Stockfish();
-	private String stockfishResponse;
+	private String bestMove;
+	private String evalScore;
 	AnalyzeInput analyzeWindow;
 	public ChessBoardAnalyze() {
 		this.setVisible(true);
@@ -49,6 +51,8 @@ public class ChessBoardAnalyze extends JFrame {
 		analyzeWindow = new AnalyzeInput(windowSizeX, windowPosY, windowSizeY);
 		fenInputTextfield = analyzeWindow.fenInputTextfield;
 		bestMoveButton = analyzeWindow.bestMoveButton;
+		getEvalScore = analyzeWindow.getEvalScore;
+		
 		fenInputTextfield.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -63,6 +67,7 @@ public class ChessBoardAnalyze extends JFrame {
 					placePieces(userInput);
 					fenInputTextfield.setText("");
 					analyzeWindow.showBestMove("");
+					analyzeWindow.showEvalScore("");
 				}
 			}
 		});
@@ -70,8 +75,15 @@ public class ChessBoardAnalyze extends JFrame {
 		bestMoveButton.addActionListener(new ActionListener() {
 			public void actionPerformed (ActionEvent e)
 			{
-				stockfishResponse = "Stockfish anbefaler trekk: " + stockfish.getBestMove(30);
-				analyzeWindow.showBestMove(stockfishResponse);
+				bestMove = "Stockfish anbefaler trekk: " + stockfish.getBestMove(30);
+				analyzeWindow.showBestMove(bestMove);
+			}
+		});
+		
+		getEvalScore.addActionListener(new ActionListener() {
+			public void actionPerformed (ActionEvent e) {
+				evalScore = "Eval score er: " + stockfish.getEvalScore(userFenInput, 30);
+				analyzeWindow.showEvalScore(evalScore);
 			}
 		});
 		

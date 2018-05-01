@@ -19,6 +19,8 @@ public class InitializeChess {
 	JTextField hostTextField = new JTextField();
 	JTextField joinIPTextField = new JTextField();
 	JTextField joinPortTextField = new JTextField();
+	String localhost = "localhost";
+	int port = 21337;
 	boolean client = true;
 	boolean server = false;
 	boolean multiplayer = true;
@@ -94,7 +96,9 @@ public class InitializeChess {
 
             @Override
             public void mousePressed(MouseEvent e) {
-               new ChessBoard(false, false, "localhost", 21337, "Sjakk");
+            	new ChessBoard(multiplayer, server, localhost, port, "Sjakk"); 
+            	new ChessBoard(multiplayer, client, localhost, port, "Sjakk");
+            	
             }
 
         });

@@ -85,4 +85,26 @@ public class Stockfish {
 		return getOutput(waitTime + 20).split("bestmove ")[1].split(" ")[0];
 	}
 	
+	 public float getEvalScore(String fen, int waitTime) { 
+		  sendCommand("position fen " + fen); 
+		  sendCommand("go movetime " + waitTime); 
+		 
+		  float evalScore = 0.0f; 
+		  String[] dump = getOutput(waitTime + 20).split("\n"); 
+		  //System.out.println(dump[21]);
+		 // System.out.println(dump.length);
+		  for (int i = 1; i >= 0; i--) { 
+		   if (dump[i].startsWith("info depth ")) { 
+		    try { 
+		    evalScore = Float.parseFloat(dump[i].split("score cp ")[1] 
+		      .split(" nodes")[0]); 
+		    } catch(Exception e) { 
+		     evalScore = Float.parseFloat(dump[i].split("score cp ")[1] 
+		       .split(" upperbound nodes")[0]); 
+		    } 
+		   } 
+		  } 
+		  return evalScore/100; 
+		 }
+	
 }

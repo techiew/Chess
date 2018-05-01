@@ -38,13 +38,21 @@ public class ChessBoard extends JFrame {
 	private Client client = null;
 	private int turn = 0;
 	private SoundPlayer soundPlayer = null;
+	private int width = 0;
 	
 	public ChessBoard(boolean isMultiplayer, boolean isClient, String ip, int port, String title) {
 		this.isMultiplayer = isMultiplayer;
 		this.isClient = isClient;
 		setTitle(title);
 		setVisible(true);
-		setSize(600, 600);
+		setSize(600,600);
+		
+		if (isClient) {
+			setLocation(30 + getWidth(),30);
+		} else {
+			setLocation(30,30);
+		}
+		
 		panel.setLayout(new GridLayout(rows, 0));
 		add(panel);
 		createChessBoard();

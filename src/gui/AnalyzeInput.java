@@ -18,7 +18,9 @@ public class AnalyzeInput extends JFrame {
 	//private JLabel label = new JLabel();
 	public JTextField fenInputTextfield = new JTextField(30);
 	public JButton bestMoveButton = new JButton("Foreslått trekk");
+	public JButton getEvalScore = new JButton("Get eval score");
 	private JLabel bestMoveLabel = new JLabel();
+	private JLabel evalScoreLabel = new JLabel();
 	private JLabel showCurrentFenLabel = new JLabel();
 	private JLabel fenTitle = new JLabel("Nåværende FEN: ");
 	private JLabel fenInputTitle = new JLabel("Sett inn ny FEN: ");
@@ -37,6 +39,7 @@ public class AnalyzeInput extends JFrame {
 		panel1.add(fenInputTextfield);
 		panel1.add(uciCommandTitle);
 		panel1.add(bestMoveButton);
+		panel1.add(getEvalScore);
 		//panel.add(label);
 		containerPanel.add(panel1);
 		containerPanel.add(panel2);
@@ -59,6 +62,12 @@ public class AnalyzeInput extends JFrame {
 		System.out.println(bestMove);
 	}
 
+	public void showEvalScore(String evalScore) {
+		evalScoreLabel.setText(evalScore);
+		panel2.add(evalScoreLabel);
+		revalidate();
+		System.out.println(evalScore);
+	}
 	public void showCurrentFen(String fen)
 	{
 		showCurrentFenLabel.setText(fen);
