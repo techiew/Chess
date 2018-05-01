@@ -26,13 +26,11 @@ public class ChessBoardAnalyze extends JFrame {
 	private JPanel panel = new JPanel();
 	private int columns = 8;
 	private int rows = 8;
-	private int windowSizeX = 500;
-	private int windowSizeY = 500;
+	private int windowSizeX = 600;
+	private int windowSizeY = 600;
 	private int windowPosX = 50;
 	private int windowPosY = 50;
 	private BoardSquare[][] boardArray = new BoardSquare[rows][columns];
-	private Position currentHighlight = null;
-	private Color colorHighlight = new Color(209, 206, 111); 
 	private String userFenInput;
 	private JTextField fenInputTextfield;
 	private JButton bestMoveButton;

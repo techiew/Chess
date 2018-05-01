@@ -35,7 +35,6 @@ public class ChessMenu extends JFrame {
 	public JLabel joinLabel = new JLabel(join);
 	public JLabel hostLabel = new JLabel(host);
 	public JTextField clientIPTextfield = new JTextField(30);
-	public JTextField dummy = new JTextField(0);
 	private JLabel ipAdressText = new JLabel("Skriv inn IP adressen:");
 	private JLabel addPortText1 = new JLabel("Skriv inn porten:");
 	private JLabel lblNewLabel = new JLabel("");
@@ -47,7 +46,6 @@ public class ChessMenu extends JFrame {
 	
 	public ChessMenu()
 	{		
-		dummy.setVisible(false);
 		setTitle("ChessMaster X-TREME3000");
 		setVisible(true);
 		setSize(600,600);
@@ -96,8 +94,7 @@ public class ChessMenu extends JFrame {
 		addPortText1.setFont(new Font("Tahoma", Font.BOLD, 12));
 		addPortText1.setBounds(226, 214, 136, 33);
 		containerPanel.add(addPortText1);	
-		dummy.setBounds(300,300,300,300);
-		containerPanel.add(dummy);
+
 		
 		//JPanel imagePanel = new JPanel();
 		//imagePanel.setBounds(10, 49, 552, 154);
