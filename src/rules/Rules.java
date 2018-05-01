@@ -4,6 +4,7 @@ import gui.BoardSquare;
 import gui.ChessPiece;
 import gui.Position;
 
+//Inneholder hjelpefunksjoner som er nyttig for regelklassene
 public class Rules implements RulesInterface {
 
 	protected BoardSquare[][] b;
@@ -39,22 +40,20 @@ public class Rules implements RulesInterface {
 	//}
 	
 	@Override
-	public boolean isKingInCheck(ChessPiece king, Position kingPosFrom, Position kingPosTo) {
-		BoardSquare[][] tempB = b.clone();
-		tempB[kingPosFrom.getX()][kingPosFrom.getY()].movePieceNoRules(tempB[kingPosTo.getX()][kingPosTo.getY()]);
+	public boolean isKingInCheck(ChessPiece king, Position kingPos) {
 		
-		for(int x = 0; x < tempB[0].length; x++){
+		for(int x = 0; x < b[0].length; x++){
 			
-			for(int y = 0; y < tempB[1].length; y++) {
+			for(int y = 0; y < b[1].length; y++) {
 			
-				if(tempB[x][y].hasChild()) {
-					ChessPiece child = tempB[x][y].getChild();
+				if(b[x][y].hasChild()) {
+					ChessPiece child = b[x][y].getChild();
 					
 					if(child.getColor() == king.getColor() || child == king) {
 						continue;
 					}
 					
-					boolean legalMove = ((RulesInterface) child.getRules()).isLegalMove(tempB, child, tempB[x][y].getPos(), kingPosTo);
+					boolean legalMove = ((RulesInterface) child.getRules()).isLegalMove(b, child, b[x][y].getPos(), kingPos);
 
 					if(legalMove) {
 						return true;

@@ -17,9 +17,9 @@ public class King extends Rules implements RulesInterface {
 			return false;
 		}
 		
-		//if(isKingInCheck(piece, from, to)) {
-			//return false;
-		//}
+		if(isKingInCheck(piece, to)) {
+			return false;
+		}
 		
 		return true;
 	}
