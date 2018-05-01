@@ -118,6 +118,7 @@ public class ChessMenu extends JFrame {
 			//picLabel.setSize(200,200);
 			label.setBounds(33, 52, 463, 159);
 			containerPanel.add(label);
+			repaint();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
