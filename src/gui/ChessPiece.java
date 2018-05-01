@@ -41,7 +41,7 @@ public class ChessPiece extends JLabel {
 			break;
 		case ROOK:
 			imgSrc = (color == "white") ? imgSrc = "white_rook.png" : "black_rook.png";
-			rulesObject = new Pawn();
+			rulesObject = new Rook();
 			break;
 		case KNIGHT:
 			imgSrc = (color == "white") ? imgSrc = "white_knight.png" : "black_knight.png";
@@ -49,7 +49,7 @@ public class ChessPiece extends JLabel {
 			break;
 		case BISHOP:
 			imgSrc = (color == "white") ? imgSrc = "white_bishop.png" : "black_bishop.png";
-			rulesObject = new Pawn();
+			rulesObject = new Bishop();
 			break;
 		case QUEEN:
 			imgSrc = (color == "white") ? imgSrc = "white_queen.png" : "black_queen.png";
