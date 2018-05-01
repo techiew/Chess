@@ -21,7 +21,7 @@ public class Bishop extends Rules implements RulesInterface {
 			if (fromX < toX && fromY < toY) { // Sjekker om du går opp mot høyre
 				direction = "upRight";
 				
-				if (canIMovePiece(fromX, fromY, toX, toY, xMove, direction) == false) { 
+				if (canIMovePieceDiagonal(fromX, fromY, toX, toY, xMove, direction) == false) { 
 					return false;
 				}
 				
@@ -30,7 +30,7 @@ public class Bishop extends Rules implements RulesInterface {
 			if (fromX > toX && fromY < toY) { // Sjekker om du går opp mot venstre
 				direction = "upLeft";
 				
-				if (canIMovePiece(fromX, fromY, toX, toY, xMove, direction) == false) { 
+				if (canIMovePieceDiagonal(fromX, fromY, toX, toY, xMove, direction) == false) { 
 					return false;
 				}
 				
@@ -39,7 +39,7 @@ public class Bishop extends Rules implements RulesInterface {
 			if (fromX < toX && fromY > toY) { // Sjekker om du går ned mot høyre
 				direction = "downRight";
 				
-				if (canIMovePiece(fromX, fromY, toX, toY, xMove, direction) == false) { 
+				if (canIMovePieceDiagonal(fromX, fromY, toX, toY, xMove, direction) == false) { 
 					return false;
 				}
 				
@@ -48,7 +48,7 @@ public class Bishop extends Rules implements RulesInterface {
 			if (fromX > toX && fromY > toY) { // Sjekker om du går ned mot venstre
 				direction = "downLeft";
 				
-				if (canIMovePiece(fromX, fromY, toX, toY, xMove, direction) == false) { 
+				if (canIMovePieceDiagonal(fromX, fromY, toX, toY, xMove, direction) == false) { 
 					return false;
 				}
 				
@@ -60,7 +60,7 @@ public class Bishop extends Rules implements RulesInterface {
 		return false;
 	}
 
-	private boolean canIMovePiece(int fromX, int fromY, int toX, int toY, int squaresMoved, String direction) {
+	private boolean canIMovePieceDiagonal(int fromX, int fromY, int toX, int toY, int squaresMoved, String direction) {
 		
 		for (int i = 0; i < squaresMoved; i++) { 
 			String movedDirection = direction;

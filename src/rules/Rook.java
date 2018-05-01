@@ -20,14 +20,14 @@ public class Rook extends Rules implements RulesInterface {
 		
 			if (fromY < toY) {	
 				direction = "up";
-				if (canIMovePiece(fromX, fromY, toX, toY, yMove, direction) == false) { 
+				if (canIMoveStraight(fromX, fromY, toX, toY, yMove, direction) == false) { 
 					return false;
 				}
 			}
 		
 			if (fromY > toY) {
 				direction = "down";
-				if (canIMovePiece(fromX, fromY, toX, toY, yMove, direction) == false) { 
+				if (canIMoveStraight(fromX, fromY, toX, toY, yMove, direction) == false) { 
 					return false;
 				}
 			}
@@ -39,14 +39,14 @@ public class Rook extends Rules implements RulesInterface {
 			
 			if (fromX < toX) {	
 				direction = "right";
-				if (canIMovePiece(fromX, fromY, toX, toY, xMove, direction) == false) { 
+				if (canIMoveStraight(fromX, fromY, toX, toY, xMove, direction) == false) { 
 					return false;
 				}
 			}
 			
 			if (fromX > toX) {
 				direction = "left";
-				if (canIMovePiece(fromX, fromY, toX, toY, xMove, direction) == false) { 
+				if (canIMoveStraight(fromX, fromY, toX, toY, xMove, direction) == false) { 
 					return false;
 				}
 			}
@@ -56,7 +56,7 @@ public class Rook extends Rules implements RulesInterface {
 		return false;
 	}	
 	
-private boolean canIMovePiece(int fromX, int fromY, int toX, int toY, int squaresMoved, String direction) {
+private boolean canIMoveStraight(int fromX, int fromY, int toX, int toY, int squaresMoved, String direction) {
 		
 		for (int i = 0; i < squaresMoved; i++) { 
 			String movedDirection = direction;
@@ -112,6 +112,15 @@ private boolean canIMovePiece(int fromX, int fromY, int toX, int toY, int square
 		}
 
 		return true; 
-		
+	
 	}
 }
+
+
+
+
+
+
+
+
+
