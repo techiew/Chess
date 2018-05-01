@@ -1,12 +1,9 @@
 package gui;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.SystemColor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
@@ -17,14 +14,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
 
 public class ChessMenu extends JFrame {
 	public String clientIP;
@@ -32,23 +25,28 @@ public class ChessMenu extends JFrame {
 	public int hostPort;
 	
 	private JPanel containerPanel = new JPanel();
-	public JButton singleplayerButton = new JButton("Enkeltspiller");
-	public JButton chessAnalyzeButton = new JButton("Analysemodus");
-	public JButton hostButton = new JButton("Host");
-	public JButton joinButton = new JButton("Join");
+	private ImageIcon imageSolo = new ImageIcon("button_enkeltspiller.png");
+	private ImageIcon imageAnalyze = new ImageIcon("button_analysemodus.png");
+	private ImageIcon join = new ImageIcon("button_join.png");
+	private ImageIcon host = new ImageIcon("button_host.png");
+	public JLabel singleplayerLabel = new JLabel(imageSolo);
+	public JLabel analyzeLabel = new JLabel(imageAnalyze);
+	public JLabel joinLabel = new JLabel(join);
+	public JLabel hostLabel = new JLabel(host);
 	public JTextField clientIPTextfield = new JTextField(30);
+	public JTextField dummy = new JTextField(0);
 	private JLabel ipAdressText = new JLabel("Skriv inn IP adressen:");
 	private JLabel addPortText1 = new JLabel("Skriv inn porten:");
 	private JLabel lblNewLabel = new JLabel("");
 	private JLabel addPortText2 = new JLabel("Skriv inn porten: ");
 	private BufferedImage img;
-	private JTextField hostPortTextfield;
-	private JTextField clientPortTextfield;
-	private JLabel picLabel;
+	public JTextField hostPortTextfield;
+	public JTextField clientPortTextfield;
 	
 	
 	public ChessMenu()
 	{		
+		dummy.setVisible(false);
 		setTitle("ChessMaster X-TREME3000");
 		setVisible(true);
 		setSize(600,600);
@@ -62,21 +60,13 @@ public class ChessMenu extends JFrame {
 		clientIPTextfield.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		clientIPTextfield.setBounds(50, 258, 190, 33);
 		containerPanel.add(clientIPTextfield);
-		chessAnalyzeButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		chessAnalyzeButton.setBounds(50, 484, 446, 48);
-		containerPanel.add(chessAnalyzeButton);
-		
+		analyzeLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		analyzeLabel.setBounds(50, 484, 446, 48);
+		containerPanel.add(analyzeLabel);
 				
-				chessAnalyzeButton.addActionListener(new ActionListener() {
-					public void actionPerformed (ActionEvent e)
-					{
-						new ChessBoardAnalyze();
-						setVisible(false);
-					}
-				});
-		singleplayerButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		singleplayerButton.setBounds(50, 412, 446, 48);
-		containerPanel.add(singleplayerButton);
+		singleplayerLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		singleplayerLabel.setBounds(50, 412, 446, 48);
+		containerPanel.add(singleplayerLabel);
 		getContentPane().add(containerPanel);
 		
 		hostPortTextfield = new JTextField(30);
@@ -84,13 +74,13 @@ public class ChessMenu extends JFrame {
 		hostPortTextfield.setBounds(50, 354, 271, 33);
 		containerPanel.add(hostPortTextfield);
 		
-		joinButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		joinButton.setBounds(331, 258, 165, 33);
-		containerPanel.add(joinButton);
+		joinLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		joinLabel.setBounds(331, 258, 165, 33);
+		containerPanel.add(joinLabel);
 		
-		hostButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		hostButton.setBounds(331, 354, 165, 33);
-		containerPanel.add(hostButton);
+		hostLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		hostLabel.setBounds(331, 354, 165, 33);
+		containerPanel.add(hostLabel);
 		
 		addPortText2.setFont(new Font("Tahoma", Font.BOLD, 12));
 		addPortText2.setBounds(50, 316, 114, 14);
@@ -103,7 +93,9 @@ public class ChessMenu extends JFrame {
 		
 		addPortText1.setFont(new Font("Tahoma", Font.BOLD, 12));
 		addPortText1.setBounds(226, 214, 136, 33);
-		containerPanel.add(addPortText1);		
+		containerPanel.add(addPortText1);	
+		dummy.setBounds(300,300,300,300);
+		containerPanel.add(dummy);
 		
 		//JPanel imagePanel = new JPanel();
 		//imagePanel.setBounds(10, 49, 552, 154);
@@ -144,6 +136,20 @@ public class ChessMenu extends JFrame {
 			}
 		});
 		
+		joinLabel.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+            }
+        });
+		
+		hostLabel.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+            }
+        });
+		
 		clientPortTextfield.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				
@@ -164,13 +170,11 @@ public class ChessMenu extends JFrame {
 			public void focusLost(FocusEvent e) {
 				String hostPortString = hostPortTextfield.getText();
 				if (isANumber(hostPortString)) {
-					System.out.println(hostPortString);
 					hostPort = Integer.parseInt(hostPortString);
-					System.out.println(hostPort);
+					System.out.println(hostPort + "hei");
 				}
 			}
 		});
-	
 		
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
