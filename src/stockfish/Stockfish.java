@@ -12,7 +12,7 @@ public class Stockfish {
 	private Process engineProcess;
 	private BufferedReader processReader;
 	private OutputStreamWriter processWriter;
-	private static final String PATH = "stockfish_9_x32.exe";
+	private static final String PATH = "src/stockfishengine/stockfish_9_x32.exe";
 	
 	public boolean startEngine() { //Metoden er skrevet og lånt fra Rahul.
 		

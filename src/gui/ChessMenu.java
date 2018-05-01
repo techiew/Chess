@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -25,10 +26,10 @@ public class ChessMenu extends JFrame {
 	public int hostPort;
 	
 	private JPanel containerPanel = new JPanel();
-	private ImageIcon imageSolo = new ImageIcon("button_enkeltspiller.png");
-	private ImageIcon imageAnalyze = new ImageIcon("button_analysemodus.png");
-	private ImageIcon join = new ImageIcon("button_join.png");
-	private ImageIcon host = new ImageIcon("button_host.png");
+	private ImageIcon imageSolo = new ImageIcon("src/images/button_enkeltspiller.png");
+	private ImageIcon imageAnalyze = new ImageIcon("src/images/button_analysemodus.png");
+	private ImageIcon join = new ImageIcon("src/images/button_join.png");
+	private ImageIcon host = new ImageIcon("src/images/button_host.png");
 	public JLabel singleplayerLabel = new JLabel(imageSolo);
 	public JLabel analyzeLabel = new JLabel(imageAnalyze);
 	public JLabel joinLabel = new JLabel(join);
@@ -54,6 +55,7 @@ public class ChessMenu extends JFrame {
 		containerPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 		containerPanel.setBorder(null);
 		containerPanel.setLayout(null);
+		containerPanel.setBackground(new Color(204, 201, 182));
 		ipAdressText.setFont(new Font("Tahoma", Font.BOLD, 12));
 		ipAdressText.setBounds(50, 214, 136, 33);
 		containerPanel.add(ipAdressText);
@@ -110,7 +112,7 @@ public class ChessMenu extends JFrame {
 		BufferedImage myPicture;
 		
 		try {
-			myPicture = ImageIO.read(new File("menuImage.png"));
+			myPicture = ImageIO.read(new File("src/images/menuImage.png"));
 			JLabel label = new JLabel(new ImageIcon(myPicture));
 			label.setSize(new Dimension(463, 159));
 			//picLabel.setSize(200,200);
@@ -120,11 +122,6 @@ public class ChessMenu extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-				
-		//Image img = new ImageIcon(this.getClass().getResource("/menuImage.png")).getImage();
-		//lblNewLabel.setIcon(new ImageIcon(img));
-		//lblNewLabel.setBounds(33, 52, 463, 159);
-		//containerPanel.add(img);
 		
 		clientIPTextfield.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {

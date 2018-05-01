@@ -36,27 +36,27 @@ public class ChessPiece extends JLabel {
 		
 		switch(type) {
 		case PAWN:
-			imgSrc = (color == "white") ? imgSrc = "white_pawn.png" : "black_pawn.png";
+			imgSrc = (color == "white") ? imgSrc = "src/images/white_pawn.png" : "src/images/black_pawn.png";
 			rulesObject = new Pawn();
 			break;
 		case ROOK:
-			imgSrc = (color == "white") ? imgSrc = "white_rook.png" : "black_rook.png";
+			imgSrc = (color == "white") ? imgSrc = "src/images/white_rook.png" : "src/images/black_rook.png";
 			rulesObject = new Rook();
 			break;
 		case KNIGHT:
-			imgSrc = (color == "white") ? imgSrc = "white_knight.png" : "black_knight.png";
+			imgSrc = (color == "white") ? imgSrc = "src/images/white_knight.png" : "src/images/black_knight.png";
 			rulesObject = new Knight();
 			break;
 		case BISHOP:
-			imgSrc = (color == "white") ? imgSrc = "white_bishop.png" : "black_bishop.png";
+			imgSrc = (color == "white") ? imgSrc = "src/images/white_bishop.png" : "src/images/black_bishop.png";
 			rulesObject = new Bishop();
 			break;
 		case QUEEN:
-			imgSrc = (color == "white") ? imgSrc = "white_queen.png" : "black_queen.png";
+			imgSrc = (color == "white") ? imgSrc = "src/images/white_queen.png" : "src/images/black_queen.png";
 			rulesObject = new Queen();
 			break;
 		case KING:
-			imgSrc = (color == "white") ? imgSrc = "white_king.png" : "black_king.png";
+			imgSrc = (color == "white") ? imgSrc = "src/images/white_king.png" : "src/images/black_king.png";
 			rulesObject = new King();
 			break;
 		}
