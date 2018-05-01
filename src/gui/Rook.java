@@ -1,5 +1,5 @@
-package rules;
-
+/*package rules;
+kjetil som er mongo og legger rook.java i GUI
 import gui.Position;
 import gui.BoardSquare;
 import gui.ChessPiece;
@@ -91,3 +91,4 @@ private boolean canIMovePiece(int fromX, int fromY, int toX, int toY, int square
 		return true; 
 	}
 }
+*/
