@@ -118,6 +118,7 @@ public class Rules implements RulesInterface {
 					if(canMoveToKing) {
 						legalMoveToKing = true;
 						System.out.println("Blokkert av " + child.getType() + " | " + child.getColor());
+						System.out.println("Kan bevege seg mot " + kingColor);
 						b[x][y].setBackground(new Color(255, 0, 0));
 					}
 					

@@ -20,7 +20,7 @@ public class ChessPiece extends JLabel {
 	private Object rulesObject;
 	private boolean firstMove;
 	
-	public ChessPiece(PieceType type, String color) {
+	public ChessPiece(PieceType type, String color, String myColor) {
 		this.type = type;
 		this.color = color;
 		setVisible(true);
@@ -28,10 +28,12 @@ public class ChessPiece extends JLabel {
 		rulesObject = null;
 		firstMove = true;
 		
-		if(color == "white") {
-			direction = "up";
-		} else {
+		if(color == "white" && myColor == "black") {
 			direction = "down";
+		} else if(color == "black" && myColor == "white"){
+			direction = "down";
+		} else {
+			direction = "up";
 		}
 		
 		switch(type) {

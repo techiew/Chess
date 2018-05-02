@@ -1,6 +1,9 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,7 +14,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.OverlayLayout;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import multiplayer.Client;
@@ -25,6 +31,7 @@ import sound.*;
 
 public class ChessBoard extends JFrame {
 	private JPanel panel = new JPanel();
+	private JPanel waitingPanel = new JPanel();
 	private int columns = 8;
 	private int rows = 8;
 	private BoardSquare[][] boardArray = new BoardSquare[rows][columns];
@@ -50,25 +57,23 @@ public class ChessBoard extends JFrame {
 		setSize(600,600);
 		
 		if (isClient) {
-			setLocation(30 + getWidth(),30);
+			setLocation(30 + getWidth(), 30);
 		} else {
-			setLocation(30,30);
+			setLocation(30, 30);
 		}
 		
 		panel.setLayout(new GridLayout(rows, 0));
-		add(panel);
-		createChessBoard();
-		placePieces();
-		validate();
-		repaint();
-
-		this.addWindowListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent e){
-				System.exit(0);
-			}
-		});
 		
+        waitingPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+		JLabel text = new JLabel("Venter på tilkobling...");
+        text.setFont(text.getFont().deriveFont(32.0f));
+		waitingPanel.add(text, gbc);
+		add(waitingPanel);
+				
 		if(isMultiplayer) {
+			panel.setVisible(false);
+			waitingPanel.setVisible(true);
 			
 			if(isClient) {
 				myColor = "black";
@@ -87,6 +92,20 @@ public class ChessBoard extends JFrame {
 		soundPlayer = new SoundPlayer();
 		Thread soundThread = new Thread(soundPlayer, "Sound thread");
 		soundThread.start();
+				
+		createChessBoard();
+		placePieces();
+		validate();
+		repaint();
+		
+		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		this.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e){
+				System.exit(0);
+			}
+		});
+		
 	}
 	
 	private void createChessBoard() {
@@ -135,37 +154,46 @@ public class ChessBoard extends JFrame {
 	
 	private void placePieces() {
 		
-		for(int i = 0; i < 8; i++) {
-			boardArray[i][1].addPiece(new ChessPiece(PieceType.PAWN, "white"));
-		}
-		
-		for(int i = 0; i < 8; i++) {
-			boardArray[i][6].addPiece(new ChessPiece(PieceType.PAWN, "black"));
-		}
-		
-		boardArray[0][0].addPiece(new ChessPiece(PieceType.ROOK, "white"));
-		boardArray[7][0].addPiece(new ChessPiece(PieceType.ROOK, "white"));
-		boardArray[0][7].addPiece(new ChessPiece(PieceType.ROOK, "black"));
-		boardArray[7][7].addPiece(new ChessPiece(PieceType.ROOK, "black"));
-		
-		boardArray[1][0].addPiece(new ChessPiece(PieceType.KNIGHT, "white"));
-		boardArray[6][0].addPiece(new ChessPiece(PieceType.KNIGHT, "white"));
-		boardArray[1][7].addPiece(new ChessPiece(PieceType.KNIGHT, "black"));
-		boardArray[6][7].addPiece(new ChessPiece(PieceType.KNIGHT, "black"));
-	
-		boardArray[2][0].addPiece(new ChessPiece(PieceType.BISHOP, "white"));
-		boardArray[5][0].addPiece(new ChessPiece(PieceType.BISHOP, "white"));
-		boardArray[2][7].addPiece(new ChessPiece(PieceType.BISHOP, "black"));
-		boardArray[5][7].addPiece(new ChessPiece(PieceType.BISHOP, "black"));
-		
-		boardArray[3][0].addPiece(new ChessPiece(PieceType.QUEEN, "white"));
-		boardArray[3][7].addPiece(new ChessPiece(PieceType.QUEEN, "black"));
-		
-		boardArray[4][0].addPiece(new ChessPiece(PieceType.KING, "white"));
-		boardArray[4][7].addPiece(new ChessPiece(PieceType.KING, "black"));
-		
+		String upperColor = "black";
+		String lowerColor = "white";
 		wKingPos = new Position(4, 0);
 		bKingPos = new Position(4, 7);
+		
+		if(isMultiplayer && myColor == "black") {
+			upperColor = "white";
+			lowerColor = "black";
+			wKingPos = new Position(4, 7);
+			bKingPos = new Position(4, 0);
+		} 
+		
+		for(int i = 0; i < 8; i++) {
+			boardArray[i][1].addPiece(new ChessPiece(PieceType.PAWN, lowerColor, myColor));
+		}
+		
+		for(int i = 0; i < 8; i++) {
+			boardArray[i][6].addPiece(new ChessPiece(PieceType.PAWN, upperColor, myColor));
+		}
+		
+		boardArray[0][0].addPiece(new ChessPiece(PieceType.ROOK, lowerColor, myColor));
+		boardArray[7][0].addPiece(new ChessPiece(PieceType.ROOK, lowerColor, myColor));
+		boardArray[0][7].addPiece(new ChessPiece(PieceType.ROOK, upperColor, myColor));
+		boardArray[7][7].addPiece(new ChessPiece(PieceType.ROOK, upperColor, myColor));
+		
+		boardArray[1][0].addPiece(new ChessPiece(PieceType.KNIGHT, lowerColor, myColor));
+		boardArray[6][0].addPiece(new ChessPiece(PieceType.KNIGHT, lowerColor, myColor));
+		boardArray[1][7].addPiece(new ChessPiece(PieceType.KNIGHT, upperColor, myColor));
+		boardArray[6][7].addPiece(new ChessPiece(PieceType.KNIGHT, upperColor, myColor));
+	
+		boardArray[2][0].addPiece(new ChessPiece(PieceType.BISHOP, lowerColor, myColor));
+		boardArray[5][0].addPiece(new ChessPiece(PieceType.BISHOP, lowerColor, myColor));
+		boardArray[2][7].addPiece(new ChessPiece(PieceType.BISHOP, upperColor, myColor));
+		boardArray[5][7].addPiece(new ChessPiece(PieceType.BISHOP, upperColor, myColor));
+		
+		boardArray[3][0].addPiece(new ChessPiece(PieceType.QUEEN, lowerColor, myColor));
+		boardArray[3][7].addPiece(new ChessPiece(PieceType.QUEEN, upperColor, myColor));
+		
+		boardArray[4][0].addPiece(new ChessPiece(PieceType.KING, lowerColor, myColor));
+		boardArray[4][7].addPiece(new ChessPiece(PieceType.KING, upperColor, myColor));
 	}
 	
 	//Event handler som kjï¿½rer nï¿½r man trykker pï¿½ en rute
@@ -333,8 +361,8 @@ public class ChessBoard extends JFrame {
 		int toSquarePosX = Integer.parseInt(toSquarePos.substring(0, 1));
 		int toSquarePosY = Integer.parseInt(toSquarePos.substring(1, 2));
 		
-		BoardSquare from = boardArray[fromSquarePosX][fromSquarePosY];
-		BoardSquare to = boardArray[toSquarePosX][toSquarePosY];
+		BoardSquare from = boardArray[fromSquarePosX][(columns - 1) - fromSquarePosY];
+		BoardSquare to = boardArray[toSquarePosX][(columns - 1) - toSquarePosY];
 		
 		forceMovePiece(from, to);
 	}
@@ -347,6 +375,12 @@ public class ChessBoard extends JFrame {
 	public void onPlayerConnected() {
 		soundPlayer.playSound(SoundPlayer.SoundName.CONNECTED);
 		isConnected = true;
+		panel.setVisible(true);
+		waitingPanel.setVisible(false);
+		remove(waitingPanel);
+		add(panel);
+		revalidate();
+		repaint();
 	}
 	
 }

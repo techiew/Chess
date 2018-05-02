@@ -39,6 +39,8 @@ public class ChessBoardAnalyze extends JFrame {
 	private String bestMove;
 	private String evalScore;
 	AnalyzeInput analyzeWindow;
+	private String myColor = "white";
+	
 	public ChessBoardAnalyze() {
 		this.setVisible(true);
 		this.setSize(windowSizeX, windowSizeY);
@@ -173,54 +175,54 @@ public class ChessBoardAnalyze extends JFrame {
 				switch(fenArray[i])
 				{
 					case "r":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.ROOK, "black"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.ROOK, "black", myColor));
 						x++;
 						break;
 					case "n":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.KNIGHT, "black"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.KNIGHT, "black", myColor));
 						x++;
 						break;
 					case "b":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.BISHOP, "black"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.BISHOP, "black", myColor));
 						x++;
 						break;
 					case "q":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.QUEEN, "black"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.QUEEN, "black", myColor));
 						x++;
 						break;
 					case "k":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.KING, "black"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.KING, "black", myColor));
 						x++;
 						break;
 					case "0":
 						x++;
 						break;
 					case "p":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.PAWN, "black"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.PAWN, "black", myColor));
 						x++;
 						break;
 					case "R":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.ROOK, "white"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.ROOK, "white", myColor));
 						x++;
 						break;
 					 case "N":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.KNIGHT, "white"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.KNIGHT, "white", myColor));
 						x++;
 						break;
 					case "B": 
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.BISHOP, "white"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.BISHOP, "white", myColor));
 						x++;
 						break;
 					case "Q":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.QUEEN, "white"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.QUEEN, "white", myColor));
 						x++;
 						break;
 					case "K":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.KING, "white"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.KING, "white", myColor));
 						x++;
 						break;
 					case "P":
-						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.PAWN, "white"));
+						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.PAWN, "white", myColor));
 						x++;
 						break; 
 				}
@@ -238,34 +240,34 @@ public class ChessBoardAnalyze extends JFrame {
 		stockfish.sendFen(userFenInput);
 		analyzeWindow.showCurrentFen(userFenInput);
 		for(int i = 0; i < 8; i++) {
-			boardArray[i][1].addPiece(new ChessPiece(PieceType.PAWN, "white"));
+			boardArray[i][1].addPiece(new ChessPiece(PieceType.PAWN, "white", myColor));
 
 		}
 		
 		for(int i = 0; i < 8; i++) {
-			boardArray[i][6].addPiece(new ChessPiece(PieceType.PAWN, "black"));
+			boardArray[i][6].addPiece(new ChessPiece(PieceType.PAWN, "black", myColor));
 		}
 
-		boardArray[0][0].addPiece(new ChessPiece(PieceType.ROOK, "white"));
-		boardArray[7][0].addPiece(new ChessPiece(PieceType.ROOK, "white"));
-		boardArray[0][7].addPiece(new ChessPiece(PieceType.ROOK, "black"));
-		boardArray[7][7].addPiece(new ChessPiece(PieceType.ROOK, "black"));
+		boardArray[0][0].addPiece(new ChessPiece(PieceType.ROOK, "white", myColor));
+		boardArray[7][0].addPiece(new ChessPiece(PieceType.ROOK, "white", myColor));
+		boardArray[0][7].addPiece(new ChessPiece(PieceType.ROOK, "black", myColor));
+		boardArray[7][7].addPiece(new ChessPiece(PieceType.ROOK, "black", myColor));
 		
-		boardArray[1][0].addPiece(new ChessPiece(PieceType.KNIGHT, "white"));
-		boardArray[6][0].addPiece(new ChessPiece(PieceType.KNIGHT, "white"));
-		boardArray[1][7].addPiece(new ChessPiece(PieceType.KNIGHT, "black"));
-		boardArray[6][7].addPiece(new ChessPiece(PieceType.KNIGHT, "black"));
+		boardArray[1][0].addPiece(new ChessPiece(PieceType.KNIGHT, "white", myColor));
+		boardArray[6][0].addPiece(new ChessPiece(PieceType.KNIGHT, "white", myColor));
+		boardArray[1][7].addPiece(new ChessPiece(PieceType.KNIGHT, "black", myColor));
+		boardArray[6][7].addPiece(new ChessPiece(PieceType.KNIGHT, "black", myColor));
 	
-		boardArray[2][0].addPiece(new ChessPiece(PieceType.BISHOP, "white"));
-		boardArray[5][0].addPiece(new ChessPiece(PieceType.BISHOP, "white"));
-		boardArray[2][7].addPiece(new ChessPiece(PieceType.BISHOP, "black"));
-		boardArray[5][7].addPiece(new ChessPiece(PieceType.BISHOP, "black"));
+		boardArray[2][0].addPiece(new ChessPiece(PieceType.BISHOP, "white", myColor));
+		boardArray[5][0].addPiece(new ChessPiece(PieceType.BISHOP, "white", myColor));
+		boardArray[2][7].addPiece(new ChessPiece(PieceType.BISHOP, "black", myColor));
+		boardArray[5][7].addPiece(new ChessPiece(PieceType.BISHOP, "black", myColor));
 		
-		boardArray[3][0].addPiece(new ChessPiece(PieceType.QUEEN, "white"));
-		boardArray[3][7].addPiece(new ChessPiece(PieceType.QUEEN, "black"));
+		boardArray[3][0].addPiece(new ChessPiece(PieceType.QUEEN, "white", myColor));
+		boardArray[3][7].addPiece(new ChessPiece(PieceType.QUEEN, "black", myColor));
 		
-		boardArray[4][0].addPiece(new ChessPiece(PieceType.KING, "white"));
-		boardArray[4][7].addPiece(new ChessPiece(PieceType.KING, "black"));
+		boardArray[4][0].addPiece(new ChessPiece(PieceType.KING, "white", myColor));
+		boardArray[4][7].addPiece(new ChessPiece(PieceType.KING, "black", myColor));
 	}
 	
 	private void clearBoard()

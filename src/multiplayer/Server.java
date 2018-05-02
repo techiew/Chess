@@ -83,6 +83,10 @@ public class Server implements ConnectionInterface, Runnable {
 			Message response = null;	
 			System.out.println("Server venter på respons");
 			
+			while(input.available() > 0) {
+				Thread.sleep(100);
+			}
+			
 			response = (Message)input.readObject();
 			
 			System.out.println("SERVER: " + response.getMessage());
@@ -91,6 +95,9 @@ public class Server implements ConnectionInterface, Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
