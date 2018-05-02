@@ -46,7 +46,7 @@ public class ChessMenu extends JFrame {
 	
 	public ChessMenu()
 	{		
-		setTitle("ChessMaster");
+		setTitle("OBJ2000V Eksamen 2018");
 		setVisible(true);
 		setSize(600,600);
 		setLocation(50,50);
@@ -55,44 +55,44 @@ public class ChessMenu extends JFrame {
 		containerPanel.setLayout(null);
 		containerPanel.setBackground(new Color(204, 201, 182));
 		ipAdressText.setFont(new Font("Tahoma", Font.BOLD, 12));
-		ipAdressText.setBounds(50, 214, 136, 33);
+		ipAdressText.setBounds(50, 288, 136, 33);
 		containerPanel.add(ipAdressText);
 		clientIPTextfield.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		clientIPTextfield.setBounds(50, 258, 190, 33);
+		clientIPTextfield.setBounds(50, 326, 190, 33);
 		containerPanel.add(clientIPTextfield);
 		analyzeLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		analyzeLabel.setBounds(50, 484, 446, 48);
+		analyzeLabel.setBounds(50, 502, 446, 48);
 		containerPanel.add(analyzeLabel);
 				
 		singleplayerLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		singleplayerLabel.setBounds(50, 412, 446, 48);
+		singleplayerLabel.setBounds(50, 436, 446, 48);
 		containerPanel.add(singleplayerLabel);
 		getContentPane().add(containerPanel);
 		
 		hostPortTextfield = new JTextField(30);
 		hostPortTextfield.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		hostPortTextfield.setBounds(50, 354, 271, 33);
+		hostPortTextfield.setBounds(50, 395, 271, 33);
 		containerPanel.add(hostPortTextfield);
 		
 		joinLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		joinLabel.setBounds(331, 258, 165, 33);
+		joinLabel.setBounds(331, 326, 165, 33);
 		containerPanel.add(joinLabel);
 		
 		hostLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		hostLabel.setBounds(331, 354, 165, 33);
+		hostLabel.setBounds(331, 395, 165, 33);
 		containerPanel.add(hostLabel);
 		
 		addPortText2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		addPortText2.setBounds(50, 316, 114, 14);
+		addPortText2.setBounds(50, 370, 114, 14);
 		containerPanel.add(addPortText2);
 		
 		clientPortTextfield = new JTextField(30);
 		clientPortTextfield.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		clientPortTextfield.setBounds(239, 258, 82, 33);
+		clientPortTextfield.setBounds(239, 326, 82, 33);
 		containerPanel.add(clientPortTextfield);
 		
 		addPortText1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		addPortText1.setBounds(226, 214, 136, 33);
+		addPortText1.setBounds(224, 288, 136, 33);
 		containerPanel.add(addPortText1);	
 
 		
@@ -113,8 +113,13 @@ public class ChessMenu extends JFrame {
 			JLabel label = new JLabel(new ImageIcon(myPicture));
 			label.setSize(new Dimension(463, 159));
 			//picLabel.setSize(200,200);
-			label.setBounds(33, 52, 463, 159);
+			label.setBounds(33, 52, 463, 160);
 			containerPanel.add(label);
+			
+			JLabel lblOnlineFlerspiller = new JLabel("Online flerspiller:");
+			lblOnlineFlerspiller.setFont(new Font("Tahoma", Font.BOLD, 24));
+			lblOnlineFlerspiller.setBounds(50, 244, 271, 33);
+			containerPanel.add(lblOnlineFlerspiller);
 			repaint();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
