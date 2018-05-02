@@ -91,7 +91,6 @@ public class Bishop extends Rules implements RulesInterface {
 				square = getSquareAt(new Position(previousBoxX[i], previousBoxY[i])); 
 				
 				if (square.hasChild()) {	
-					System.out.println("Du prøvde å gå " + i + " trekk over en brikke"); 
 					return false; 
 				}
 				

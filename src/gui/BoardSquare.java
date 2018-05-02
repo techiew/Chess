@@ -27,8 +27,24 @@ public class BoardSquare extends JPanel {
 		this.pos = square.pos;
 	}
 	
-	public boolean movePiece(BoardSquare[][] board, BoardSquare destination) {
-		boolean legalMove = ((RulesInterface) childPiece.getRules()).isLegalMove(board, childPiece, pos, destination.getPos());
+	public boolean movePiece(BoardSquare[][] board, BoardSquare destination, Position wKingPos, Position bKingPos) {
+		RulesInterface rules = ((RulesInterface) childPiece.getRules());		
+		boolean legalMove = rules.isLegalMove(board, childPiece, pos, destination.getPos());
+		
+		if(legalMove && childPiece.getType() != PieceType.KING) {
+			boolean wKingInCheck = rules.isKingInCheck(board, pos, destination.getPos(), "white", wKingPos);
+			boolean bKingInCheck = rules.isKingInCheck(board, pos, destination.getPos(), "black", bKingPos);
+			
+			if(childPiece.getColor() == "white" && wKingInCheck) {
+				board[wKingPos.getX()][wKingPos.getY()].setBackground(new Color(255, 0, 0));
+				return false;
+				
+			} else if(childPiece.getColor() == "black" && bKingInCheck) {
+				board[bKingPos.getX()][bKingPos.getY()].setBackground(new Color(255, 0, 0));
+				return false;
+			}
+			
+		}
 		
 		if(destination.hasChild()) {
 			
@@ -92,6 +108,10 @@ public class BoardSquare extends JPanel {
 	
 	public ChessPiece getChild() {
 		return childPiece;
+	}
+	
+	public void setChild(ChessPiece child) {
+		childPiece = child;
 	}
 	
 }

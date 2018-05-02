@@ -5,21 +5,9 @@ import multiplayer.*;
 public class Main {
 
 	public static void main(String[] args) {
-		new InitializeChess();
-		//new ChessMenu();
-		//while(menu.isVisible()) {
-			//en eller annen m�te � stoppe resten p� midlertidig
-		//}
+		//new InitializeChess();
 		
-		//String ip = menu.ip;
-		//int port = menu.port;
-		//boolean isMultiplayer = menu.isMultiplayer; // er det multiplayer eller singleplayer?
-		//boolean isClient = menu.isClient; //hoster vi server eller joiner vi??
-		//S� vil instansieringa se s�nn her ut:
-		//new ChessBoard(true, false, "localhost", 21337, "Sjakk");
-		//new ChessBoard(false, false, "localhost", 21337, "Sjakk");
-		
-		//new ChessBoardAnalyze();
+		new ChessBoard(false, false, "localhost", 21337, "Sjakk"); //Singleplayer versjon for debugging
 	}
 
 }

@@ -68,7 +68,6 @@ private boolean canIMoveStraight(int fromX, int fromY, int toX, int toY, int squ
 			switch (movedDirection) {
 			case "up":
 				previousBoxY[i] = toY - (i + 1);
-				System.out.println(previousBoxY[i]);
 				break;
 			case "down":
 				previousBoxY[i] = toY + (i + 1);
@@ -88,8 +87,6 @@ private boolean canIMoveStraight(int fromX, int fromY, int toX, int toY, int squ
 				if (previousBoxY[i] != fromY) {
 					square = getSquareAt(new Position(toX, previousBoxY[i])); 
 					if (square.hasChild()) {	
-						System.out.println("Du prøvde å gå " + (i + 1) + " trekk over en brikke"); 
-						System.out.println(toX + "" + previousBoxY[i]);
 						return false; 
 					}
 					
@@ -100,8 +97,6 @@ private boolean canIMoveStraight(int fromX, int fromY, int toX, int toY, int squ
 				if (previousBoxX[i] != fromX) {
 					square = getSquareAt(new Position(previousBoxX[i], toY)); 
 					if (square.hasChild()) {	
-						System.out.println("Du prøvde å gå " + (i + 1) + " trekk over en brikke"); 
-						System.out.println(previousBoxX[i] + "" + toY);
 						return false; 
 					}
 					

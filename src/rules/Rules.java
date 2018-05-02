@@ -41,29 +41,30 @@ public class Rules implements RulesInterface {
 		//Position normalizedDir = new Position(direction.getX() * direction.getX(), direction.getY() * 
 	//}
 	
+	//Lager en "simulasjon" av brettet hvor vi kan sjekke om en bevegelse av en brikke
+	//fører til at en konge blir satt i sjakk
 	@Override
-	public boolean isKingInCheck(ChessPiece king, Position kingPosFrom, Position kingPosTo) {
+	public boolean isKingInCheck(BoardSquare[][] board, Position fromPos, Position toPos, String kingColor, Position kingPos) {
+		b = board;
+		
+		//Vi lager en kopi av brettet, slik at vi ikke påvirker det originale brettet
 		BoardSquare[][] tempB = new BoardSquare[b[0].length][b[1].length];
 		
 		for(int x = 0; x < b[0].length; x++) {
 			
 			for(int y = 0; y < b[1].length; y++) {
 				BoardSquare square = new BoardSquare(b[x][y]);
-				tempB[x][y] = square;
-				
-				BoardSquare squareReset = b[x][y];
-				if(squareReset.getPos() != kingPosFrom) {
-					squareReset.setBackground(squareReset.getOriginalColor());
-				}
-				
+				tempB[x][y] = square;		
 			}
 			
 		}
 		
-		tempB[kingPosTo.getX()][kingPosTo.getY()].addPiece(king);
+		//tempB[kingPos.getX()][kingPos.getY()].addPiece(new ChessPiece(PieceType.KING, kingColor));
+		tempB[toPos.getX()][toPos.getY()].setChild(tempB[fromPos.getX()][fromPos.getY()].getChild());
 		
 		boolean legalMoveToKing = false;
 		
+		//Sjekk alle brikkene på brettet om de har et lovlig trekk til kongen
 		for(int x = 0; x < tempB[0].length; x++) {
 			
 			for(int y = 0; y < tempB[1].length; y++) {
@@ -72,7 +73,7 @@ public class Rules implements RulesInterface {
 					ChessPiece child = tempB[x][y].getChild();
 					boolean canMoveToKing = false;
 					
-					if(child.getColor() == king.getColor() || child == king) {
+					if(child.getColor() == kingColor) {
 						continue;
 					}
 					
@@ -83,35 +84,35 @@ public class Rules implements RulesInterface {
 					if(child.getType() == PieceType.PAWN || child.getType() == PieceType.KING) {
 						
 							if(child.getType() == PieceType.PAWN) {
-							int posX = tempB[x][y].getPos().getX();
-							int posY = tempB[x][y].getPos().getY();
+								int posX = tempB[x][y].getPos().getX();
+								int posY = tempB[x][y].getPos().getY();
 							
-							if(child.getDirection() == "up") {
-								
-								if(inRange(posX, kingPosTo.getX(), 1) && posY + 1 == kingPosTo.getY()) {
-									canMoveToKing = true;
+								if(child.getDirection() == "up") {
+									
+									if(inRange(posX, kingPos.getX(), 1) && posY + 1 == kingPos.getY()) {
+										canMoveToKing = true;
+									}
+									
+								} else if(child.getDirection() == "down"){
+									
+									if(inRange(posX, kingPos.getX(), 1) && posY - 1 == kingPos.getY()) {
+										canMoveToKing = true;
+									}
+									
 								}
-								
-							} else if(child.getDirection() == "down"){
-								
-								if(inRange(posX, kingPosTo.getX(), 1) && posY - 1 == kingPosTo.getY()) {
-									canMoveToKing = true;
-								}
-								
-							}
 							
 						} else if(child.getType() == PieceType.KING) {
 							int posX = tempB[x][y].getPos().getX();
 							int posY = tempB[x][y].getPos().getY();
 							
-							if(inRange(posX, kingPosTo.getX(), 1) && inRange(posY, kingPosTo.getY(), 1)) {
+							if(inRange(posX, kingPos.getX(), 1) && inRange(posY, kingPos.getY(), 1)) {
 								canMoveToKing = true;
 							}
 							
 						}
 							
 					} else {
-						canMoveToKing = ((RulesInterface) child.getRules()).isLegalMove(tempB, child, tempB[x][y].getPos(), kingPosTo);
+						canMoveToKing = ((RulesInterface) child.getRules()).isLegalMove(tempB, child, tempB[x][y].getPos(), kingPos);
 					}
 					
 					if(canMoveToKing) {

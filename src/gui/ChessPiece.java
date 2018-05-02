@@ -66,6 +66,13 @@ public class ChessPiece extends JLabel {
 		this.setIcon(scaledImageIcon);
 	}
 	
+	public ChessPiece(ChessPiece piece) {
+		this.type = piece.type;
+		this.color = piece.color;
+		this.direction = piece.direction;
+		this.firstMove = piece.firstMove;
+	}
+	
 	public PieceType getType() {
 		return type;
 	}

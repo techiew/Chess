@@ -19,11 +19,11 @@ import multiplayer.ConnectionInterface;
 import multiplayer.Message;
 import multiplayer.Server;
 import rules.PieceType;
+import rules.Rules;
 import rules.RulesInterface;
 import sound.*;
 
 public class ChessBoard extends JFrame {
-
 	private JPanel panel = new JPanel();
 	private int columns = 8;
 	private int rows = 8;
@@ -38,6 +38,10 @@ public class ChessBoard extends JFrame {
 	private Client client = null;
 	private int turn = 0;
 	private SoundPlayer soundPlayer = null;
+	private Position wKingPos;
+	private Position bKingPos;
+	private boolean wKingInCheck = false;
+	private boolean bKingInCheck = false;
 	
 	public ChessBoard(boolean isMultiplayer, boolean isClient, String ip, int port, String title) {
 		this.isMultiplayer = isMultiplayer;
@@ -51,7 +55,7 @@ public class ChessBoard extends JFrame {
 		placePieces();
 		validate();
 		repaint();
-		
+
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				System.exit(0);
@@ -153,6 +157,9 @@ public class ChessBoard extends JFrame {
 		
 		boardArray[4][0].addPiece(new ChessPiece(PieceType.KING, "white"));
 		boardArray[4][7].addPiece(new ChessPiece(PieceType.KING, "black"));
+		
+		wKingPos = new Position(4, 0);
+		bKingPos = new Position(4, 7);
 	}
 	
 	//Event handler som kjører når man trykker på en rute
@@ -225,6 +232,7 @@ public class ChessBoard extends JFrame {
 	
 	//Prøv å beveg en brikke og sjekk om det er lovlig
 	public boolean attemptToMovePiece(BoardSquare fromSquare, BoardSquare toSquare) {
+		resetSquareColors();
 		
 		if(turn == 0 && fromSquare.getChild().getColor() != "white") {
 			return false;
@@ -234,12 +242,22 @@ public class ChessBoard extends JFrame {
 		
 		if(isMultiplayer && (myColor == "white" && turn == 1 || myColor == "black" && turn == 0)) return false;
 		
-		if(fromSquare.movePiece(boardArray, toSquare)) {			
-			onPieceMoved();
+		if(fromSquare.movePiece(boardArray, toSquare, wKingPos, bKingPos)) {			
+			onPieceMoved();		
+			
+			if(toSquare.getChild().getType() == PieceType.KING) {
+				
+				if(toSquare.getChild().getColor() == "white") {
+					wKingPos = toSquare.getPos();
+				} else if(toSquare.getChild().getColor() == "black") {
+					bKingPos = toSquare.getPos();
+				}
+				
+			} 
 			
 			if(isMultiplayer) {
 				sendPieceMoveEvent(fromSquare, toSquare);
-			}
+			}	
 			
 			return true;
 		}
@@ -251,7 +269,7 @@ public class ChessBoard extends JFrame {
 	private void onPieceMoved() {
 		turn = (turn == 0) ? 1 : 0;
 		setTitle((turn == 0) ? "Hvit sin tur" : "Svart sin tur");
-		soundPlayer.playSound(SoundPlayer.SoundName.PIECE_MOVED);
+		soundPlayer.playSound(SoundPlayer.SoundName.PIECE_MOVED);		
 	}
 	
 	public BoardSquare getSquareAt(Position pos) {
@@ -260,6 +278,19 @@ public class ChessBoard extends JFrame {
 	
 	public BoardSquare[][] getBoard() {
 		return boardArray;
+	}
+	
+	public void resetSquareColors() {
+		
+		for(int x = 0; x < boardArray[0].length; x++) {
+			
+ 			for(int y = 0; y < boardArray[1].length; y++) {
+ 				BoardSquare square = boardArray[x][y];
+ 				square.setBackground(square.getOriginalColor());
+ 			}
+ 			
+		}
+		
 	}
 	
 	
@@ -304,9 +335,7 @@ public class ChessBoard extends JFrame {
 	
 	//Hent instansen av socketen som brukes for tilkobling
 	private ConnectionInterface getConnection() {
-		
 		return (ConnectionInterface)((isClient) ? client : server);
-		
 	}
 
 	public void onPlayerConnected() {
