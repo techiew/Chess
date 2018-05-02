@@ -72,7 +72,6 @@ public class Stockfish {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return buffer.toString();
 	}
 	
@@ -85,8 +84,7 @@ public class Stockfish {
 		return getOutput(waitTime + 20).split("bestmove ")[1].split(" ")[0];
 	}
 	
-	 public float getEvalScore(String fen, int waitTime) { 
-		  sendCommand("position fen " + fen); 
+	public float getEvalScore(int waitTime) { //Metoden er skrevet og lånt fra Rahul.
 		  sendCommand("go movetime " + waitTime); 
 		 
 		  float evalScore = 0.0f; 

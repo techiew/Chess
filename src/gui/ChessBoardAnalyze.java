@@ -71,8 +71,7 @@ public class ChessBoardAnalyze extends JFrame {
 		});
 		
 		bestMoveButton.addActionListener(new ActionListener() {
-			public void actionPerformed (ActionEvent e)
-			{
+			public void actionPerformed (ActionEvent e) {
 				bestMove = "Stockfish anbefaler trekk: " + stockfish.getBestMove(30);
 				analyzeWindow.showBestMove(bestMove);
 			}
@@ -80,7 +79,7 @@ public class ChessBoardAnalyze extends JFrame {
 		
 		getEvalScore.addActionListener(new ActionListener() {
 			public void actionPerformed (ActionEvent e) {
-				evalScore = "Eval score er: " + stockfish.getEvalScore(userFenInput, 30);
+				evalScore = "Eval score er: " + stockfish.getEvalScore(30);
 				analyzeWindow.showEvalScore(evalScore);
 			}
 		});
