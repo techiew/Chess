@@ -46,7 +46,7 @@ public class ChessMenu extends JFrame {
 	
 	public ChessMenu()
 	{		
-		setTitle("ChessMaster X-TREME3000");
+		setTitle("ChessMaster");
 		setVisible(true);
 		setSize(600,600);
 		setLocation(50,50);
