@@ -78,12 +78,12 @@ public class Bishop extends Rules implements RulesInterface {
 				previousBoxY[i] = toY - (i + 1);
 				break;
 			case "downRight":
-				previousBoxX[i] = toX - i;
-				previousBoxY[i] = toY + i;
+				previousBoxX[i] = toX - (i + 1);
+				previousBoxY[i] = toY + (i + 1);
 				break;
 			case "downLeft":
-				previousBoxX[i] = toX + i;
-				previousBoxY[i] = toY + i;
+				previousBoxX[i] = toX + (i + 1);
+				previousBoxY[i] = toY + (i + 1);
 				break;
 			}
 			
@@ -91,6 +91,7 @@ public class Bishop extends Rules implements RulesInterface {
 				square = getSquareAt(new Position(previousBoxX[i], previousBoxY[i])); 
 				
 				if (square.hasChild()) {	
+					System.out.println("hasChild ble besøkt");
 					return false; 
 				}
 				
