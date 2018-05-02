@@ -8,15 +8,17 @@ import gui.Position;
 
 //Inneholder hjelpefunksjoner som er nyttig for regelklassene
 public class Rules implements RulesInterface {
-
+	
 	protected BoardSquare[][] b;
 	
+	//Sjekk om en bevegelse fra A til B er lovlig
 	@Override
 	public boolean isLegalMove(BoardSquare[][] board, ChessPiece piece, Position from, Position to) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	//Sjekk om en verdi er i en viss range
 	@Override
 	public boolean inRange(int start, int value, int range) {
 		
@@ -29,17 +31,6 @@ public class Rules implements RulesInterface {
 	public BoardSquare getSquareAt(Position pos) {
 		return b[pos.getX()][pos.getY()];
 	}
-	
-	//@Override
-	//public boolean isPathObstructed(Position from, Position to) {
-		//int fX = from.getX();
-		//int fY = from.getY();
-		//int tX = to.getX();
-		//int tY = to.getY();
-		
-		//Position direction = new Position(fX - tX, fY - tY);
-		//Position normalizedDir = new Position(direction.getX() * direction.getX(), direction.getY() * 
-	//}
 	
 	//Lager en "simulasjon" av brettet hvor vi kan sjekke om en bevegelse av en brikke
 	//fører til at en konge blir satt i sjakk
@@ -59,7 +50,6 @@ public class Rules implements RulesInterface {
 			
 		}
 		
-		//tempB[kingPos.getX()][kingPos.getY()].addPiece(new ChessPiece(PieceType.KING, kingColor));
 		tempB[toPos.getX()][toPos.getY()].setChild(tempB[fromPos.getX()][fromPos.getY()].getChild());
 		
 		boolean legalMoveToKing = false;

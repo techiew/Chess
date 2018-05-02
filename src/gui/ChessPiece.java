@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import rules.*;
 
+//En sjakkbrikke
 public class ChessPiece extends JLabel {
 		
 	private PieceType type;
@@ -68,6 +69,7 @@ public class ChessPiece extends JLabel {
 		this.setIcon(scaledImageIcon);
 	}
 	
+	//En copy constructor, brukes i isKingInCheck
 	public ChessPiece(ChessPiece piece) {
 		this.type = piece.type;
 		this.color = piece.color;
@@ -75,26 +77,32 @@ public class ChessPiece extends JLabel {
 		this.firstMove = piece.firstMove;
 	}
 	
+	//Hent brikketypen
 	public PieceType getType() {
 		return type;
 	}
 	
+	//Hent fargen, eller laget til denne brikken
 	public String getColor() {
 		return color;
 	}
 	
+	//Hent regelobjektet
 	public Object getRules() {
 		return rulesObject;
 	}
 	
+	//Hvilken retning går vi, brukes for bønder
 	public String getDirection() {
 		return direction;
 	}
 	
+	//Er dette første trekket for denne brikka? brukes for bønder
 	public boolean isFirstMove() {
 		return firstMove;
 	}
 	
+	//Når brikken blir beveget
 	public void onPieceMoved() {
 		
 		if(firstMove == true) {
@@ -103,11 +111,8 @@ public class ChessPiece extends JLabel {
 		
 	}
 	
+	//Når brikken dør
 	public void onPieceRemoved() {
-		
-		if(type == PieceType.KING) {
-			//Tap spillet
-		}
 		
 	}
 	

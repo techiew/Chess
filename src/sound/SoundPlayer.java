@@ -18,7 +18,7 @@ public class SoundPlayer implements Runnable {
 	
 	private final File pieceMoved = new File("src/sounds/piece_moved.wav");
 	private final File connected = new File("src/sounds/connected.wav");
-	private volatile File currentSound = null;
+	private volatile File currentSound = null; //Volatile for å kunne bruke den fra forskjellige tråder
 	
 	@Override
 	public void run() {

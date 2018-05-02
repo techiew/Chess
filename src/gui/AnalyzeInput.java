@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,17 +19,17 @@ public class AnalyzeInput extends JFrame {
 	private JPanel panel2 = new JPanel();
 	//private JLabel label = new JLabel();
 	public JTextField fenInputTextfield;
-	public JButton bestMoveButton = new JButton("Foreslått trekk");
+	public JButton bestMoveButton = new JButton("Foreslï¿½tt trekk");
 	public JButton getEvalScore = new JButton("Get eval score");
 	private JLabel bestMoveLabel = new JLabel();
 	private JLabel evalScoreLabel = new JLabel();
 	private JLabel mateScoreLabel = new JLabel();
 	private JLabel showCurrentFenLabel = new JLabel();
-	private JLabel fenTitle = new JLabel("Nåværende FEN: ");
+	private JLabel fenTitle = new JLabel("Nï¿½vï¿½rende FEN: ");
 	private JLabel fenInputTitle = new JLabel("Sett inn ny FEN: ");
 	private JLabel uciCommandTitle = new JLabel("Velg en funksjon: ");
-	public AnalyzeInput(int windowPosX, int windowPosY, int windowSizeY)
-	{
+	
+	public AnalyzeInput(int windowPosX, int windowPosY, int windowSizeY) {
 		setTitle("Analyze Sjakk");
 		setVisible(true);
 		setSize(600,windowSizeY);
@@ -66,7 +64,7 @@ public class AnalyzeInput extends JFrame {
 		});
 	}
 	
-	//Tar imot en string og viser det i en label. Brukes til å vise hva Stockfish svarer oss når vi spør om anbefalt trekk. 
+	//Tar imot en string og viser det i en label. Brukes til ï¿½ vise hva Stockfish svarer oss nï¿½r vi spï¿½r om anbefalt trekk. 
 	public void showBestMove(String bestMove){
 		bestMoveLabel.setText(bestMove);
 		panel2.add(bestMoveLabel);
@@ -74,7 +72,7 @@ public class AnalyzeInput extends JFrame {
 		System.out.println(bestMove);
 	}
 
-	//Tar imot en string og viser det i en label. Brukes til å vise hva Stockfish svarer når vi spør etter evaluation score. 
+	//Tar imot en string og viser det i en label. Brukes til ï¿½ vise hva Stockfish svarer nï¿½r vi spï¿½r etter evaluation score. 
 	public void showEvalScore(String evalScore) {
 		evalScoreLabel.setText(evalScore);
 		panel2.add(evalScoreLabel);
@@ -82,7 +80,7 @@ public class AnalyzeInput extends JFrame {
 		System.out.println(evalScore);
 	}
 	
-	//Likt de andre to, bare med antall trekk før sjakk matt. 
+	//Likt de andre to, bare med antall trekk fï¿½r sjakk matt. 
 	public void showMateScore(String mateScore) {		
 		mateScoreLabel.setVisible(true);	
 		mateScoreLabel.setText(mateScore);
@@ -91,12 +89,12 @@ public class AnalyzeInput extends JFrame {
 		System.out.println(mateScore);
 	}
 	
-	//Viser den nåværende FEN nøkkelen som vises på brettet og behandles internt i Stockfish. 
+	//Viser den nï¿½vï¿½rende FEN nï¿½kkelen som vises pï¿½ brettet og behandles internt i Stockfish. 
 	public void showCurrentFen(String fen)
 	{
 		showCurrentFenLabel.setText(fen);
 		revalidate();
-		System.out.println("showCurrentFen ble besøkt");
+		System.out.println("showCurrentFen ble besï¿½kt");
 	}
 	
 }

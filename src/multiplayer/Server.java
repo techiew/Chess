@@ -8,6 +8,7 @@ import java.net.Socket;
 
 import gui.ChessBoard;
 
+//Socket til serveren, som lar klienten koble seg til
 public class Server implements ConnectionInterface, Runnable {
 
 	private int port;
@@ -22,6 +23,7 @@ public class Server implements ConnectionInterface, Runnable {
 		this.port = port;
 	}
 	
+	//Entry point for tråden vår
 	@Override
 	public void run() {
 		
@@ -54,7 +56,7 @@ public class Server implements ConnectionInterface, Runnable {
 		
 	}
 	
-	//Si hei til hverandre og bestem ting som f.eks. hvilken spiller som er hvilken farge
+	//Si hei til hverandre
 	private void handshake() {
 		
 		try {			
@@ -77,6 +79,7 @@ public class Server implements ConnectionInterface, Runnable {
 		
 	}
 		
+	//Vent på en melding fra den andre spilleren
 	private void waitForResponse() {
 		
 		try {
@@ -106,7 +109,6 @@ public class Server implements ConnectionInterface, Runnable {
 	}
 	
 	//Send en melding til den andre spilleren, sendes når en brikke blir flyttet
-	@Override
 	public void sendResponse(Message response) {
 		
 		try {
@@ -117,11 +119,13 @@ public class Server implements ConnectionInterface, Runnable {
 		}
 		
 	}
-
+	
+	//Kjøres når en melding har blitt mottatt, lar oss oppdatere brettet vårt
 	private void updateChessBoard(Message msg) {
 		board.getUpdateFromSocket(msg);
 	}
 	
+	//Si ifra til GUI at vi har blitt tilkoblet og starter sjakkspillet
 	private void notifyConnection() {
 		board.onPlayerConnected();
 	}
