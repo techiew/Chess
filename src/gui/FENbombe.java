@@ -10,6 +10,7 @@ public class FENbombe {
 		String FENstring = fen;
 		String[] fenArray = FENstring.split("/");
 		String[] splitEnd = fenArray[7].split(" ");
+		
 		for (int i = 0; i<7; i++)
 		{
 			trimmedFenCode = trimmedFenCode + fenArray[i];
