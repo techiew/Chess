@@ -6,6 +6,7 @@ import gui.Position;
 
 public class Bishop extends Rules implements RulesInterface {
 
+	//Sjekker om Bishop gjør et lovlig trekk. Returner true hvis trekket er lovlig, og false hvis den er ulovlig. 
 	public boolean isLegalMove(BoardSquare[][] board, ChessPiece piece, Position from, Position to) {
 		b = board;
 		int fromX = from.getX();
@@ -60,6 +61,7 @@ public class Bishop extends Rules implements RulesInterface {
 		return false;
 	}
 
+	//Metode som sjekker at Bishop brikken ikke passerer noen andre brikker og hopper over de. 
 	private boolean canIMovePieceDiagonal(int fromX, int fromY, int toX, int toY, int squaresMoved, String direction) {
 		
 		for (int i = 0; i < squaresMoved; i++) { 

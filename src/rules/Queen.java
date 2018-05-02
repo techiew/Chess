@@ -6,6 +6,7 @@ import gui.Position;
 
 public class Queen extends Rules implements RulesInterface {
 	
+	//Sjekker om Queen gjør et lovlig trekk. Returner true hvis trekket er lovlig, og false hvis den er ulovlig. 
 	public boolean isLegalMove(BoardSquare[][] board, ChessPiece piece, Position from, Position to) {
 		b = board;
 		int fromX = from.getX();
@@ -99,6 +100,7 @@ public class Queen extends Rules implements RulesInterface {
 		
 	}
 	
+	//Metoden blir kjørt hvis du beveger dronningen diagonalt. Metoden passer på at dronningen ikke hopper over noen andre brikker. 
 	private boolean canIMovePieceDiagonal(int fromX, int fromY, int toX, int toY, int squaresMoved, String direction) {
 		for (int i = 0; i < squaresMoved; i++) { 
 			String movedDirection = direction;
@@ -140,6 +142,7 @@ public class Queen extends Rules implements RulesInterface {
 		return true; 
 	}
 	
+	//Metoden blir kjørt når dronningen prøver å bevege seg i en rett linje. Passer på at dronningen ikke hopper over noen brikker. 
 	private boolean canIMoveStraight(int fromX, int fromY, int toX, int toY, int squaresMoved, String direction) {
 		
 		for (int i = 0; i < squaresMoved; i++) { 

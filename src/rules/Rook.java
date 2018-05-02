@@ -6,6 +6,7 @@ import gui.ChessPiece;
 
 public class Rook extends Rules implements RulesInterface {
 	
+	//Sjekker om Rook gjør et lovlig trekk. Returner true hvis trekket er lovlig, og false hvis den er ulovlig. 
 	public boolean isLegalMove(BoardSquare[][] board, ChessPiece piece, Position from, Position to) {
 		b = board;
 		int fromX = from.getX();
@@ -56,7 +57,8 @@ public class Rook extends Rules implements RulesInterface {
 		return false;
 	}	
 	
-private boolean canIMoveStraight(int fromX, int fromY, int toX, int toY, int squaresMoved, String direction) {
+	//Sjekker at Rook brikken ikke passerer noen andre brikker på veien bort til ruten brukeren trykket på. 
+	private boolean canIMoveStraight(int fromX, int fromY, int toX, int toY, int squaresMoved, String direction) {
 		
 		for (int i = 0; i < squaresMoved; i++) { 
 			String movedDirection = direction;

@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+//Denne klassen tar seg av det grafiske vinduet som inneholder UCI knappene og viser resultatet fra Stockfish. 
 public class AnalyzeInput extends JFrame {
 	private JPanel containerPanel = new JPanel();
 	private JPanel panel1 = new JPanel();
@@ -65,7 +66,7 @@ public class AnalyzeInput extends JFrame {
 		});
 	}
 	
-	
+	//Tar imot en string og viser det i en label. Brukes til å vise hva Stockfish svarer oss når vi spør om anbefalt trekk. 
 	public void showBestMove(String bestMove){
 		bestMoveLabel.setText(bestMove);
 		panel2.add(bestMoveLabel);
@@ -73,12 +74,15 @@ public class AnalyzeInput extends JFrame {
 		System.out.println(bestMove);
 	}
 
+	//Tar imot en string og viser det i en label. Brukes til å vise hva Stockfish svarer når vi spør etter evaluation score. 
 	public void showEvalScore(String evalScore) {
 		evalScoreLabel.setText(evalScore);
 		panel2.add(evalScoreLabel);
 		revalidate();
 		System.out.println(evalScore);
 	}
+	
+	//Likt de andre to, bare med antall trekk før sjakk matt. 
 	public void showMateScore(String mateScore) {		
 		mateScoreLabel.setVisible(true);	
 		mateScoreLabel.setText(mateScore);
@@ -86,6 +90,8 @@ public class AnalyzeInput extends JFrame {
 		revalidate();
 		System.out.println(mateScore);
 	}
+	
+	//Viser den nåværende FEN nøkkelen som vises på brettet og behandles internt i Stockfish. 
 	public void showCurrentFen(String fen)
 	{
 		showCurrentFenLabel.setText(fen);

@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ import javax.swing.JTextPane;
 import rules.PieceType;
 import stockfish.Stockfish;
 
+//Klassen som bygger og justerer sjakkbrettet for analysemodus. 
 public class ChessBoardAnalyze extends JFrame {
 
 	private JPanel panel = new JPanel();
@@ -54,6 +56,7 @@ public class ChessBoardAnalyze extends JFrame {
 		bestMoveButton = analyzeWindow.bestMoveButton;
 		getEvalScore = analyzeWindow.getEvalScore;
 		
+		//Kjører når du taster inn en FEN nøkkel i tekstfeltet og trykker ENTER. Sender FEN nøkkelen til placePieces metoden. 
 		fenInputTextfield.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -75,6 +78,7 @@ public class ChessBoardAnalyze extends JFrame {
 			}
 		});
 		
+		//Kjører når du trykker på "Anbefalt trekk" knappen. Kaller getBestMove metoden fra Stockfish klassen og printer den i en label. 
 		bestMoveButton.addActionListener(new ActionListener() {
 			public void actionPerformed (ActionEvent e) {
 				bestMove = "Stockfish anbefaler trekk: " + stockfish.getBestMove(30);
@@ -82,6 +86,7 @@ public class ChessBoardAnalyze extends JFrame {
 			}
 		});
 		
+		//Kjører når du trykker på "Get evaluation score" knappen. Kaller getEvalScore & getMateScore metodene fra Stockfish klassen og printer resultatet i en label.
 		getEvalScore.addActionListener(new ActionListener() {
 			public void actionPerformed (ActionEvent e) {
 				evalScore = "Evalueringsscore er: " + stockfish.getEvalScore(30);	
@@ -91,6 +96,7 @@ public class ChessBoardAnalyze extends JFrame {
 			}
 		});
 		
+		//Starter opp Stockfish. 
 		if (stockfish.startEngine()) {
 			System.out.println("Sjakkmotoren har startet");
 		}
@@ -101,6 +107,7 @@ public class ChessBoardAnalyze extends JFrame {
 		initializePieces();
 		this.validate();
 		this.repaint();
+		//Lukker vinduet når du trykker [X]. 
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				stockfish.stopEngine();
@@ -109,7 +116,7 @@ public class ChessBoardAnalyze extends JFrame {
 		});
 	}
 
-	
+	//Lager selve sjakkbrettet. Setter opp de 64 rutene og farger dem. 
 	private void createChessBoard() {
 		
 		int row = 1;
@@ -154,8 +161,9 @@ public class ChessBoardAnalyze extends JFrame {
 		//boardArray[0][0].setBackground(new Color(255, 0, 0));
 	}
 	
+	//Legger ut brikkene. Blir kjørt når brukeren taster inn en FEN nøkkel. Leser FEN koden i et array og legger ut brikkene basert på hva nøkkelen sier. 
 	private void placePieces(String userInput) {
-		FENbombe fenBombe = new FENbombe(userInput);
+		FENSplitter fenBombe = new FENSplitter(userInput);
 		userFenInput = userInput;
 		
 		if (fenBombe.checkFenArray())
@@ -239,7 +247,7 @@ public class ChessBoardAnalyze extends JFrame {
 		}
 	}
 	
-	
+	//Blir kjørt på oppstart, setter ut brikkene til startingposisjonene og setter FEN nøkkelen til startingposisjonen. 
 	private void initializePieces()
 	{
 		userFenInput = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 ";
@@ -276,6 +284,7 @@ public class ChessBoardAnalyze extends JFrame {
 		boardArray[4][7].addPiece(new ChessPiece(PieceType.KING, "black", myColor));
 	}
 	
+	//Fjerner alle brikkene fra brettet. Blir brukt når du taster inn ny FEN kode sånn at sjakkbrettet blir rent og klar for ny brikkeplasseringer. 
 	private void clearBoard()
 	{
 		int x = 0;
@@ -302,20 +311,4 @@ public class ChessBoardAnalyze extends JFrame {
 		
 	} 
 }
-	/* ADDER HIGHLIGHT TIL PIECENE, IKKE NØDVENDIG MEST ANTAGELIG MEN KAN FJERNES SENERE
-	public void setHighlight(Position pos) {
-				
-		if(!boardArray[pos.getX()][pos.getY()].hasChild()) return;
-		
-		if(currentHighlight != null) {
-			
-			if(currentHighlight.getPos() == pos.getPos()) return;
-			
-			BoardSquare target = boardArray[currentHighlight.getX()][currentHighlight.getY()];
-			target.setBackground(target.getOriginalColor());
-		}
-		
-		boardArray[pos.getX()][pos.getY()].setBackground(colorHighlight);
-		currentHighlight = new Position(pos.getX(), pos.getY());
-	} */ 
 	

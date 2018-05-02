@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+//Selve vinduet for sjakkmenyen som kommer på oppstart. 
 public class ChessMenu extends JFrame {
 	public String clientIP;
 	public int clientPort;
@@ -94,11 +95,6 @@ public class ChessMenu extends JFrame {
 		addPortText1.setFont(new Font("Tahoma", Font.BOLD, 12));
 		addPortText1.setBounds(224, 288, 136, 33);
 		containerPanel.add(addPortText1);	
-
-		
-		//JPanel imagePanel = new JPanel();
-		//imagePanel.setBounds(10, 49, 552, 154);
-		//containerPanel.add(imagePanel);
 		
 		JLabel welcomeText = new JLabel("OBJ2000V EKSAMEN 2018 SJAKK");
 		welcomeText.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -126,6 +122,7 @@ public class ChessMenu extends JFrame {
 			e1.printStackTrace();
 		}
 		
+		//Legger til en focuslistener til tekstfeltet. Når den mister fokus, så blir informasjonen i feltet sendt videre. 
 		clientIPTextfield.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				
@@ -136,20 +133,7 @@ public class ChessMenu extends JFrame {
 			}
 		});
 		
-		joinLabel.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                super.focusGained(e);
-            }
-        });
-		
-		hostLabel.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                super.focusGained(e);
-            }
-        });
-		
+		//Focuslistener for porten til join. Gjør det samme som den over. 
 		clientPortTextfield.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				
@@ -163,6 +147,7 @@ public class ChessMenu extends JFrame {
 			}
 		});
 		
+		//Focuslistener for porten til host. Gjør det samme som de to over. 
 		hostPortTextfield.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				
@@ -176,6 +161,7 @@ public class ChessMenu extends JFrame {
 			}
 		});
 		
+		//Lukker vinduet når du lukker vinduet. 
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				System.exit(0);
@@ -183,16 +169,15 @@ public class ChessMenu extends JFrame {
 		});
 	}
 	
-	private boolean isANumber(String incompleteSplitFenCode)
-	  {
-	    try
-	    {
+	//Metode hentet fra stackoverflow https://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java
+	//Sjekker om verdien tilsendt er et tall. 
+	private boolean isANumber(String incompleteSplitFenCode) {
+	    try {
 	      double check = Double.parseDouble(incompleteSplitFenCode);
-	    }
-	    catch(NumberFormatException nfe)
-	    {
+	    } catch(NumberFormatException nfe) {
 	      return false;
 	    }
 	    return true;
 	  }
+	
 }

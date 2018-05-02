@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+//Tar seg av "backend" delen av sjakkmenyen på starten. 
 public class InitializeChess {
 	
 	public static void infoBox(String infoMessage, String titleBar)
@@ -43,6 +44,7 @@ public class InitializeChess {
 		joinPortTextField = menu.clientPortTextfield;
 		host.setFocusable(true);
 		
+		//Moustelistener når join labelen blir trykket inn. Den fjerner focus fra begge join feltene sånn at de kjører sin focusLost. 
 		join.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -54,6 +56,7 @@ public class InitializeChess {
 
         });
 		
+		//Mouselistener når host knappen blir trykket inn. Gjør det samme som den over. 
 		host.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -63,6 +66,7 @@ public class InitializeChess {
             }
         });
 		
+		//Når slipper knappen du trykker inn, så vil feltene miste fokus og vi får da hentet verdiene. Den bruker verdiene fra tekstfeltene til å starte en ny instans av ChessBoard med ønsket verdier. 
 		host.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 		    	hostPort = menu.hostPort;
@@ -75,6 +79,7 @@ public class InitializeChess {
 			}
 		});
 		
+		//Gjør det samme som den over, bare for join knappen istedet. 
 		join.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 				clientIP = menu.clientIP;
@@ -89,6 +94,7 @@ public class InitializeChess {
 			}
 		});
     
+		//Når du trykker på analyze labelen vil ChessBoardAnalyze instansen kjøres. 
 		analyze.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -98,6 +104,7 @@ public class InitializeChess {
 
         });
 		
+		//Når du trykker på lokal flerspiller labelen vil ChessBoard instansieres to ganger med localhost verdier for lokal flerspiller. 
 		localPlay.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -108,16 +115,6 @@ public class InitializeChess {
             }
 
         });
-		
-		
-		
-		
-		//localPlay.addActionListener(new ActionListener() {
-			
-			//public void actionPerformed (ActionEvent e) {
-			//	new ChessBoard(false, false, "localhost", 21337, "Sjakk");
-			//}
-		//});
 		
 	}
 	
