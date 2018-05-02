@@ -87,7 +87,7 @@ public class Stockfish {
 	public float getEvalScore(int waitTime) { //Metoden er skrevet og lånt fra Rahul.
 		  sendCommand("go movetime " + waitTime); 
 		 
-		  float evalScore = 0.0f; 
+		  float evalScore = 0.0f;
 		  String[] dump = getOutput(waitTime + 20).split("\n"); 
 		  //System.out.println(dump[21]);
 		 // System.out.println(dump.length);
@@ -95,14 +95,34 @@ public class Stockfish {
 		   if (dump[i].startsWith("info depth ")) { 
 		    try { 
 		    evalScore = Float.parseFloat(dump[i].split("score cp ")[1] 
-		      .split(" nodes")[0]); 
+		      .split(" nodes")[0]);
 		    } catch(Exception e) { 
 		     evalScore = Float.parseFloat(dump[i].split("score cp ")[1] 
 		       .split(" upperbound nodes")[0]); 
 		    } 
 		   } 
 		  } 
-		  return evalScore/100; 
+		  return evalScore/100;
 		 }
-	
+	public int getMateScore(int waitTime) { //Kode skrevet av oss, men benytter oss av Rahul's getEvalScore metode.
+		  sendCommand("go movetime " + waitTime); 
+		 
+		  int mateScore = 0;
+		  String[] dump = getOutput(waitTime + 20).split("\n"); 
+		  
+		  //System.out.println(dump[21]);
+		 // System.out.println(dump.length);
+		  for (int i = 1; i >= 0; i--) { 
+		   if (dump[i].contains("score mate") && dump[i].startsWith("info depth ")) { 
+		    try { 
+		    mateScore = Integer.parseInt(dump[i].split("score mate ")[1] 
+		      .split(" nodes")[0]);
+		    } catch(Exception e) { 
+		     mateScore = Integer.parseInt(dump[i].split("score mate ")[1] 
+		       .split(" upperbound nodes")[0]); 
+		    } 
+		   } 
+		  } 
+		  return mateScore;
+		 }
 }

@@ -6,9 +6,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class InitializeChess {
+	
+	public static void infoBox(String infoMessage, String titleBar)
+    {
+        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+    }
+	
 	String clientIP;
 	int clientPort;
 	int hostPort;
@@ -47,7 +54,6 @@ public class InitializeChess {
 
         });
 		
-		
 		host.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -62,7 +68,7 @@ public class InitializeChess {
 		    	hostPort = menu.hostPort;
 		    	System.out.println(hostPort);
 				if (hostPort == 0) {
-					System.out.println("Vennligst sett inn en Port Xd");
+					InitializeChess.infoBox("Vennligst skriv inn en port", "Feilmelding");
 				} else {
 					new ChessBoard(multiplayer, server, "localhost", hostPort, "Sjakk"); 
 				}
@@ -75,7 +81,7 @@ public class InitializeChess {
 				clientPort = menu.clientPort;
 				
 				if (clientIP == null && clientPort == 0) {
-					System.out.println("Vennligst sett inn en IP adresse og Port :)))))))");
+					InitializeChess.infoBox("Vennligst skriv inn en IP adresse og en port", "Feilmelding");
 				} else {
 					System.out.println(clientPort + clientIP);
 					new ChessBoard(multiplayer, client, clientIP, clientPort, "Sjakk");
