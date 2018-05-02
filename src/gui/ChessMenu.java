@@ -26,7 +26,7 @@ public class ChessMenu extends JFrame {
 	public int hostPort;
 	
 	private JPanel containerPanel = new JPanel();
-	private ImageIcon imageSolo = new ImageIcon("src/images/button_enkeltspiller.png");
+	private ImageIcon imageSolo = new ImageIcon("src/images/button_lokal-flerspiller.png");
 	private ImageIcon imageAnalyze = new ImageIcon("src/images/button_analysemodus.png");
 	private ImageIcon join = new ImageIcon("src/images/button_join.png");
 	private ImageIcon host = new ImageIcon("src/images/button_host.png");
