@@ -58,14 +58,17 @@ public class AnalyzeInput extends JFrame {
 		add(containerPanel);
 		
 		this.addWindowListener(new WindowAdapter(){
+			
 			public void windowClosing(WindowEvent e){
 				System.exit(0);
 			}
+			
 		});
+		
 	}
 	
 	//Tar imot en string og viser det i en label. Brukes til � vise hva Stockfish svarer oss n�r vi sp�r om anbefalt trekk. 
-	public void showBestMove(String bestMove){
+	public void showBestMove(String bestMove) {
 		bestMoveLabel.setText(bestMove);
 		panel2.add(bestMoveLabel);
 		revalidate();
@@ -90,8 +93,7 @@ public class AnalyzeInput extends JFrame {
 	}
 	
 	//Viser den n�v�rende FEN n�kkelen som vises p� brettet og behandles internt i Stockfish. 
-	public void showCurrentFen(String fen)
-	{
+	public void showCurrentFen(String fen) {
 		showCurrentFenLabel.setText(fen);
 		revalidate();
 		System.out.println("showCurrentFen ble bes�kt");

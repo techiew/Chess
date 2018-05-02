@@ -1,18 +1,14 @@
 package multiplayer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.net.Socket;
 
 import gui.ChessBoard;
 
 //Socket til klienten, som kobler seg til en server
 public class Client implements ConnectionInterface, Runnable {
-
 	private String ip;
 	private int port;
 	private Socket socket;

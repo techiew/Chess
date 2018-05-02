@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
@@ -25,7 +24,6 @@ public class ChessMenu extends JFrame {
 	public String clientIP;
 	public int clientPort;
 	public int hostPort;
-	
 	private JPanel containerPanel = new JPanel();
 	private ImageIcon imageSolo = new ImageIcon("src/images/button_lokal-flerspiller.png");
 	private ImageIcon imageAnalyze = new ImageIcon("src/images/button_analysemodus.png");
@@ -44,9 +42,7 @@ public class ChessMenu extends JFrame {
 	public JTextField hostPortTextfield;
 	public JTextField clientPortTextfield;
 	
-	
-	public ChessMenu()
-	{		
+	public ChessMenu() {		
 		setTitle("OBJ2000V Eksamen 2018");
 		setVisible(true);
 		setSize(600,600);
@@ -101,7 +97,6 @@ public class ChessMenu extends JFrame {
 		welcomeText.setBounds(10, 11, 564, 33);
 		containerPanel.add(welcomeText);
 		
-		
 		BufferedImage myPicture;
 		
 		try {
@@ -117,6 +112,7 @@ public class ChessMenu extends JFrame {
 			lblOnlineFlerspiller.setBounds(50, 244, 271, 33);
 			containerPanel.add(lblOnlineFlerspiller);
 			repaint();
+			
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -124,60 +120,79 @@ public class ChessMenu extends JFrame {
 		
 		//Legger til en focuslistener til tekstfeltet. Når den mister fokus, så blir informasjonen i feltet sendt videre. 
 		clientIPTextfield.addFocusListener(new FocusListener() {
+			
 			public void focusGained(FocusEvent e) {
 				
 			}
+			
 			public void focusLost(FocusEvent e) {
 				clientIP = clientIPTextfield.getText();
 				System.out.println(clientIP);
 			}
+			
 		});
 		
 		//Focuslistener for porten til join. Gjør det samme som den over. 
 		clientPortTextfield.addFocusListener(new FocusListener() {
+			
 			public void focusGained(FocusEvent e) {
 				
 			}
+			
 			public void focusLost(FocusEvent e) {
 				String clientPortString = clientPortTextfield.getText();
+				
 				if (isANumber(clientPortString)) {
 					clientPort = Integer.parseInt(clientPortString);
 					System.out.println(clientPort);
 				}
+				
 			}
+			
 		});
 		
 		//Focuslistener for porten til host. Gjør det samme som de to over. 
 		hostPortTextfield.addFocusListener(new FocusListener() {
+			
 			public void focusGained(FocusEvent e) {
 				
 			}
+			
 			public void focusLost(FocusEvent e) {
 				String hostPortString = hostPortTextfield.getText();
+				
 				if (isANumber(hostPortString)) {
 					hostPort = Integer.parseInt(hostPortString);
 					System.out.println(hostPort + "hei");
 				}
+				
 			}
+			
 		});
 		
 		//Lukker vinduet når du lukker vinduet. 
 		this.addWindowListener(new WindowAdapter(){
+			
 			public void windowClosing(WindowEvent e){
 				System.exit(0);
 			}
+			
 		});
+		
 	}
 	
 	//Metode hentet fra stackoverflow https://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java
 	//Sjekker om verdien tilsendt er et tall. 
 	private boolean isANumber(String incompleteSplitFenCode) {
-	    try {
-	      double check = Double.parseDouble(incompleteSplitFenCode);
+		
+		try {
+			double check = Double.parseDouble(incompleteSplitFenCode);
+			
 	    } catch(NumberFormatException nfe) {
-	      return false;
+	    	return false;
 	    }
+	    
 	    return true;
-	  }
+	}
 	
 }

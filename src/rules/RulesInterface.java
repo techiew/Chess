@@ -1,7 +1,5 @@
 package rules;
 
-import java.awt.Color;
-
 import gui.BoardSquare;
 import gui.ChessPiece;
 import gui.Position;

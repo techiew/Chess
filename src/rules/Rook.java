@@ -21,16 +21,20 @@ public class Rook extends Rules implements RulesInterface {
 		
 			if (fromY < toY) {	
 				direction = "up";
+				
 				if (canIMoveStraight(fromX, fromY, toX, toY, yMove, direction) == false) { 
 					return false;
 				}
+				
 			}
 		
 			if (fromY > toY) {
 				direction = "down";
+				
 				if (canIMoveStraight(fromX, fromY, toX, toY, yMove, direction) == false) { 
 					return false;
 				}
+				
 			}
 			
 			return true;
@@ -40,20 +44,25 @@ public class Rook extends Rules implements RulesInterface {
 			
 			if (fromX < toX) {	
 				direction = "right";
+				
 				if (canIMoveStraight(fromX, fromY, toX, toY, xMove, direction) == false) { 
 					return false;
 				}
+				
 			}
 			
 			if (fromX > toX) {
 				direction = "left";
+				
 				if (canIMoveStraight(fromX, fromY, toX, toY, xMove, direction) == false) { 
 					return false;
 				}
+				
 			}
 			
 			return true;
 		}
+		
 		return false;
 	}	
 	
@@ -88,6 +97,7 @@ public class Rook extends Rules implements RulesInterface {
 				
 				if (previousBoxY[i] != fromY) {
 					square = getSquareAt(new Position(toX, previousBoxY[i])); 
+					
 					if (square.hasChild()) {	
 						return false; 
 					}
@@ -98,6 +108,7 @@ public class Rook extends Rules implements RulesInterface {
 				
 				if (previousBoxX[i] != fromX) {
 					square = getSquareAt(new Position(previousBoxX[i], toY)); 
+					
 					if (square.hasChild()) {	
 						return false; 
 					}
@@ -109,8 +120,8 @@ public class Rook extends Rules implements RulesInterface {
 		}
 
 		return true; 
-	
 	}
+	
 }
 
 

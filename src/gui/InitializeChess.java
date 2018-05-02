@@ -1,10 +1,7 @@
 package gui;
 
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -57,29 +54,36 @@ public class InitializeChess {
 		
 		//Mouselistener når host knappen blir trykket inn. Gjør det samme som den over. 
 		host.addMouseListener(new MouseAdapter() {
+			
             @Override
             public void mousePressed(MouseEvent e) {
             	//når du trykker her så skal alle felt miste fokus
             	hostTextField.setFocusable(false);
             	hostTextField.setFocusable(true);
             }
+            
         });
 		
 		//Når slipper knappen du trykker inn, så vil feltene miste fokus og vi får da hentet verdiene. Den bruker verdiene fra tekstfeltene til å starte en ny instans av ChessBoard med ønsket verdier. 
 		host.addMouseListener(new MouseAdapter() {
+			
 			public void mouseReleased(MouseEvent e) {
 		    	hostPort = menu.hostPort;
 		    	System.out.println(hostPort);
+		    	
 				if (hostPort == 0) {
 					InitializeChess.infoBox("Vennligst skriv inn en port", "Feilmelding");
 				} else {
 					new ChessBoard(multiplayer, server, "localhost", hostPort, "Sjakk"); 
 				}
+				
 			}
+			
 		});
 		
 		//Gjør det samme som den over, bare for join knappen istedet. 
 		join.addMouseListener(new MouseAdapter() {
+			
 			public void mouseReleased(MouseEvent e) {
 				clientIP = menu.clientIP;
 				clientPort = menu.clientPort;
@@ -90,7 +94,9 @@ public class InitializeChess {
 					System.out.println(clientPort + clientIP);
 					new ChessBoard(multiplayer, client, clientIP, clientPort, "Sjakk");
 				}
+				
 			}
+			
 		});
     
 		//Når du trykker på analyze labelen vil ChessBoardAnalyze instansen kjøres. 

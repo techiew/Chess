@@ -4,6 +4,7 @@ package gui;
 public class FENSplitter {
 	private String[] completeSplitFenCode = new String[64];
 	private int arrayCounter = 0;
+	
 	public FENSplitter(String fen) {			
 		String trimmedFenCode = "";
 		String[] incompleteSplitFenCode;
@@ -15,17 +16,21 @@ public class FENSplitter {
 		for (int i = 0; i<7; i++) {
 			trimmedFenCode = trimmedFenCode + fenArray[i];
 		}
+		
 		trimmedFenCode = trimmedFenCode + splitEnd[0];
 		incompleteSplitFenCode = trimmedFenCode.split(""); 
 		
 		for (int i = 0; i<incompleteSplitFenCode.length; i++) {
+			
 			if (isANumber(incompleteSplitFenCode[i])) {
 				int emptySpaceNumber = Integer.parseInt(incompleteSplitFenCode[i]);
+				
 				for (int y = 0; y < emptySpaceNumber; y++) {
 					completeSplitFenCode[counter] = "0";
 					counter++;
 					arrayCounter++;
 				}
+				
 			} else {
 				completeSplitFenCode[counter] = incompleteSplitFenCode[i];
 				counter++;
@@ -38,11 +43,13 @@ public class FENSplitter {
 	
 	//Sjekker om arrayet ble fylt ut, stopper ugyldige FEN nøkler som ikke inneholder informasjon om alle rutene. 
 	public boolean checkFenArray() {
+		
 		if (arrayCounter == 64){
 			return true;
 		} else {
 			return false;
 		}
+		
 	}
 	
 	//Metode som returnerer arrayet som inneholder all informasjonen om FEN koden. 
@@ -56,16 +63,12 @@ public class FENSplitter {
 	private boolean isANumber(String incompleteSplitFenCode) {
 		
 	    try {
-	      double check = Double.parseDouble(incompleteSplitFenCode);
+	    	double check = Double.parseDouble(incompleteSplitFenCode);
 	    } catch(NumberFormatException nfe) {
-	      return false;
+	    	return false;
 	    }
-	    return true;
 	    
-	  }
-
-	
-	
-	
+	    return true; 
+	}
 	
 }

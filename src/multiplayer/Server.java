@@ -10,7 +10,6 @@ import gui.ChessBoard;
 
 //Socket til serveren, som lar klienten koble seg til
 public class Server implements ConnectionInterface, Runnable {
-
 	private int port;
 	private ServerSocket serverSocket;
 	private Socket socket;

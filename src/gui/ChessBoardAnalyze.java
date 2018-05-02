@@ -1,30 +1,21 @@
 package gui;
 
 import java.awt.Color;
-
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-
 import rules.PieceType;
 import stockfish.Stockfish;
 
 //Klassen som bygger og justerer sjakkbrettet for analysemodus. 
 public class ChessBoardAnalyze extends JFrame {
-
 	private JPanel panel = new JPanel();
 	private int columns = 8;
 	private int rows = 8;
@@ -57,75 +48,80 @@ public class ChessBoardAnalyze extends JFrame {
 		getEvalScore = analyzeWindow.getEvalScore;
 		
 		//Kjører når du taster inn en FEN nøkkel i tekstfeltet og trykker ENTER. Sender FEN nøkkelen til placePieces metoden. 
-		fenInputTextfield.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
+		fenInputTextfield.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
 				String userInput = fenInputTextfield.getText();
-				if (userInput.length() < 10)
-				{
+				
+				if (userInput.length() < 10) {
 					System.out.println("Invalid FEN code");
 					InitializeChess.infoBox("Vennligst skriv inn en gyldig FEN string", "Feilmelding");
-				}
-				else
-				{
+				} else {
 					placePieces(userInput);
 					fenInputTextfield.setText("");
 					analyzeWindow.showBestMove("");
 					analyzeWindow.showEvalScore("");
 					analyzeWindow.showMateScore("");
 				}
+				
 			}
+			
 		});
 		
 		//Kjører når du trykker på "Anbefalt trekk" knappen. Kaller getBestMove metoden fra Stockfish klassen og printer den i en label. 
 		bestMoveButton.addActionListener(new ActionListener() {
+			
 			public void actionPerformed (ActionEvent e) {
 				bestMove = "Stockfish anbefaler trekk: " + stockfish.getBestMove(30);
 				analyzeWindow.showBestMove(bestMove);
 			}
+			
 		});
 		
 		//Kjører når du trykker på "Get evaluation score" knappen. Kaller getEvalScore & getMateScore metodene fra Stockfish klassen og printer resultatet i en label.
 		getEvalScore.addActionListener(new ActionListener() {
+			
 			public void actionPerformed (ActionEvent e) {
 				evalScore = "Evalueringsscore er: " + stockfish.getEvalScore(30);	
 				mateScore = "Sjakkmatt er mulig i " + stockfish.getMateScore(30) + " trekk!";
 				analyzeWindow.showEvalScore(evalScore);
 				analyzeWindow.showMateScore(mateScore);
 			}
+			
 		});
 		
 		//Starter opp Stockfish. 
 		if (stockfish.startEngine()) {
 			System.out.println("Sjakkmotoren har startet");
-		}
-		else {
+		} else {
 			System.out.println("Feil med starting av sjakkmotor");
 		}
+		
 		createChessBoard();
 		initializePieces();
 		this.validate();
 		this.repaint();
-		//Lukker vinduet når du trykker [X]. 
+		
 		this.addWindowListener(new WindowAdapter(){
+			
 			public void windowClosing(WindowEvent e){
 				stockfish.stopEngine();
 				System.exit(0);
 			}
+			
 		});
+		
 	}
 
 	//Lager selve sjakkbrettet. Setter opp de 64 rutene og farger dem. 
 	private void createChessBoard() {
-		
 		int row = 1;
 		Color colorOne = new Color(106, 133, 78);
 		Color colorTwo = new Color(204, 201, 182);
 		
 		for(int y = 0; y < columns; y++) {
 			
-			for(int x = 0; x < rows; x++){
+			for(int x = 0; x < rows; x++) {
 				Position pos = new Position(x, (columns - 1) - y);
 				BoardSquare bSquare;
 								
@@ -140,7 +136,7 @@ public class ChessBoardAnalyze extends JFrame {
 				
 				bSquare.addMouseListener(new MouseAdapter() {
 					
-				   /* HAR NOE MED SETHIGHLIGHT Å GJØRE, SJEKK KOMMENTARENE I setHighlight METODEN
+				   /* 
 				    * @Override
 				    public void mouseClicked(MouseEvent e) {
 				       setHighlight(((BoardSquare) e.getSource()).getPos());
@@ -153,6 +149,7 @@ public class ChessBoardAnalyze extends JFrame {
 					colorOne = colorTwo;
 					colorTwo = temp;
 				}
+				
 				row++;
 			}
 			
@@ -163,31 +160,31 @@ public class ChessBoardAnalyze extends JFrame {
 	
 	//Legger ut brikkene. Blir kjørt når brukeren taster inn en FEN nøkkel. Leser FEN koden i et array og legger ut brikkene basert på hva nøkkelen sier. 
 	private void placePieces(String userInput) {
-		FENSplitter fenBombe = new FENSplitter(userInput);
+		FENSplitter fenSplitter = new FENSplitter(userInput);
 		userFenInput = userInput;
 		
-		if (fenBombe.checkFenArray())
-		{
+		if (fenSplitter.checkFenArray()) {
 			stockfish.sendFen(userInput);
 			analyzeWindow.showCurrentFen(userFenInput);
-		   // stockfishResponse = stockfish.getBestMove(30);
+			//stockfishResponse = stockfish.getBestMove(30);
 			clearBoard();
-			String[] fenArray = fenBombe.getFenArray();
-			for (int i = 0; i < 64; i++)
-			{
+			String[] fenArray = fenSplitter.getFenArray();
+			
+			for (int i = 0; i < 64; i++) {
 				//System.out.println(fenArray[i]);
 			}
+			
 			int x = 0;
 			int y = 0;
-			for (int i = 0; i < fenArray.length; i++)
-			{
-				if (i % 8 == 0 && i != 0)
-				{
+			
+			for (int i = 0; i < fenArray.length; i++) {
+				
+				if (i % 8 == 0 && i != 0) {
 						x = 0;
 						y++;
 				}
-				switch(fenArray[i])
-				{
+				
+				switch(fenArray[i]) {
 					case "r":
 						boardArray[x][(columns - 1) - y].addPiece(new ChessPiece(PieceType.ROOK, "black", myColor));
 						x++;
@@ -240,16 +237,17 @@ public class ChessBoardAnalyze extends JFrame {
 						x++;
 						break; 
 				}
+				
 			}
-		}
-		else {
+			
+		} else {
 			InitializeChess.infoBox("Vennligst skriv inn en gyldig FEN string", "Feilmelding");
 		}
+		
 	}
 	
 	//Blir kjørt på oppstart, setter ut brikkene til startingposisjonene og setter FEN nøkkelen til startingposisjonen. 
-	private void initializePieces()
-	{
+	private void initializePieces() {
 		userFenInput = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 ";
 		stockfish.sendFen(userFenInput);
 		analyzeWindow.showCurrentFen(userFenInput);
@@ -285,30 +283,30 @@ public class ChessBoardAnalyze extends JFrame {
 	}
 	
 	//Fjerner alle brikkene fra brettet. Blir brukt når du taster inn ny FEN kode sånn at sjakkbrettet blir rent og klar for ny brikkeplasseringer. 
-	private void clearBoard()
-	{
+	private void clearBoard() {
 		int x = 0;
 		int y = 0;
-		for (int i = 0; i < 64; i++)
-		{
-			if (i % 8 == 0 && i != 0)
-			{
+		
+		for (int i = 0; i < 64; i++) {
+			
+			if (i % 8 == 0 && i != 0) {
 					x = 0;
 					y++;
 			} 
-			if (boardArray[x][y].hasChild())
-			{
+			
+			if (boardArray[x][y].hasChild()) {
 				boardArray[x][y].removePiece();
 				x++;
-			}
-			else
-			{
+				
+			} else {
 				x++;
 			}
+			
 		}
+		
 		this.validate();
 		this.repaint();
-		
 	} 
+	
 }
 	

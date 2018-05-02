@@ -13,7 +13,6 @@ import rules.*;
 
 //En sjakkbrikke
 public class ChessPiece extends JLabel {
-		
 	private PieceType type;
 	private String color;
 	private String direction;

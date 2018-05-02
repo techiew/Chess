@@ -21,16 +21,20 @@ public class Queen extends Rules implements RulesInterface {
 			
 			if (fromY < toY) {	
 				direction = "up";
+				
 				if (canIMoveStraight(fromX, fromY, toX, toY, yMove, direction) == false) { 
 					return false;
 				}
+				
 			}
 		
 			if (fromY > toY) {
 				direction = "down";
+				
 				if (canIMoveStraight(fromX, fromY, toX, toY, yMove, direction) == false) { 
 					return false;
 				}
+				
 			}
 			
 			return true;
@@ -40,16 +44,20 @@ public class Queen extends Rules implements RulesInterface {
 			
 			if (fromX < toX) {	
 				direction = "right";
+				
 				if (canIMoveStraight(fromX, fromY, toX, toY, xMove, direction) == false) { 
 					return false;
 				}
+				
 			}
 			
 			if (fromX > toX) {
 				direction = "left";
+				
 				if (canIMoveStraight(fromX, fromY, toX, toY, xMove, direction) == false) { 
 					return false;
 				}
+				
 			}
 			
 			return true;
@@ -97,11 +105,11 @@ public class Queen extends Rules implements RulesInterface {
 		}
 		
 		return false;
-		
 	}
 	
 	//Metoden blir kjørt hvis du beveger dronningen diagonalt. Metoden passer på at dronningen ikke hopper over noen andre brikker. 
 	private boolean canIMovePieceDiagonal(int fromX, int fromY, int toX, int toY, int squaresMoved, String direction) {
+		
 		for (int i = 0; i < squaresMoved; i++) { 
 			String movedDirection = direction;
 			int[] previousBoxX = new int[8];
@@ -174,6 +182,7 @@ public class Queen extends Rules implements RulesInterface {
 				
 				if (previousBoxY[i] != fromY) {
 					square = getSquareAt(new Position(toX, previousBoxY[i])); 
+					
 					if (square.hasChild()) {	
 						System.out.println("Du prøvde å gå " + (i + 1) + " trekk over en brikke"); 
 						System.out.println(toX + "" + previousBoxY[i]);
@@ -186,6 +195,7 @@ public class Queen extends Rules implements RulesInterface {
 				
 				if (previousBoxX[i] != fromX) {
 					square = getSquareAt(new Position(previousBoxX[i], toY)); 
+					
 					if (square.hasChild()) {	
 						System.out.println("Du prøvde å gå " + (i + 1) + " trekk over en brikke"); 
 						System.out.println(previousBoxX[i] + "" + toY);
@@ -197,8 +207,10 @@ public class Queen extends Rules implements RulesInterface {
 			}
 		
 		}
+		
 		return true; 
 	}	
+	
 }
 
 
