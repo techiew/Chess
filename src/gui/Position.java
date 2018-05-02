@@ -1,5 +1,6 @@
 package gui;
 
+//En datastruktur for å holde 2 tall som en X, Y posisjon
 public class Position {
 	private int x;
 	private int y;

@@ -1,12 +1,10 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import rules.*;
 
+//En av rutene på sjakkbrettet
 public class BoardSquare extends JPanel {
 
 	private ChessPiece childPiece = null;
@@ -20,13 +18,15 @@ public class BoardSquare extends JPanel {
 		setBackground(color);
 	}
 	
-	//En copy constructor
+	//En copy constructor, for isKingInCheck
 	public BoardSquare(BoardSquare square) {
 		this.childPiece = square.childPiece;
 		this.color = square.color;
 		this.pos = square.pos;
 	}
 	
+	//Sjekk regler og prøv å beveg brikka til en gitt rute
+	//Sjekker også om en konge blir satt i sjakk etter bevegelsen
 	public boolean movePiece(BoardSquare[][] board, BoardSquare destination, Position wKingPos, Position bKingPos) {
 		RulesInterface rules = ((RulesInterface) childPiece.getRules());		
 		boolean legalMove = rules.isLegalMove(board, childPiece, pos, destination.getPos());
@@ -66,6 +66,7 @@ public class BoardSquare extends JPanel {
 		return legalMove;
 	}
 	
+	//Beveg en brikke uten regler, brukes for multiplayer
 	public boolean movePieceNoRules(BoardSquare destination) {
 		
 		if(destination.hasChild()) {
@@ -80,6 +81,7 @@ public class BoardSquare extends JPanel {
 		return true;
 	}
 	
+	//Legg til en brikke i denne ruta
 	public void addPiece(ChessPiece newPiece) {	
 		childPiece = newPiece;
 		add(newPiece);
@@ -87,6 +89,7 @@ public class BoardSquare extends JPanel {
 		repaint();
 	}
 	
+	//Fjern en brikke fra denne ruta
 	public void removePiece() {
 		remove(childPiece);
 		childPiece = null;
@@ -94,22 +97,27 @@ public class BoardSquare extends JPanel {
 		repaint();
 	}
 	
+	//Hent den originale fargen, for å fjerne highlights osv.
 	public Color getOriginalColor() {
 		return color;
 	}
 	
+	//Hent posisjonen til denne ruta på brettet, samme som posisjonen i boardArray
 	public Position getPos() {
 		return pos;
 	}
 	
+	//Har ruta en brikke?
 	public boolean hasChild() {
 		return (childPiece == null) ? false : true;
  	}
 	
+	//Hent brikken i denne ruta
 	public ChessPiece getChild() {
 		return childPiece;
 	}
 	
+	//Sett brikken direkte
 	public void setChild(ChessPiece child) {
 		childPiece = child;
 	}

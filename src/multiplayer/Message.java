@@ -2,7 +2,7 @@ package multiplayer;
 
 import java.io.Serializable;
 
-//Et objekt som inneholder meldinger som sendes via sockets mellom server og klient
+//Et objekt som er meldingen som sendes via sockets mellom server og klient
 public class Message implements Serializable {
 	private String msg;
 	

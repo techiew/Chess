@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,26 +8,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.OverlayLayout;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-
 import multiplayer.Client;
 import multiplayer.ConnectionInterface;
 import multiplayer.Message;
 import multiplayer.Server;
 import rules.PieceType;
-import rules.Rules;
-import rules.RulesInterface;
 import sound.*;
 
+//Hele sjakkbrettet vårt
 public class ChessBoard extends JFrame {
 	private JPanel panel = new JPanel();
 	private JPanel waitingPanel = new JPanel();
@@ -45,7 +35,6 @@ public class ChessBoard extends JFrame {
 	private Client client = null;
 	private int turn = 0;
 	private SoundPlayer soundPlayer = null;
-	private int width = 0;
 	private Position wKingPos;
 	private Position bKingPos;
 	
@@ -98,8 +87,6 @@ public class ChessBoard extends JFrame {
 		validate();
 		repaint();
 		
-		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				System.exit(0);
@@ -108,8 +95,8 @@ public class ChessBoard extends JFrame {
 		
 	}
 	
+	//Lag hele sjakkbrettet ut i fra BoardSquare
 	private void createChessBoard() {
-		
 		int row = 1;
 		Color colorOne = new Color(106, 133, 78);
 		Color colorTwo = new Color(204, 201, 182);
@@ -153,7 +140,6 @@ public class ChessBoard extends JFrame {
 	}
 	
 	private void placePieces() {
-		
 		String upperColor = "black";
 		String lowerColor = "white";
 		wKingPos = new Position(4, 0);
@@ -220,7 +206,7 @@ public class ChessBoard extends JFrame {
 				String highlightedColor = highlightedSquare.getChild().getColor();
 				String clickedColor = clickedSquare.getChild().getColor();
 				
-				//Fjern highlight hvis du trykker pï¿½ rute med highlight pï¿½
+				//Fjern highlight hvis du trykker pï¿½ rute med highlight
 				if(highlightedSquare == clickedSquare) {
 					setHighlight(null);
 					return;
@@ -241,7 +227,7 @@ public class ChessBoard extends JFrame {
 		
 	}
 		
-	//Prï¿½v ï¿½ framhev ruten som vi trykket pï¿½
+	//Fremhev ruten som har blitt trykket på
 	public void setHighlight(BoardSquare clickedSquare) {
 		
 		//Hvis clickedSquare er satt til null, ikke ha noen highlights
@@ -314,6 +300,7 @@ public class ChessBoard extends JFrame {
 		return boardArray;
 	}
 	
+	//Nullstill fargene på alle rutene
 	public void resetSquareColors() {
 		
 		for(int x = 0; x < boardArray[0].length; x++) {
@@ -372,6 +359,7 @@ public class ChessBoard extends JFrame {
 		return (ConnectionInterface)((isClient) ? client : server);
 	}
 
+	//Si ifra når en spiller har blitt tilkoblet
 	public void onPlayerConnected() {
 		soundPlayer.playSound(SoundPlayer.SoundName.CONNECTED);
 		isConnected = true;

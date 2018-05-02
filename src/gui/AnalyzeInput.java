@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,8 +27,8 @@ public class AnalyzeInput extends JFrame {
 	private JLabel fenTitle = new JLabel("Nåværende FEN: ");
 	private JLabel fenInputTitle = new JLabel("Sett inn ny FEN: ");
 	private JLabel uciCommandTitle = new JLabel("Velg en funksjon: ");
-	public AnalyzeInput(int windowPosX, int windowPosY, int windowSizeY)
-	{
+	
+	public AnalyzeInput(int windowPosX, int windowPosY, int windowSizeY) {
 		setTitle("Analyze Sjakk");
 		setVisible(true);
 		setSize(600,windowSizeY);
@@ -66,7 +64,7 @@ public class AnalyzeInput extends JFrame {
 	}
 	
 	
-	public void showBestMove(String bestMove){
+	public void showBestMove(String bestMove) {
 		bestMoveLabel.setText(bestMove);
 		panel2.add(bestMoveLabel);
 		revalidate();
@@ -79,6 +77,7 @@ public class AnalyzeInput extends JFrame {
 		revalidate();
 		System.out.println(evalScore);
 	}
+	
 	public void showMateScore(String mateScore) {		
 		mateScoreLabel.setVisible(true);	
 		mateScoreLabel.setText(mateScore);
@@ -86,8 +85,8 @@ public class AnalyzeInput extends JFrame {
 		revalidate();
 		System.out.println(mateScore);
 	}
-	public void showCurrentFen(String fen)
-	{
+	
+	public void showCurrentFen(String fen) {
 		showCurrentFenLabel.setText(fen);
 		revalidate();
 		System.out.println("showCurrentFen ble besøkt");

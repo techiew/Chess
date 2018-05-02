@@ -10,6 +10,7 @@ import java.net.Socket;
 
 import gui.ChessBoard;
 
+//Socket til klienten, som kobler seg til en server
 public class Client implements ConnectionInterface, Runnable {
 
 	private String ip;
@@ -25,6 +26,7 @@ public class Client implements ConnectionInterface, Runnable {
 		this.port = port;
 	}
 	
+	//Entry point for tråden vår
 	@Override
 	public void run() {
 		
@@ -56,7 +58,7 @@ public class Client implements ConnectionInterface, Runnable {
 		
 	}
 	
-	//Si hei til hverandre og bestem ting som f.eks. hvilken spiller som er hvilken farge
+	//Si hei til hverandre
 	private void handshake() {
 		
 		try {
@@ -75,7 +77,8 @@ public class Client implements ConnectionInterface, Runnable {
 		}
 		
 	}
-			
+		
+	//Vent på en melding fra den andre spilleren
 	private void waitForResponse() {
 		
 		try {
@@ -116,10 +119,12 @@ public class Client implements ConnectionInterface, Runnable {
 		
 	}
 	
+	//Kjøres når en melding har blitt mottatt, lar oss oppdatere brettet vårt
 	private void updateChessBoard(Message msg) {
 		board.getUpdateFromSocket(msg);
 	}
 	
+	//Si ifra til GUI at vi har blitt tilkoblet og starter sjakkspillet
 	private void notifyConnection() {
 		board.onPlayerConnected();
 	}

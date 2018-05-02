@@ -11,8 +11,7 @@ import javax.swing.JTextField;
 
 public class InitializeChess {
 	
-	public static void infoBox(String infoMessage, String titleBar)
-    {
+	public static void infoBox(String infoMessage, String titleBar) {
         JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
     }
 	
