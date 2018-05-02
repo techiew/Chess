@@ -38,6 +38,7 @@ public class ChessBoardAnalyze extends JFrame {
 	private Stockfish stockfish = new Stockfish();
 	private String bestMove;
 	private String evalScore;
+	private String mateScore;
 	AnalyzeInput analyzeWindow;
 	private String myColor = "white";
 	
@@ -61,6 +62,7 @@ public class ChessBoardAnalyze extends JFrame {
 				if (userInput.length() < 10)
 				{
 					System.out.println("Invalid FEN code");
+					InitializeChess.infoBox("Vennligst skriv inn en gyldig FEN string", "Feilmelding");
 				}
 				else
 				{
@@ -68,6 +70,7 @@ public class ChessBoardAnalyze extends JFrame {
 					fenInputTextfield.setText("");
 					analyzeWindow.showBestMove("");
 					analyzeWindow.showEvalScore("");
+					analyzeWindow.showMateScore("");
 				}
 			}
 		});
@@ -81,8 +84,10 @@ public class ChessBoardAnalyze extends JFrame {
 		
 		getEvalScore.addActionListener(new ActionListener() {
 			public void actionPerformed (ActionEvent e) {
-				evalScore = "Eval score er: " + stockfish.getEvalScore(30);
+				evalScore = "Evalueringsscore er: " + stockfish.getEvalScore(30);	
+				mateScore = "Sjakkmatt er mulig i " + stockfish.getMateScore(30) + " trekk!";
 				analyzeWindow.showEvalScore(evalScore);
+				analyzeWindow.showMateScore(mateScore);
 			}
 		});
 		
@@ -152,6 +157,7 @@ public class ChessBoardAnalyze extends JFrame {
 	private void placePieces(String userInput) {
 		FENbombe fenBombe = new FENbombe(userInput);
 		userFenInput = userInput;
+		
 		if (fenBombe.checkFenArray())
 		{
 			stockfish.sendFen(userInput);
@@ -229,7 +235,7 @@ public class ChessBoardAnalyze extends JFrame {
 			}
 		}
 		else {
-			System.out.println("Den scuffed ass shit FEN stringen din er invalid as fuck");
+			InitializeChess.infoBox("Vennligst skriv inn en gyldig FEN string", "Feilmelding");
 		}
 	}
 	

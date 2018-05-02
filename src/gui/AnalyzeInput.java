@@ -24,6 +24,7 @@ public class AnalyzeInput extends JFrame {
 	public JButton getEvalScore = new JButton("Get eval score");
 	private JLabel bestMoveLabel = new JLabel();
 	private JLabel evalScoreLabel = new JLabel();
+	private JLabel mateScoreLabel = new JLabel();
 	private JLabel showCurrentFenLabel = new JLabel();
 	private JLabel fenTitle = new JLabel("Nåværende FEN: ");
 	private JLabel fenInputTitle = new JLabel("Sett inn ny FEN: ");
@@ -77,6 +78,13 @@ public class AnalyzeInput extends JFrame {
 		panel2.add(evalScoreLabel);
 		revalidate();
 		System.out.println(evalScore);
+	}
+	public void showMateScore(String mateScore) {		
+		mateScoreLabel.setVisible(true);	
+		mateScoreLabel.setText(mateScore);
+		panel2.add(mateScoreLabel);
+		revalidate();
+		System.out.println(mateScore);
 	}
 	public void showCurrentFen(String fen)
 	{
