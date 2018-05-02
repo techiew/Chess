@@ -26,18 +26,18 @@ public class ChessBoardAnalyze extends JFrame {
 	private JPanel panel = new JPanel();
 	private int columns = 8;
 	private int rows = 8;
-	private int windowSizeX = 500;
-	private int windowSizeY = 500;
+	private int windowSizeX = 600;
+	private int windowSizeY = 600;
 	private int windowPosX = 50;
 	private int windowPosY = 50;
 	private BoardSquare[][] boardArray = new BoardSquare[rows][columns];
-	private Position currentHighlight = null;
-	private Color colorHighlight = new Color(209, 206, 111); 
 	private String userFenInput;
 	private JTextField fenInputTextfield;
 	private JButton bestMoveButton;
+	private JButton getEvalScore;
 	private Stockfish stockfish = new Stockfish();
-	private String stockfishResponse;
+	private String bestMove;
+	private String evalScore;
 	AnalyzeInput analyzeWindow;
 	public ChessBoardAnalyze() {
 		this.setVisible(true);
@@ -49,6 +49,8 @@ public class ChessBoardAnalyze extends JFrame {
 		analyzeWindow = new AnalyzeInput(windowSizeX, windowPosY, windowSizeY);
 		fenInputTextfield = analyzeWindow.fenInputTextfield;
 		bestMoveButton = analyzeWindow.bestMoveButton;
+		getEvalScore = analyzeWindow.getEvalScore;
+		
 		fenInputTextfield.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -63,15 +65,22 @@ public class ChessBoardAnalyze extends JFrame {
 					placePieces(userInput);
 					fenInputTextfield.setText("");
 					analyzeWindow.showBestMove("");
+					analyzeWindow.showEvalScore("");
 				}
 			}
 		});
 		
 		bestMoveButton.addActionListener(new ActionListener() {
-			public void actionPerformed (ActionEvent e)
-			{
-				stockfishResponse = "Stockfish anbefaler trekk: " + stockfish.getBestMove(30);
-				analyzeWindow.showBestMove(stockfishResponse);
+			public void actionPerformed (ActionEvent e) {
+				bestMove = "Stockfish anbefaler trekk: " + stockfish.getBestMove(30);
+				analyzeWindow.showBestMove(bestMove);
+			}
+		});
+		
+		getEvalScore.addActionListener(new ActionListener() {
+			public void actionPerformed (ActionEvent e) {
+				evalScore = "Eval score er: " + stockfish.getEvalScore(30);
+				analyzeWindow.showEvalScore(evalScore);
 			}
 		});
 		

@@ -38,17 +38,21 @@ public class ChessBoard extends JFrame {
 	private Client client = null;
 	private int turn = 0;
 	private SoundPlayer soundPlayer = null;
-	private Position wKingPos;
-	private Position bKingPos;
-	private boolean wKingInCheck = false;
-	private boolean bKingInCheck = false;
+	private int width = 0;
 	
 	public ChessBoard(boolean isMultiplayer, boolean isClient, String ip, int port, String title) {
 		this.isMultiplayer = isMultiplayer;
 		this.isClient = isClient;
 		setTitle(title);
 		setVisible(true);
-		setSize(600, 600);
+		setSize(600,600);
+		
+		if (isClient) {
+			setLocation(30 + getWidth(),30);
+		} else {
+			setLocation(30,30);
+		}
+		
 		panel.setLayout(new GridLayout(rows, 0));
 		add(panel);
 		createChessBoard();
@@ -162,13 +166,13 @@ public class ChessBoard extends JFrame {
 		bKingPos = new Position(4, 7);
 	}
 	
-	//Event handler som kjører når man trykker på en rute
+	//Event handler som kjï¿½rer nï¿½r man trykker pï¿½ en rute
 	public void squareClickedEvent(BoardSquare clickedSquare) {	
 	
 		if(isMultiplayer && !isConnected) return;
 		if(isMultiplayer && (myColor == "white" && turn == 1 || myColor == "black" && turn == 0)) return;
 		
-		//Hvis vi trykker på en tom rute
+		//Hvis vi trykker pï¿½ en tom rute
 		if(!clickedSquare.hasChild()) {
 			
 			//Fjern highlight
@@ -179,14 +183,14 @@ public class ChessBoard extends JFrame {
 			
 		} 
 		
-		//Hvis vi trykker på en rute med brikke
+		//Hvis vi trykker pï¿½ en rute med brikke
 		if (clickedSquare.hasChild()) {
 			
 			if(highlightedSquare != null) {
 				String highlightedColor = highlightedSquare.getChild().getColor();
 				String clickedColor = clickedSquare.getChild().getColor();
 				
-				//Fjern highlight hvis du trykker på rute med highlight på
+				//Fjern highlight hvis du trykker pï¿½ rute med highlight pï¿½
 				if(highlightedSquare == clickedSquare) {
 					setHighlight(null);
 					return;
@@ -201,13 +205,13 @@ public class ChessBoard extends JFrame {
 				
 			}
 			
-			//Sett highlight til å være den ruta som er trykket på (bare ruter med brikker)
+			//Sett highlight til ï¿½ vï¿½re den ruta som er trykket pï¿½ (bare ruter med brikker)
 			setHighlight(clickedSquare);	
 		}
 		
 	}
 		
-	//Prøv å framhev ruten som vi trykket på
+	//Prï¿½v ï¿½ framhev ruten som vi trykket pï¿½
 	public void setHighlight(BoardSquare clickedSquare) {
 		
 		//Hvis clickedSquare er satt til null, ikke ha noen highlights
@@ -221,7 +225,7 @@ public class ChessBoard extends JFrame {
 			return;
 		}
 		
-		//Hvis en rute alerede er i highlightedSquare, fjern highlight på den
+		//Hvis en rute alerede er i highlightedSquare, fjern highlight pï¿½ den
 		if(highlightedSquare != null) {
 			highlightedSquare.setBackground(highlightedSquare.getOriginalColor());	
 		}
@@ -230,7 +234,7 @@ public class ChessBoard extends JFrame {
 		highlightedSquare.setBackground(colorHighlight);	
 	}
 	
-	//Prøv å beveg en brikke og sjekk om det er lovlig
+	//Prï¿½v ï¿½ beveg en brikke og sjekk om det er lovlig
 	public boolean attemptToMovePiece(BoardSquare fromSquare, BoardSquare toSquare) {
 		resetSquareColors();
 		
@@ -265,7 +269,7 @@ public class ChessBoard extends JFrame {
 		return false;
 	}
 	
-	//Når en brikke ble flyttet på, endre tur
+	//Nï¿½r en brikke ble flyttet pï¿½, endre tur
 	private void onPieceMoved() {
 		turn = (turn == 0) ? 1 : 0;
 		setTitle((turn == 0) ? "Hvit sin tur" : "Svart sin tur");
@@ -296,7 +300,7 @@ public class ChessBoard extends JFrame {
 	
 	//Multiplayer kode ------------------------------------------------------
 	
-	//Tving brettet vårt til å bevege en brikke (uten å sjekke regler), brukes for trekk fra andre spilleren
+	//Tving brettet vï¿½rt til ï¿½ bevege en brikke (uten ï¿½ sjekke regler), brukes for trekk fra andre spilleren
 	public void forceMovePiece(BoardSquare fromSquare, BoardSquare toSquare) {
 		
 		if(fromSquare.movePieceNoRules(toSquare)) {			

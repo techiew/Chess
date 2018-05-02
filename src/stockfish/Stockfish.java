@@ -12,7 +12,7 @@ public class Stockfish {
 	private Process engineProcess;
 	private BufferedReader processReader;
 	private OutputStreamWriter processWriter;
-	private static final String PATH = "stockfish_9_x32.exe";
+	private static final String PATH = "src/stockfishengine/stockfish_9_x32.exe";
 	
 	public boolean startEngine() { //Metoden er skrevet og lånt fra Rahul.
 		
@@ -72,7 +72,6 @@ public class Stockfish {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return buffer.toString();
 	}
 	
@@ -84,5 +83,26 @@ public class Stockfish {
 		sendCommand("go movetime " + waitTime);
 		return getOutput(waitTime + 20).split("bestmove ")[1].split(" ")[0];
 	}
+	
+	public float getEvalScore(int waitTime) { //Metoden er skrevet og lånt fra Rahul.
+		  sendCommand("go movetime " + waitTime); 
+		 
+		  float evalScore = 0.0f; 
+		  String[] dump = getOutput(waitTime + 20).split("\n"); 
+		  //System.out.println(dump[21]);
+		 // System.out.println(dump.length);
+		  for (int i = 1; i >= 0; i--) { 
+		   if (dump[i].startsWith("info depth ")) { 
+		    try { 
+		    evalScore = Float.parseFloat(dump[i].split("score cp ")[1] 
+		      .split(" nodes")[0]); 
+		    } catch(Exception e) { 
+		     evalScore = Float.parseFloat(dump[i].split("score cp ")[1] 
+		       .split(" upperbound nodes")[0]); 
+		    } 
+		   } 
+		  } 
+		  return evalScore/100; 
+		 }
 	
 }
