@@ -126,12 +126,12 @@ public class Queen extends Rules implements RulesInterface {
 				previousBoxY[i] = toY - (i + 1);
 				break;
 			case "downRight":
-				previousBoxX[i] = toX - i;
-				previousBoxY[i] = toY + i;
+				previousBoxX[i] = toX - (i + 1);
+				previousBoxY[i] = toY + (i + 1);
 				break;
 			case "downLeft":
-				previousBoxX[i] = toX + i;
-				previousBoxY[i] = toY + i;
+				previousBoxX[i] = toX + (i + 1);
+				previousBoxY[i] = toY + (i + 1);
 				break;
 			}
 			
