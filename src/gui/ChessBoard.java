@@ -39,6 +39,8 @@ public class ChessBoard extends JFrame {
 	private int turn = 0;
 	private SoundPlayer soundPlayer = null;
 	private int width = 0;
+	private Position wKingPos;
+	private Position bKingPos;
 	
 	public ChessBoard(boolean isMultiplayer, boolean isClient, String ip, int port, String title) {
 		this.isMultiplayer = isMultiplayer;
