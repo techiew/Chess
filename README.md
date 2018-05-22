@@ -1,2 +1,2 @@
-# stuff
-stuff
+# Chess game for exam
+A chess game
