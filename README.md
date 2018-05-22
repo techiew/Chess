@@ -1,2 +1,2 @@
 # Chess game for exam
-A chess game
+A chess game (interface language is Norwegian)
