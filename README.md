@@ -1,2 +1,4 @@
 # Chess game for exam
-A chess game (interface language is Norwegian)
+A chess game
+Interface language is in Norwegian
+Most rules work and are implemented in code, with some small exceptions
