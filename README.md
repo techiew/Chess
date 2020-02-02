@@ -2,7 +2,7 @@
 A chess game.
 Interface language is in Norwegian.
 Stockfish was used as this was a criteria for the exam, although we barely used Stockfish at all, we needed to provide atleast one instance where we used it. 
-Most rules work and are implemented in code, with some small exceptions.
+Most chess rules work and are implemented in code, with some small exceptions.
 
 Missing rules/functionality:
 
