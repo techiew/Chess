@@ -8,7 +8,7 @@ Missing rules/functionality:
 
 The game doesn't check if either king is in a checkmate
 
-The game doesn't explicitly declare a winner, the players decide when to end the game
+The game doesn't explicitly declare a winner, the players have to decide when to end the game
 
 Some other small bugs/missing rules
 
