@@ -15,4 +15,4 @@ The aesthetics were heavily inspired from online chess websites, such as [Liches
 
 Most chess rules work and are implemented in code, with some small exceptions.
 
-We got an A on this exam :).
+**We got an A on this exam :).**
